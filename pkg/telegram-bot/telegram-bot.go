@@ -37,10 +37,10 @@ var (
 	report     = selector.Data("Report", "Report")
 	logout     = selector.Data("Logout", "Logout")
 
-	prevPage = selector.Data("Previuse page", "Previuse page")
-	nexPage  = selector.Data("Next page", "Next page")
-	back     = selector.Data("Back", "Back")
-	refresh  = selector.Data("Refresh", "Refresh")
+	globalBookmark = selector.Data("Global Bookmarks", "Global_Bookmarks")
+	myBookmark     = selector.Data("My Bookmarks", "My_Bookmarks")
+	back           = selector.Data("Back", "Back")
+	refresh        = selector.Data("Refresh", "Refresh")
 
 	// reply btn
 	cancle = menu.Text("Cancle")
@@ -81,8 +81,13 @@ func StartBot() {
 
 	bot.Handle(&register, registerBtn)
 	bot.Handle(&login, loginBtn)
+
 	bot.Handle(&monitoring, monitoringBtn)
+	bot.Handle(&bookmark, globalBookmarkBtn)
+
 	bot.Handle(&back, backBtn)
+	bot.Handle(&myBookmark, myBookmarkBtn)
+	bot.Handle(&globalBookmark, globalBookmarkBtn)
 
 	bot.Handle(telebot.OnText, onText)
 
@@ -133,46 +138,73 @@ func loginBtn(c telebot.Context) error {
 }
 
 func monitoringBtn(c telebot.Context) error {
-	c.Delete()
-	userId := c.Sender().ID
+	var (
+		prevPageMonitor = selector.Data("Previuse page", "Previuse page monitoring")
+		nexPageMonitor  = selector.Data("Next page", "Next page monitoring")
+	)
 	page := selector.Data(fmt.Sprintf("page %v of %v", 1, 1), "page")
 	log := fmt.Sprintf("crawler logs activities : \n%s", "log ..")
 	selector.Inline(
-		selector.Row(prevPage, page, nexPage),
+		selector.Row(prevPageMonitor, page, nexPageMonitor),
 		selector.Row(refresh),
 		selector.Row(back),
 	)
-	resp, err := bot.Send(
-		c.Sender(),
+
+	return c.Edit(
 		log,
 		selector,
 	)
-	if err != nil {
-		return err
-	}
-	message[userId] = resp
-	return nil
+}
+
+func myBookmarkBtn(c telebot.Context) error {
+	var (
+		prevPageMyBkMark = selector.Data("Previuse page", "Previuse page my bookmark")
+		nexPageMyBkMark  = selector.Data("Next page", "Next page my bookmark")
+	)
+	page := selector.Data(fmt.Sprintf("page %v of %v", 1, 1), "page")
+	bookMarks := fmt.Sprintf("My bookmark  : \n%s", "bookmark ..")
+	selector.Inline(
+		selector.Row(prevPageMyBkMark, page, nexPageMyBkMark),
+		selector.Row(globalBookmark),
+		selector.Row(back),
+	)
+
+	return c.Edit(
+		bookMarks,
+		selector,
+	)
+}
+
+func globalBookmarkBtn(c telebot.Context) error {
+	var (
+		prevPageGlobBkMark = selector.Data("Previuse page", "Previuse page global bookmark")
+		nexPageGlobBkMark  = selector.Data("Next page", "Next page global bookmark")
+	)
+	page := selector.Data(fmt.Sprintf("page %v of %v", 1, 1), "page")
+	bookMarks := fmt.Sprintf("global bookmark : \n%s", "bookmark ..")
+	selector.Inline(
+		selector.Row(prevPageGlobBkMark, page, nexPageGlobBkMark),
+		selector.Row(myBookmark),
+		selector.Row(back),
+	)
+
+	return c.Edit(
+		bookMarks,
+		selector,
+	)
 }
 
 func backBtn(c telebot.Context) error {
-	c.Delete()
-	userId := c.Sender().ID
 	selector.Inline(
 		selector.Row(profile, bookmark, monitoring),
 		selector.Row(post, export, report),
 		selector.Row(logout),
 	)
-	resp, err := bot.Send(
-		c.Sender(),
+
+	return c.Edit(
 		fmt.Sprintf("Welcome dear %s %s", c.Chat().FirstName, c.Chat().LastName),
 		selector,
 	)
-	if err != nil {
-		return err
-	}
-
-	message[userId] = resp
-	return nil
 }
 
 func profileBtn(c telebot.Context) error {
