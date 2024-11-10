@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/joho/godotenv"
@@ -16,11 +18,37 @@ const (
 	SUPERADMIN = "SuperAdmin"
 )
 
+const (
+	rent = 0
+	buy  = 1
+	sell = 2
+)
+
+const (
+	divar    = 0
+	sheypoor = 1
+)
+
 type user struct {
 	userName string
 	password string
 	userType string
 	email    string
+}
+
+type filters struct {
+	priceRange       []int
+	landAreaRange    []int
+	roomRange        []int
+	floorRange       []int
+	haveStorage      bool
+	publishDataRange []string //[]time.Time
+	haveElevator     bool
+	builtYearRange   []int
+	isApartment      bool
+	city             string
+	dealType         int
+	sourceSite       []int
 }
 
 var (
@@ -31,6 +59,7 @@ var (
 
 	data    = make(map[int64]user)
 	message = make(map[int64]*telebot.Message)
+	filter  = make(map[int64]filters)
 
 	// inline btn
 	register = selector.Data("Register", "Register")
@@ -43,13 +72,37 @@ var (
 	prevPageGlobBkMark = selector.Data("Previuse page", "Previuse_page_global_bookmark")
 	nexPageGlobBkMark  = selector.Data("Next page", "Next_page_global_bookmark")
 
-	monitoring      = selector.Data("Monitoring", "Monitoring")
-	prevPageMonitor = selector.Data("Previuse page", "Previuse_page_monitoring")
-	nexPageMonitor  = selector.Data("Next page", "Next_page_monitoring")
-	post            = selector.Data("Post", "Post")
-	export          = selector.Data("Export", "Export")
-	report          = selector.Data("Report", "Report")
-	logout          = selector.Data("Logout", "Logout")
+	monitoring        = selector.Data("Monitoring", "Monitoring")
+	prevPageMonitor   = selector.Data("Previuse page", "Previuse_page_monitoring")
+	nexPageMonitor    = selector.Data("Next page", "Next_page_monitoring")
+	post              = selector.Data("Post", "Post")
+	export            = selector.Data("Export", "Export")
+	report            = selector.Data("Report", "Report")
+	newReport         = selector.Data("Create New Report", "Create_New_Report")
+	newReportBack     = selector.Data("Back", "Back_New_report")
+	newReportNo       = selector.Data("No", "New_report_No")
+	newReportYes      = selector.Data("Yes", "New_report_Yes")
+	newReportNotifNo  = selector.Data("No", "New_report_Notif_No")
+	newReportNotifYes = selector.Data("Yes", "New_report_Notif_Yes")
+	prevPageReport    = selector.Data("Previuse page", "Previuse_page_report")
+	nexPageReport     = selector.Data("Next page", "Next_page_report")
+	room              = selector.Data("Room", "Room")
+	landArea          = selector.Data("Land Area", "Land_Area")
+	price             = selector.Data("Price", "Price")
+	publishData       = selector.Data("Publish Data", "Publish_Data")
+	storage           = selector.Data("Storage", "Storage")
+	floor             = selector.Data("Floor", "Floor")
+	apartment         = selector.Data("Apartment", "Apartment")
+	builtYear         = selector.Data("Built Year", "Built_Year")
+	elevator          = selector.Data("Elevator", "Elevator")
+	sourceSite        = selector.Data("Source Site", "Source_Sites")
+	dealType          = selector.Data("Deal Type", "Deal_Type")
+	city              = selector.Data("City", "City")
+	finish            = selector.Data("Finish", "Finish")
+	removeFilter      = selector.Data("Remove", "Remove_filter")
+	backFilter        = selector.Data("Back", "Back_Filter")
+
+	logout = selector.Data("Logout", "Logout")
 
 	monitoringAdmin      = selector.Data("Monitoring", "MonitoringAdmin")
 	usr                  = selector.Data("User", "User")
@@ -86,9 +139,22 @@ var (
 	cancle = menu.Text("Cancle")
 
 	// state
-	loginStatus         = false
-	registerUserStatus  = false
-	registerAdminStatus = false
+	loginStatus            = false
+	registerUserStatus     = false
+	registerAdminStatus    = false
+	newReportStatus        = false
+	priceRangeStatus       = false
+	landAreaRangeStatus    = false
+	roomRangeStatus        = false
+	floorRangeStatus       = false
+	haveStorageStatus      = false
+	publishDataRangeStatus = false
+	haveElevatorStatus     = false
+	builtYearRangeStatus   = false
+	isApartmentStatus      = false
+	cityStatus             = false
+	dealTypeStatus         = false
+	sourceSiteStatus       = false
 )
 
 func initServer() (*telebot.Bot, error) {
@@ -127,6 +193,26 @@ func StartBot() {
 	bot.Handle(&bookmark, globalBookmarkBtn)
 	bot.Handle(&post, postBtn)
 	bot.Handle(&report, reportBtn)
+	bot.Handle(&newReport, newReportBtn)
+	bot.Handle(&newReportBack, newReportBtn)
+	bot.Handle(&newReportNo, newReportNoBtn)
+	bot.Handle(&newReportYes, newReportYesBtn)
+	bot.Handle(&newReportNotifNo, newReporNotifNoBtn)
+	bot.Handle(&newReportNotifYes, newReporNotifYesBtn)
+	bot.Handle(&room, roomBtn)
+	bot.Handle(&landArea, landAreaBtn)
+	bot.Handle(&price, priceBtn)
+	bot.Handle(&publishData, publishDataBtn)
+	bot.Handle(&storage, storageBtn)
+	bot.Handle(&floor, floorBtn)
+	bot.Handle(&apartment, apartmentBtn)
+	bot.Handle(&builtYear, builtYearBtn)
+	bot.Handle(&elevator, elevatorBtn)
+	bot.Handle(&sourceSite, sourceSiteBtn)
+	bot.Handle(&dealType, dealTypeBtn)
+	bot.Handle(&city, cityBtn)
+	bot.Handle(&finish, finishBtn)
+	bot.Handle(&backFilter, backFilterBtn)
 
 	bot.Handle(&monitoringAdmin, monitoringAdminBtn)
 	bot.Handle(&monitoringSuperAdmin, monitoringSuperAdminBtn)
@@ -382,10 +468,6 @@ func newPostBtn(c telebot.Context) error {
 }
 
 func reportBtn(c telebot.Context) error {
-	var (
-		prevPageReport = selector.Data("Previuse page", "Previuse_page_report")
-		nexPageReport  = selector.Data("Next page", "Next_page_report")
-	)
 	page := selector.Data(fmt.Sprintf("page %v of %v", 1, 1), "page")
 	report := fmt.Sprintf("The report \"%s\" has been selected , select a post to view , edit or delere :", "vespa 200 divar and sheypoor")
 
@@ -393,12 +475,277 @@ func reportBtn(c telebot.Context) error {
 
 	selector.Inline(
 		selector.Row(prevPageReport, page, nexPageReport),
-		selector.Row(newPost),
+		selector.Row(newReport),
 		selector.Row(back),
 	)
 
 	return c.Edit(
 		report,
+		selector,
+	)
+}
+
+func newReportBtn(c telebot.Context) error {
+	c.Delete()
+	newReportStatus = true
+	userId := c.Sender().ID
+	data[userId] = user{}
+
+	selector.Inline(
+		selector.Row(back),
+	)
+
+	resp, err := bot.Send(
+		c.Sender(),
+		"Type a name for your report , this name should be unique :",
+		selector,
+	)
+	if err != nil {
+		return err
+	}
+	message[userId] = resp
+	return nil
+}
+
+func newReportNoBtn(c telebot.Context) error {
+	// do something
+	loginMessage := "If this is checked again (watch list) , should the notification be sent to robot ?"
+	selector.Inline(
+		selector.Row(newReportNotifNo, newReportNotifYes),
+		selector.Row(newReportBack),
+	)
+	return c.Edit(
+		loginMessage,
+		selector,
+	)
+}
+
+func newReportYesBtn(c telebot.Context) error {
+	// do something
+	loginMessage := "If this is checked again (watch list) , should the notification be sent to robot ?"
+	selector.Inline(
+		selector.Row(newReportNotifNo, newReportNotifYes),
+		selector.Row(newReportBack),
+	)
+	return c.Edit(
+		loginMessage,
+		selector,
+	)
+}
+
+func newReporNotifNoBtn(c telebot.Context) error {
+	// do something
+	return reportFilter(c)
+}
+
+func newReporNotifYesBtn(c telebot.Context) error {
+	// do something
+	return reportFilter(c)
+}
+
+func reportFilter(c telebot.Context) error {
+	userId := c.Sender().ID
+	fltr, exist := filter[userId]
+	if !exist {
+		filter[userId] = filters{}
+	}
+	report := fmt.Sprintf("Making the filter - Click on each filter button to create or change a filter :\n")
+	priceRange := fmt.Sprintf("Price range : %v - %v\n", fltr.priceRange[0], fltr.priceRange[1])
+	landAreaRange := fmt.Sprintf("Land area range : %v - %v\n", fltr.landAreaRange[0], fltr.landAreaRange[1])
+	roomRange := fmt.Sprintf("Room range : %v - %v\n", fltr.roomRange[0], fltr.roomRange[1])
+	floorRange := fmt.Sprintf("Floor range : %v - %v\n", fltr.floorRange[0], fltr.floorRange[1])
+	haveStorage := fmt.Sprintf("have storage : %t\n", fltr.haveStorage)
+	publishDataRange := fmt.Sprintf("Publish data range : %v - %v\n", fltr.publishDataRange[0], fltr.publishDataRange[1])
+	haveElevator := fmt.Sprintf("have elevator : %t\n", fltr.haveElevator)
+	builtYearRange := fmt.Sprintf("Built year range : %v - %v\n", fltr.builtYearRange[0], fltr.builtYearRange[1])
+	isApartment := fmt.Sprintf("Is apartment : %t\n", fltr.isApartment)
+	cty := fmt.Sprintf("Land area range : %s\n", fltr.city)
+	delType := fmt.Sprintf("Deal type : %s\n", fltr.dealType)
+	sourcSite := fmt.Sprintf("Source site : %s - %s\n", fltr.sourceSite[0], fltr.sourceSite[1])
+
+	body := fmt.Sprintf("%s%s%s%s%s%s%s%s%s%s%s%s%s",
+		report, priceRange, landAreaRange, roomRange, floorRange,
+		haveStorage, publishDataRange, haveElevator,
+		builtYearRange, isApartment, cty, delType, sourcSite)
+	selector.Inline(
+		selector.Row(room, landArea, price),
+		selector.Row(publishData, storage, floor),
+		selector.Row(apartment, builtYear, elevator),
+		selector.Row(sourceSite, dealType, city),
+		selector.Row(finish),
+		selector.Row(back),
+	)
+	return c.Edit(
+		body,
+		selector,
+	)
+}
+
+func roomBtn(c telebot.Context) error {
+	roomRangeStatus = true
+	message := "Enter your room range, separated by , :\nFor example \"1,2\""
+	selector.Inline(
+		selector.Row(removeFilter),
+		selector.Row(backFilter),
+	)
+	return c.Edit(
+		message,
+		selector,
+	)
+}
+func landAreaBtn(c telebot.Context) error {
+	landAreaRangeStatus = true
+	message := "Enter your land area range, separated by , :\nFor example \"100,200\""
+	selector.Inline(
+		selector.Row(removeFilter),
+		selector.Row(backFilter),
+	)
+	return c.Edit(
+		message,
+		selector,
+	)
+}
+func priceBtn(c telebot.Context) error {
+	priceRangeStatus = true
+	message := "Enter your price range, separated by , :\nFor example \"1000000,2000000\""
+	selector.Inline(
+		selector.Row(removeFilter),
+		selector.Row(backFilter),
+	)
+	return c.Edit(
+		message,
+		selector,
+	)
+}
+func publishDataBtn(c telebot.Context) error {
+	publishDataRangeStatus = true
+	message := "Enter your publish date range, separated by , :\nFor example \"2024-10-11,2024-12-01\""
+	selector.Inline(
+		selector.Row(removeFilter),
+		selector.Row(backFilter),
+	)
+	return c.Edit(
+		message,
+		selector,
+	)
+}
+func storageBtn(c telebot.Context) error {
+	haveStorageStatus = true
+	message := "Enter your storage status :\nFor example \"ok\""
+	selector.Inline(
+		selector.Row(removeFilter),
+		selector.Row(backFilter),
+	)
+	return c.Edit(
+		message,
+		selector,
+	)
+}
+func floorBtn(c telebot.Context) error {
+	floorRangeStatus = true
+	message := "Enter your floor range, separated by , :\nFor example \"2,3\""
+	selector.Inline(
+		selector.Row(removeFilter),
+		selector.Row(backFilter),
+	)
+	return c.Edit(
+		message,
+		selector,
+	)
+}
+func apartmentBtn(c telebot.Context) error {
+	isApartmentStatus = true
+	message := "Is it apartment :\nFor example \"No\""
+	selector.Inline(
+		selector.Row(removeFilter),
+		selector.Row(backFilter),
+	)
+	return c.Edit(
+		message,
+		selector,
+	)
+}
+func builtYearBtn(c telebot.Context) error {
+	builtYearRangeStatus = true
+	message := "Enter your build range, separated by , :\nFor example \"4,10\""
+	selector.Inline(
+		selector.Row(removeFilter),
+		selector.Row(backFilter),
+	)
+	return c.Edit(
+		message,
+		selector,
+	)
+}
+func elevatorBtn(c telebot.Context) error {
+	haveElevatorStatus = true
+	message := "Enter your elevetor status :\nFor example \"ok\""
+	selector.Inline(
+		selector.Row(removeFilter),
+		selector.Row(backFilter),
+	)
+	return c.Edit(
+		message,
+		selector,
+	)
+}
+func sourceSiteBtn(c telebot.Context) error {
+	sourceSiteStatus = true
+	message := "Enter your source type, separated by , :\nFor example \"divar,sheypoor\""
+	selector.Inline(
+		selector.Row(removeFilter),
+		selector.Row(backFilter),
+	)
+	return c.Edit(
+		message,
+		selector,
+	)
+}
+func dealTypeBtn(c telebot.Context) error {
+	dealTypeStatus = true
+	message := "Enter your dealing type, :\nFor example \"buy\""
+	selector.Inline(
+		selector.Row(removeFilter),
+		selector.Row(backFilter),
+	)
+	return c.Edit(
+		message,
+		selector,
+	)
+}
+func cityBtn(c telebot.Context) error {
+	cityStatus = true
+	message := "Enter your city name  :\nFor example \"gazvin\""
+	selector.Inline(
+		selector.Row(removeFilter),
+		selector.Row(backFilter),
+	)
+	return c.Edit(
+		message,
+		selector,
+	)
+}
+func finishBtn(c telebot.Context) error {
+	loginMessage := fmt.Sprintf("Welcome dear %s %s", c.Chat().FirstName, c.Chat().LastName)
+	selector.Inline(
+		selector.Row(profile, bookmark, monitoring),
+		selector.Row(post, export, report),
+		selector.Row(logout),
+	)
+	return c.Edit(
+		loginMessage,
+		selector,
+	)
+}
+func backFilterBtn(c telebot.Context) error {
+	loginMessage := fmt.Sprintf("Welcome dear %s %s", c.Chat().FirstName, c.Chat().LastName)
+	selector.Inline(
+		selector.Row(profile, bookmark, monitoring),
+		selector.Row(post, export, report),
+		selector.Row(logout),
+	)
+	return c.Edit(
+		loginMessage,
 		selector,
 	)
 }
@@ -627,13 +974,142 @@ func onText(c telebot.Context) error {
 			resp, err := bot.Send(
 				c.Sender(),
 				loginMessage,
-				selector)
+				selector,
+			)
 			if err != nil {
 				return err
 			}
 			message[userID] = resp
 			registerAdminStatus = false
 		}
+	} else if newReportStatus {
+		userID := c.Sender().ID
+		c.Delete()
+		if msg, ok := message[userID]; ok {
+			_ = bot.Delete(msg)
+		}
+		selector.Inline(
+			selector.Row(newReportNo, newReportYes),
+			selector.Row(newReportBack),
+		)
+		resp, err := bot.Send(
+			c.Sender(),
+			fmt.Sprintf("is it active ? \n\nTip : if it is active it starts working immediatly after creation . "),
+			selector,
+		)
+		if err != nil {
+			return err
+		}
+		message[userID] = resp
+		newReportStatus = false
+	} else if priceRangeStatus {
+		userID := c.Sender().ID
+		c.Delete()
+		fltr := filter[userID]
+		prices := strings.Split(c.Text(), ",")
+		fltr.priceRange[0], _ = strconv.Atoi(prices[0])
+		fltr.priceRange[1], _ = strconv.Atoi(prices[1])
+		priceRangeStatus = false
+		return reportFilter(c)
+	} else if landAreaRangeStatus {
+		userID := c.Sender().ID
+		c.Delete()
+		fltr := filter[userID]
+		land := strings.Split(c.Text(), ",")
+		fltr.landAreaRange[0], _ = strconv.Atoi(land[0])
+		fltr.landAreaRange[1], _ = strconv.Atoi(land[1])
+		landAreaRangeStatus = false
+		return reportFilter(c)
+	} else if roomRangeStatus {
+		userID := c.Sender().ID
+		c.Delete()
+		fltr := filter[userID]
+		room := strings.Split(c.Text(), ",")
+		fltr.roomRange[0], _ = strconv.Atoi(room[0])
+		fltr.roomRange[1], _ = strconv.Atoi(room[1])
+		roomRangeStatus = false
+		return reportFilter(c)
+	} else if roomRangeStatus {
+		userID := c.Sender().ID
+		c.Delete()
+		fltr := filter[userID]
+		if c.Text() == "ok" {
+			fltr.haveStorage = true
+		} else {
+			fltr.haveStorage = false
+		}
+		haveStorageStatus = false
+		return reportFilter(c)
+	} else if roomRangeStatus {
+		userID := c.Sender().ID
+		c.Delete()
+		fltr := filter[userID]
+		floor := strings.Split(c.Text(), ",")
+		fltr.floorRange[0], _ = strconv.Atoi(floor[0])
+		fltr.floorRange[1], _ = strconv.Atoi(floor[1])
+		floorRangeStatus = false
+		return reportFilter(c)
+	} else if isApartmentStatus {
+		userID := c.Sender().ID
+		c.Delete()
+		fltr := filter[userID]
+		if c.Text() == "ok" {
+			fltr.isApartment = true
+		} else {
+			fltr.isApartment = false
+		}
+		isApartmentStatus = false
+		return reportFilter(c)
+	} else if builtYearRangeStatus {
+		userID := c.Sender().ID
+		c.Delete()
+		fltr := filter[userID]
+		buildYear := strings.Split(c.Text(), ",")
+		fltr.builtYearRange[0], _ = strconv.Atoi(buildYear[0])
+		fltr.builtYearRange[1], _ = strconv.Atoi(buildYear[1])
+		builtYearRangeStatus = false
+		return reportFilter(c)
+	} else if haveElevatorStatus {
+		userID := c.Sender().ID
+		c.Delete()
+		fltr := filter[userID]
+		if c.Text() == "ok" {
+			fltr.haveElevator = true
+		} else {
+			fltr.haveElevator = false
+		}
+		haveElevatorStatus = false
+		return reportFilter(c)
+	} else if sourceSiteStatus {
+		userID := c.Sender().ID
+		c.Delete()
+		fltr := filter[userID]
+		sourceType := strings.Split(c.Text(), ",")
+		fltr.sourceSite[0], _ = strconv.Atoi(sourceType[0])
+		fltr.sourceSite[1], _ = strconv.Atoi(sourceType[1])
+		sourceSiteStatus = false
+		return reportFilter(c)
+	} else if dealTypeStatus {
+		userID := c.Sender().ID
+		c.Delete()
+		fltr := filter[userID]
+		switch c.Text() {
+		case "rent":
+			fltr.dealType = rent
+		case "buy":
+			fltr.dealType = buy
+		case "sell":
+			fltr.dealType = sell
+		}
+		dealTypeStatus = false
+		return reportFilter(c)
+	} else if cityStatus {
+		userID := c.Sender().ID
+		c.Delete()
+		fltr := filter[userID]
+		fltr.city = c.Text()
+		cityStatus = false
+		return reportFilter(c)
 	}
 	return nil
 }
