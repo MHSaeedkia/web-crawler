@@ -72,10 +72,19 @@ var (
 	prevPageGlobBkMark = selector.Data("Previuse page", "Previuse_page_global_bookmark")
 	nexPageGlobBkMark  = selector.Data("Next page", "Next_page_global_bookmark")
 
-	monitoring        = selector.Data("Monitoring", "Monitoring")
-	prevPageMonitor   = selector.Data("Previuse page", "Previuse_page_monitoring")
-	nexPageMonitor    = selector.Data("Next page", "Next_page_monitoring")
-	post              = selector.Data("Post", "Post")
+	monitoring      = selector.Data("Monitoring", "Monitoring")
+	prevPageMonitor = selector.Data("Previuse page", "Previuse_page_monitoring")
+	nexPageMonitor  = selector.Data("Next page", "Next_page_monitoring")
+
+	post               = selector.Data("Post", "Post")
+	prevPagePost       = selector.Data("Previuse page", "Previuse_page_post")
+	nexPagePost        = selector.Data("Next page", "Next_page_post")
+	selectPost         = selector.Data("", "Select_Post")
+	prevSelectPagePost = selector.Data("Previuse page", "Previuse_Select_Page_Post")
+	nexSelectPagePost  = selector.Data("Next page", "Next_Select_Page_Post")
+	newPost            = selector.Data("Create New Post", "Create_New_Post")
+	backPost           = selector.Data("Back", "Back_Post")
+
 	export            = selector.Data("Export", "Export")
 	report            = selector.Data("Report", "Report")
 	newReport         = selector.Data("Create New Report", "Create_New_Report")
@@ -99,8 +108,23 @@ var (
 	dealType          = selector.Data("Deal Type", "Deal_Type")
 	city              = selector.Data("City", "City")
 	finish            = selector.Data("Finish", "Finish")
-	removeFilter      = selector.Data("Remove", "Remove_filter")
+	roomRemove        = selector.Data("Remove", "Remove_Room")
+	landAreaRemove    = selector.Data("Remove", "Remove_Land_Area")
+	priceRemove       = selector.Data("Remove", "Remove_Price")
+	publishDataRemove = selector.Data("Remove", "Remove_Publish_Data")
+	storageRemove     = selector.Data("Remove", "Remove_Storage")
+	floorRemove       = selector.Data("Remove", "Remove_Floor")
+	apartmentRemove   = selector.Data("Remove", "Remove_Apartment")
+	builtYearRemove   = selector.Data("Remove", "Remove_Built_Year")
+	elevatorRemove    = selector.Data("Remove", "Remove_Elevator")
+	sourceSiteRemove  = selector.Data("Remove", "Remove_Source_Sites")
+	dealTypeRemove    = selector.Data("Remove", "Remove_Deal_Type")
+	cityRemove        = selector.Data("Remove", "Remove_City")
 	backFilter        = selector.Data("Back", "Back_Filter")
+	backFilterEdit    = selector.Data("Back", "Back_Filter_Edit")
+	selectReport      = selector.Data("", "Select_Report")
+	editReport        = selector.Data("Edit", "Edit_Report")
+	deleteReport      = selector.Data("Delete", "Delete_Report")
 
 	logout = selector.Data("Logout", "Logout")
 
@@ -129,10 +153,8 @@ var (
 
 	globalBookmark = selector.Data("Global Bookmarks", "Global_Bookmarks")
 	myBookmark     = selector.Data("My Bookmarks", "My_Bookmarks")
-	newPost        = selector.Data("Create New Post", "Create_New_Post")
 	back           = selector.Data("Back", "Back")
 	refresh        = selector.Data("Refresh", "Refresh")
-	back_repost    = selector.Data("Back", "Back_Repost")
 	skip           = selector.Data("Skip", "Skip")
 
 	// reply btn
@@ -155,6 +177,8 @@ var (
 	cityStatus             = false
 	dealTypeStatus         = false
 	sourceSiteStatus       = false
+
+	newPostStatus = false
 )
 
 func initServer() (*telebot.Bot, error) {
@@ -192,6 +216,10 @@ func StartBot() {
 	bot.Handle(&monitoring, monitoringBtn)
 	bot.Handle(&bookmark, globalBookmarkBtn)
 	bot.Handle(&post, postBtn)
+	bot.Handle(&selectPost, selectPostBtn)
+	bot.Handle(&newPost, newPostBtn)
+	bot.Handle(&backPost, backPostBtn)
+
 	bot.Handle(&report, reportBtn)
 	bot.Handle(&newReport, newReportBtn)
 	bot.Handle(&newReportBack, newReportBtn)
@@ -213,6 +241,22 @@ func StartBot() {
 	bot.Handle(&city, cityBtn)
 	bot.Handle(&finish, finishBtn)
 	bot.Handle(&backFilter, backFilterBtn)
+	bot.Handle(&roomRemove, roomRemoveBtn)
+	bot.Handle(&landAreaRemove, landAreaRemoveBtn)
+	bot.Handle(&priceRemove, priceRemoveBtn)
+	bot.Handle(&publishDataRemove, publishDataRemoveBtn)
+	bot.Handle(&storageRemove, storageRemoveBtn)
+	bot.Handle(&floorRemove, floorRemoveBtn)
+	bot.Handle(&apartmentRemove, apartmentRemoveBtn)
+	bot.Handle(&builtYearRemove, builtYearRemoveBtn)
+	bot.Handle(&elevatorRemove, elevatorRemoveBtn)
+	bot.Handle(&sourceSiteRemove, sourceSiteRemoveBtn)
+	bot.Handle(&dealTypeRemove, dealTypeRemoveBtn)
+	bot.Handle(&cityRemove, cityRemoveBtn)
+	bot.Handle(&backFilterEdit, backFilterEditBtn)
+	bot.Handle(&selectReport, selectReportBtn)
+	bot.Handle(&deleteReport, deleteReportBtn)
+	bot.Handle(&editReport, editReportBtn)
 
 	bot.Handle(&monitoringAdmin, monitoringAdminBtn)
 	bot.Handle(&monitoringSuperAdmin, monitoringSuperAdminBtn)
@@ -431,10 +475,6 @@ func globalBookmarkBtn(c telebot.Context) error {
 }
 
 func postBtn(c telebot.Context) error {
-	var (
-		prevPagePost = selector.Data("Previuse page", "Previuse_page_post")
-		nexPagePost  = selector.Data("Next page", "Next_page_post")
-	)
 	page := selector.Data(fmt.Sprintf("page %v of %v", 1, 1), "page")
 	posts := "Select a repost to display its posts : "
 
@@ -451,14 +491,32 @@ func postBtn(c telebot.Context) error {
 	)
 }
 
+func selectPostBtn(c telebot.Context) error {
+	message := fmt.Sprintf("The report \"%s\" has been selected , select a post to view , edit or delete :", "vespa 200m")
+
+	// some inline btn .
+	page := selector.Data(fmt.Sprintf("page %v of %v", 1, 1), "page")
+	selector.Inline(
+		selector.Row(prevSelectPagePost, page, nexSelectPagePost),
+		selector.Row(newPost),
+		selector.Row(backPost),
+	)
+	return c.Edit(
+		message,
+		selector,
+	)
+
+}
+
 func newPostBtn(c telebot.Context) error {
+	newPostStatus = true
 	posts := "Enter a name for your post : "
 
 	// copule of inline btn .
 
 	selector.Inline(
 		selector.Row(newPost),
-		selector.Row(back),
+		selector.Row(backPost),
 	)
 
 	return c.Edit(
@@ -585,8 +643,8 @@ func roomBtn(c telebot.Context) error {
 	roomRangeStatus = true
 	message := "Enter your room range, separated by , :\nFor example \"1,2\""
 	selector.Inline(
-		selector.Row(removeFilter),
-		selector.Row(backFilter),
+		selector.Row(roomRemove),
+		selector.Row(backFilterEdit),
 	)
 	return c.Edit(
 		message,
@@ -597,8 +655,8 @@ func landAreaBtn(c telebot.Context) error {
 	landAreaRangeStatus = true
 	message := "Enter your land area range, separated by , :\nFor example \"100,200\""
 	selector.Inline(
-		selector.Row(removeFilter),
-		selector.Row(backFilter),
+		selector.Row(landAreaRemove),
+		selector.Row(backFilterEdit),
 	)
 	return c.Edit(
 		message,
@@ -609,8 +667,8 @@ func priceBtn(c telebot.Context) error {
 	priceRangeStatus = true
 	message := "Enter your price range, separated by , :\nFor example \"1000000,2000000\""
 	selector.Inline(
-		selector.Row(removeFilter),
-		selector.Row(backFilter),
+		selector.Row(priceRemove),
+		selector.Row(backFilterEdit),
 	)
 	return c.Edit(
 		message,
@@ -621,8 +679,8 @@ func publishDataBtn(c telebot.Context) error {
 	publishDataRangeStatus = true
 	message := "Enter your publish date range, separated by , :\nFor example \"2024-10-11,2024-12-01\""
 	selector.Inline(
-		selector.Row(removeFilter),
-		selector.Row(backFilter),
+		selector.Row(publishDataRemove),
+		selector.Row(backFilterEdit),
 	)
 	return c.Edit(
 		message,
@@ -633,8 +691,8 @@ func storageBtn(c telebot.Context) error {
 	haveStorageStatus = true
 	message := "Enter your storage status :\nFor example \"ok\""
 	selector.Inline(
-		selector.Row(removeFilter),
-		selector.Row(backFilter),
+		selector.Row(storageRemove),
+		selector.Row(backFilterEdit),
 	)
 	return c.Edit(
 		message,
@@ -645,8 +703,8 @@ func floorBtn(c telebot.Context) error {
 	floorRangeStatus = true
 	message := "Enter your floor range, separated by , :\nFor example \"2,3\""
 	selector.Inline(
-		selector.Row(removeFilter),
-		selector.Row(backFilter),
+		selector.Row(floorRemove),
+		selector.Row(backFilterEdit),
 	)
 	return c.Edit(
 		message,
@@ -657,8 +715,8 @@ func apartmentBtn(c telebot.Context) error {
 	isApartmentStatus = true
 	message := "Is it apartment :\nFor example \"No\""
 	selector.Inline(
-		selector.Row(removeFilter),
-		selector.Row(backFilter),
+		selector.Row(apartmentRemove),
+		selector.Row(backFilterEdit),
 	)
 	return c.Edit(
 		message,
@@ -669,8 +727,8 @@ func builtYearBtn(c telebot.Context) error {
 	builtYearRangeStatus = true
 	message := "Enter your build range, separated by , :\nFor example \"4,10\""
 	selector.Inline(
-		selector.Row(removeFilter),
-		selector.Row(backFilter),
+		selector.Row(builtYearRemove),
+		selector.Row(backFilterEdit),
 	)
 	return c.Edit(
 		message,
@@ -681,8 +739,8 @@ func elevatorBtn(c telebot.Context) error {
 	haveElevatorStatus = true
 	message := "Enter your elevetor status :\nFor example \"ok\""
 	selector.Inline(
-		selector.Row(removeFilter),
-		selector.Row(backFilter),
+		selector.Row(elevatorRemove),
+		selector.Row(backFilterEdit),
 	)
 	return c.Edit(
 		message,
@@ -693,8 +751,8 @@ func sourceSiteBtn(c telebot.Context) error {
 	sourceSiteStatus = true
 	message := "Enter your source type, separated by , :\nFor example \"divar,sheypoor\""
 	selector.Inline(
-		selector.Row(removeFilter),
-		selector.Row(backFilter),
+		selector.Row(sourceSiteRemove),
+		selector.Row(backFilterEdit),
 	)
 	return c.Edit(
 		message,
@@ -705,8 +763,8 @@ func dealTypeBtn(c telebot.Context) error {
 	dealTypeStatus = true
 	message := "Enter your dealing type, :\nFor example \"buy\""
 	selector.Inline(
-		selector.Row(removeFilter),
-		selector.Row(backFilter),
+		selector.Row(dealTypeRemove),
+		selector.Row(backFilterEdit),
 	)
 	return c.Edit(
 		message,
@@ -717,13 +775,99 @@ func cityBtn(c telebot.Context) error {
 	cityStatus = true
 	message := "Enter your city name  :\nFor example \"gazvin\""
 	selector.Inline(
-		selector.Row(removeFilter),
-		selector.Row(backFilter),
+		selector.Row(cityRemove),
+		selector.Row(backFilterEdit),
 	)
 	return c.Edit(
 		message,
 		selector,
 	)
+}
+func roomRemoveBtn(c telebot.Context) error {
+	userId := c.Sender().ID
+	fltr := filter[userId]
+	fltr.roomRange = []int{}
+	roomRangeStatus = false
+	return reportFilter(c)
+}
+func landAreaRemoveBtn(c telebot.Context) error {
+	userId := c.Sender().ID
+	fltr := filter[userId]
+	fltr.landAreaRange = []int{}
+	landAreaRangeStatus = false
+	return reportFilter(c)
+}
+func priceRemoveBtn(c telebot.Context) error {
+	userId := c.Sender().ID
+	fltr := filter[userId]
+	fltr.priceRange = []int{}
+	priceRangeStatus = false
+	return reportFilter(c)
+}
+func publishDataRemoveBtn(c telebot.Context) error {
+	userId := c.Sender().ID
+	fltr := filter[userId]
+	fltr.publishDataRange = []string{}
+	publishDataRangeStatus = false
+	return reportFilter(c)
+}
+func storageRemoveBtn(c telebot.Context) error {
+	userId := c.Sender().ID
+	fltr := filter[userId]
+	fltr.haveStorage = false
+	haveStorageStatus = false
+	return reportFilter(c)
+}
+func floorRemoveBtn(c telebot.Context) error {
+	userId := c.Sender().ID
+	fltr := filter[userId]
+	fltr.floorRange = []int{}
+	floorRangeStatus = false
+	return reportFilter(c)
+
+}
+func apartmentRemoveBtn(c telebot.Context) error {
+	userId := c.Sender().ID
+	fltr := filter[userId]
+	fltr.isApartment = false
+	isApartmentStatus = false
+	return reportFilter(c)
+}
+func builtYearRemoveBtn(c telebot.Context) error {
+	userId := c.Sender().ID
+	fltr := filter[userId]
+	fltr.builtYearRange = []int{}
+	builtYearRangeStatus = false
+	return reportFilter(c)
+}
+func elevatorRemoveBtn(c telebot.Context) error {
+	userId := c.Sender().ID
+	fltr := filter[userId]
+	fltr.haveElevator = false
+	haveElevatorStatus = false
+	return reportFilter(c)
+}
+func sourceSiteRemoveBtn(c telebot.Context) error {
+	userId := c.Sender().ID
+	fltr := filter[userId]
+	fltr.sourceSite = []int{}
+	sourceSiteStatus = false
+	return reportFilter(c)
+}
+func dealTypeRemoveBtn(c telebot.Context) error {
+	userId := c.Sender().ID
+	fltr := filter[userId]
+	fltr.dealType = rent
+	dealTypeStatus = false
+	return reportFilter(c)
+}
+func cityRemoveBtn(c telebot.Context) error {
+	userId := c.Sender().ID
+	fltr := filter[userId]
+	fltr.city = ""
+	cityStatus = false
+	return reportFilter(c)
+
 }
 func finishBtn(c telebot.Context) error {
 	loginMessage := fmt.Sprintf("Welcome dear %s %s", c.Chat().FirstName, c.Chat().LastName)
@@ -737,6 +881,37 @@ func finishBtn(c telebot.Context) error {
 		selector,
 	)
 }
+
+func backFilterEditBtn(c telebot.Context) error {
+	return reportFilter(c)
+}
+
+func selectReportBtn(c telebot.Context) error {
+	message := fmt.Sprintf("report \"%s\" is selected , what operation do you want to performe ?", "vespa 200m")
+	selector.Inline(
+		selector.Row(deleteReport, editReport),
+		selector.Row(report),
+	)
+	return c.Edit(
+		message,
+		selector,
+	)
+}
+
+func deleteReportBtn(c telebot.Context) error {
+	delete(filter, c.Sender().ID)
+	return reportBtn(c)
+}
+
+func editReportBtn(c telebot.Context) error {
+	delete(filter, c.Sender().ID)
+	return newReportBtn(c)
+}
+
+func backPostBtn(c telebot.Context) error {
+	return postBtn(c)
+}
+
 func backFilterBtn(c telebot.Context) error {
 	loginMessage := fmt.Sprintf("Welcome dear %s %s", c.Chat().FirstName, c.Chat().LastName)
 	selector.Inline(
@@ -1110,6 +1285,11 @@ func onText(c telebot.Context) error {
 		fltr.city = c.Text()
 		cityStatus = false
 		return reportFilter(c)
+	} else if newPostStatus {
+		c.Delete()
+		//..
+		newPostStatus = false
+		return postBtn(c)
 	}
 	return nil
 }
