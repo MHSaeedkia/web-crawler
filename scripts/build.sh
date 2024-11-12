@@ -9,6 +9,6 @@ if [ "$mod" != "go.mod" ] ; then
 fi 
 
 
-go build -o web-crawler ./cmd/web-crawler/main.go
+go build -o web-crawler ./cmd/web-crawler/crawler.go
 
 
