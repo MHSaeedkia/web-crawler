@@ -24,21 +24,6 @@ func main() {
 			LinkSelector:  "a.kt-post-card__action",
 			TitleSelector: "h1.kt-page-title__title.kt-page-title__title--responsive-sized",
 		},
-		{
-			BaseURL:       "https://divar.ir/s/iran/buy-apartment",
-			LinkSelector:  "a.kt-post-card__action",
-			TitleSelector: "h1.kt-page-title__title.kt-page-title__title--responsive-sized",
-		},
-		{
-			BaseURL:       "https://divar.ir/s/iran/rent-apartment",
-			LinkSelector:  "a.kt-post-card__action",
-			TitleSelector: "h1.kt-page-title__title.kt-page-title__title--responsive-sized",
-		},
-		{
-			BaseURL:       "https://divar.ir/s/iran/rent-villa",
-			LinkSelector:  "a.kt-post-card__action",
-			TitleSelector: "h1.kt-page-title__title.kt-page-title__title--responsive-sized",
-		},
 		// Add more sites as needed
 	}
 
