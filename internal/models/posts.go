@@ -10,8 +10,8 @@ type Posts struct {
 	CitiesID       int                    `gorm:"column:city_id;type:mediumint;NOT NULL"`
 	UsersID        int                    `gorm:"column:user_id;type:mediumint"`
 	Status         int                    `gorm:"column:name;type:tinyint"`
-	ExternalSiteID string                 `gorm:"column:external_site_id;type:varchar(255)"`
-	Title          string                 `gorm:"column:title;type:varchar(45)"`
+	ExternalSiteID string                 `gorm:"column:external_site;type:varchar(255)"`
+	Title          string                 `gorm:"column:title;type:varchar(255)"`
 	Description    string                 `gorm:"column:description;type:varchar(255)"`
 	Price          int                    `gorm:"column:project;type:bigint"`
 	PriceHistory   map[string]interface{} `gorm:"column:price_history;serializer:json"`
