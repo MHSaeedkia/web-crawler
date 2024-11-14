@@ -3,14 +3,19 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/chromedp/chromedp"
 	"log"
 	"os"
 	"os/signal"
+	"regexp"
+	"strconv"
 	"strings"
 	"sync"
 	"syscall"
 	"time"
+
+	"github.com/MHSaeedkia/web-crawler/pkg/config"
+	"github.com/chromedp/chromedp"
+	"github.com/jinzhu/gorm"
 )
 
 type Site struct {
@@ -22,46 +27,70 @@ type Site struct {
 	AreaSelector  string
 	PlaceType     string
 	ContractType  string
-	//ParkingSelector string
-	//CallerSelector  string
-	//BallconSelector string
-	//Attribiute      string
 }
 
 type PageData struct {
-	Title        string
-	Room         string
-	BuildYear    string
-	Area         string
-	Price        string
-	PlaceType    string
-	ContractType string
-	Parking      string
-	Cellar       string
-	Ballcon      string
+	Title         string
+	TempRoom      string
+	Room          int
+	TempBuildYear string
+	BuildYear     int
+	TempArea      string
+	Area          int
+	TempPrice     string
+	Price         int
+	PlaceType     string
+	ContractType  string
+	Elevator      int
+	Parking       int
+	Cellar        int
+	Ballcon       int
+	Province      string
+	City          string
+	ReleaseDate   string
+	ImageUrl      string
+	Description   string
+	TempFloor     string
+	Floor         int
 }
 
 func main() {
 	// Set up a context that listens for the interrupt signal from the OS
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
+	// Connect to the database
+	db, err := config.ConnectDB()
+	if err != nil {
+		log.Fatal("Error connecting to the database:", err)
+		return
+	}
+	defer db.Close()
 
 	// Sites configuration
 	sites := []Site{
 		{
-			BaseURL:       "https://divar.ir/s/iran/buy-villa",
+			BaseURL:       "https://divar.ir/s/iran/buy-apartment",
 			LinkSelector:  "a.kt-post-card__action",
 			TitleSelector: "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.kt-page-title > div > h1",
 			RoomSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(3)",
 			YearSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(2)",
 			AreaSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(1)",
-			//BallconSelector: "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(10) > tbody > tr > td:nth-child(3)",
-			//ParkingSelector: "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(10) > tbody > tr > td:nth-child(1)",
-			//CallerSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(10) > tbody > tr > td:nth-child(2)",
-			//Attribiute:      `//*[contains(concat(" ", @class, " "), concat(" ", "kt-body--stable", " "))]`,
-			PlaceType:    "villa",
-			ContractType: "buy",
+			PlaceType:     "apartment",
+			ContractType:  "buy",
 		},
+		/*
+			{
+				BaseURL:       "https://divar.ir/s/iran/buy-apartment",
+				LinkSelector:  "a.kt-post-card__action",
+				TitleSelector: "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.kt-page-title > div > h1",
+				RoomSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(3)",
+				YearSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(2)",
+				AreaSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(1)",
+				PlaceType:     "apartment",
+				ContractType:  "buy",
+			},
+
+		*/
 		// Add other sites as needed
 	}
 
@@ -73,7 +102,7 @@ func main() {
 		wg.Add(1)
 		go func(site Site, contractType, placeType string) {
 			defer wg.Done()
-			scrapeSite(ctx, site, contractType, placeType)
+			scrapeSite(ctx, site, contractType, placeType, db)
 		}(site, contractType, placeType)
 	}
 
@@ -104,7 +133,42 @@ func extractContractAndPlaceType(url string) (contractType, placeType string) {
 	return
 }
 
-func scrapeSite(ctx context.Context, site Site, contractType, placeType string) {
+func convertFloor(floor string) int {
+	// Persian to English digits map
+	persianToEnglish := map[rune]rune{
+		'۰': '0', '۱': '1', '۲': '2', '۳': '3', '۴': '4',
+		'۵': '5', '۶': '6', '۷': '7', '۸': '8', '۹': '9',
+	}
+
+	// Convert Persian numbers in the string to English digits
+	var englishStr strings.Builder
+	for _, char := range floor {
+		if englishDigit, ok := persianToEnglish[char]; ok {
+			englishStr.WriteRune(englishDigit)
+		} else if char >= '0' && char <= '9' {
+			englishStr.WriteRune(char)
+		}
+	}
+
+	// Match the format "x از y" (e.g., "17 از 21") or single integer (e.g., "2")
+	re := regexp.MustCompile(`(\d+)`)
+	matches := re.FindAllString(englishStr.String(), -1)
+
+	// If we have any digits
+	if len(matches) > 0 {
+		// If there's more than one number, take the first one
+		floorValue, err := strconv.Atoi(matches[0])
+		if err != nil {
+			return 0
+		}
+		return floorValue
+	}
+
+	// Return 0 if no valid number was found
+	return 0
+}
+
+func scrapeSite(ctx context.Context, site Site, contractType, placeType string, db *gorm.DB) {
 	siteCtx, cancel := chromedp.NewContext(ctx)
 	defer cancel()
 
@@ -133,7 +197,7 @@ func scrapeSite(ctx context.Context, site Site, contractType, placeType string) 
 			log.Println("Shutdown signal received, stopping further processing")
 			return
 		default:
-			data, err := scrapeLink(siteCtx, link, site, contractType, placeType)
+			data, err := scrapeLink(siteCtx, link, site, contractType, placeType, db)
 			if err != nil {
 				log.Printf("Failed to scrape page %s: %v", link, err)
 				continue
@@ -144,9 +208,9 @@ func scrapeSite(ctx context.Context, site Site, contractType, placeType string) 
 	log.Printf("Completed scraping all links for site: %s", site.BaseURL)
 }
 
-func scrapeLink(ctx context.Context, link string, site Site, contractType, placeType string) (PageData, error) {
+func scrapeLink(ctx context.Context, link string, site Site, contractType, placeType string, db *gorm.DB) (PageData, error) {
 	var data PageData
-	var divCount int
+	var result string
 	data.ContractType = contractType
 	data.PlaceType = placeType
 	time.Sleep(10 * time.Second)
@@ -154,37 +218,140 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 	defer cancel()
 	var elements []string
 	var contentSlice []string
+
 	err1 := chromedp.Run(timeoutCtx,
 		chromedp.Navigate(link),
 		chromedp.WaitVisible(site.TitleSelector, chromedp.ByQuery),
 		chromedp.Evaluate(`Array.from(document.querySelectorAll("p.kt-unexpandable-row__value")).map(e => e.textContent.trim())`, &elements),
 		chromedp.Evaluate(`Array.from(document.querySelectorAll(".kt-body--stable")).map(el => el.textContent)`, &contentSlice),
+		chromedp.Text(site.TitleSelector, &data.Title, chromedp.ByQuery),
+		chromedp.Text(site.RoomSelector, &data.TempRoom, chromedp.ByQuery),
+		chromedp.Text(site.YearSelector, &data.TempBuildYear, chromedp.ByQuery),
+		chromedp.Text(site.AreaSelector, &data.TempArea, chromedp.ByQuery),
+		chromedp.Text(`div.kt-page-title__subtitle.kt-page-title__subtitle--responsive-sized`, &result, chromedp.ByQuery),
+		chromedp.EvaluateAsDevTools(`
+			(function() {
+				let img = document.querySelector("#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-6.kt-offset-1 > section:nth-child(1) > div > div > div.keen-slider.kt-base-carousel__slides.slides-d6304 > div > figure > div > picture > img");
+				return img ? img.src : "";
+			})()`, &data.ImageUrl),
+		chromedp.Text(`p.kt-description-row__text.kt-description-row__text--primary`, &data.Description, chromedp.ByQuery),
 	)
 	if err1 != nil {
-		fmt.Println(divCount)
-		fmt.Println(data)
 		return PageData{}, err1
+	}
+	parts := strings.Split(result, " در ")
+	data.ReleaseDate = parts[0]
+	Location := strings.Split(parts[1], "،")
+	if len(Location) > 1 {
+		data.Province = Location[0]
+		data.City = Location[1]
 	} else {
-		err := chromedp.Run(timeoutCtx,
-			chromedp.Navigate(link),
-			chromedp.WaitVisible(site.TitleSelector, chromedp.ByQuery),
-			chromedp.Text(site.TitleSelector, &data.Title, chromedp.ByQuery),
-			chromedp.Text(site.RoomSelector, &data.Room, chromedp.ByQuery),
-			chromedp.Text(site.YearSelector, &data.BuildYear, chromedp.ByQuery),
-			chromedp.Text(site.AreaSelector, &data.Area, chromedp.ByQuery),
-		)
+		data.Province = ""
+		data.City = parts[1]
+	}
+
+	persianToEnglish := map[rune]rune{
+		'۰': '0', '۱': '1', '۲': '2', '۳': '3', '۴': '4',
+		'۵': '5', '۶': '6', '۷': '7', '۸': '8', '۹': '9',
+	}
+
+	// Helper function to convert Persian numbers in string to integer
+	convertToInt := func(input string) int {
+		var englishStr strings.Builder
+		for _, char := range input {
+			if englishDigit, ok := persianToEnglish[char]; ok {
+				englishStr.WriteRune(englishDigit)
+			} else if char >= '0' && char <= '9' {
+				englishStr.WriteRune(char)
+			}
+		}
+		reg, _ := regexp.Compile("[^0-9]+")
+		englishStrStripped := reg.ReplaceAllString(englishStr.String(), "")
+
+		// Convert to int
+		num, err := strconv.Atoi(englishStrStripped)
 		if err != nil {
-			return PageData{}, err
+			log.Printf("Error converting %s to int: %v", input, err)
+			return 0
+		}
+		return num
+	}
+
+	convertFeatureToTinyInt := func(feature string) int {
+		if strings.Contains(feature, "ندارد") {
+			return 0
+		}
+		return 1
+	}
+
+	// Convert TempRoom, TempBuildYear, TempArea, and TempPrice
+	data.Room = convertToInt(data.TempRoom)
+	data.BuildYear = convertToInt(data.TempBuildYear)
+	data.Area = convertToInt(data.TempArea)
+	if placeType == "villa" {
+		if contractType == "buy" {
+			if len(elements) == 3 {
+				data.TempPrice = elements[1]
+			} else if len(elements) > 3 {
+				data.TempPrice = elements[2]
+			}
+			data.Price = convertToInt(data.TempPrice)
+			data.Parking = convertFeatureToTinyInt(contentSlice[0])
+			data.Cellar = convertFeatureToTinyInt(contentSlice[1])
+			data.Ballcon = convertFeatureToTinyInt(contentSlice[2])
+			data.Elevator = 0
+			data.Floor = 0
+		}
+	} else {
+		if contractType == "buy" {
+			data.TempPrice = elements[0]
+			data.Price = convertToInt(data.TempPrice)
+			data.Elevator = convertFeatureToTinyInt(contentSlice[0])
+			data.Parking = convertFeatureToTinyInt(contentSlice[1])
+			data.Cellar = convertFeatureToTinyInt(contentSlice[2])
+			data.Ballcon = 0
+			data.Floor = convertFloor(elements[2])
+		}
+	}
+	/*
+		post := models.Posts{
+			SourceSiteId:   1,
+			CitiesID:       1,
+			UsersID:        1,
+			Status:         1,
+			ExternalSiteID: link,
+			Title:          data.Title,
+			Description:    data.Description,
+			Price:          data.Price,
+			PriceHistory:   "",
+			MainIMG:        data.ImageUrl,
+			GalleryIMG:     "",
+			SellerName:     "Unknown",
+			LandArea:       float64(data.Area),
+			BuiltYear:      data.BuildYear,
+			//Rooms:         data.Rooms,
+			IsApartment: false,
+			DealType:    1,
+			Floors:      1,
+			Elevator:    false,
+			Storage:     false,
+			//Ballcon:	false,
+			//Parking:  false,
+			Location: "Sample location",
+			PostDate: time.Now(),
+			//City:	data.Province,
+			//NeighborHood: data.City,
 		}
 
-		if len(elements) == 3 {
-			data.Price = elements[1]
-		} else if len(elements) > 3 {
-			data.Price = elements[2]
+		err1 = db.Create(&post).Error
+		if err1 != nil {
+			log.Printf("Error saving post: %v", err1)
+			return PageData{}, err1
 		}
-		data.Parking = contentSlice[0]
-		data.Cellar = contentSlice[1]
-		data.Ballcon = contentSlice[2]
-	}
+
+		log.Printf("Saved post with ID %d to database", post.ID)
+
+	*/
+
 	return data, nil
 }
