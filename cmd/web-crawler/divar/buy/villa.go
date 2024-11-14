@@ -12,7 +12,7 @@ import (
 	"sync"
 	"syscall"
 	"time"
-
+	"errors"
 	"github.com/MHSaeedkia/web-crawler/pkg/config"
 	"github.com/chromedp/chromedp"
 	"github.com/jinzhu/gorm"
@@ -52,6 +52,10 @@ type PageData struct {
 	Description   string
 	TempFloor     string
 	Floor         int
+	TempRent      string
+	Rent          int
+	TempDesposit	string
+	Desposit      int
 }
 
 func main() {
@@ -88,29 +92,27 @@ func main() {
 			PlaceType:     "apartment",
 			ContractType:  "buy",
 		},
-		/*
-			{
-				BaseURL:       "https://divar.ir/s/iran/rent-villa",
-				LinkSelector:  "a.kt-post-card__action",
-				TitleSelector: "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.kt-page-title > div > h1",
-				RoomSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(3)",
-				YearSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(2)",
-				AreaSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(1)",
-				PlaceType:     "villa",
-				ContractType:  "rent",
-			},
-			{
-				BaseURL:       "https://divar.ir/s/iran/rent-apartment",
-				LinkSelector:  "a.kt-post-card__action",
-				TitleSelector: "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.kt-page-title > div > h1",
-				RoomSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(3)",
-				YearSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(2)",
-				AreaSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(1)",
-				PlaceType:     "apartment",
-				ContractType:  "rent",
-			},
+		{
+			BaseURL:       "https://divar.ir/s/iran/rent-villa",
+			LinkSelector:  "a.kt-post-card__action",
+			TitleSelector: "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.kt-page-title > div > h1",
+			RoomSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(3)",
+			YearSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(2)",
+			AreaSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(1)",
+			PlaceType:     "villa",
+			ContractType:  "rent",
+		},
+		{
+			BaseURL:       "https://divar.ir/s/iran/rent-apartment",
+			LinkSelector:  "a.kt-post-card__action",
+			TitleSelector: "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.kt-page-title > div > h1",
+			RoomSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(3)",
+			YearSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(2)",
+			AreaSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(1)",
+			PlaceType:     "apartment",
+			ContractType:  "rent",
+		},
 
-		*/
 
 		// Add other sites as needed
 	}
@@ -316,8 +318,23 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 			data.Ballcon = convertFeatureToTinyInt(contentSlice[2])
 			data.Elevator = 0
 			data.Floor = 0
+			data.Rent = 0
+			data.Desposit = 0
 		} else {
-			//for villa rent
+			if len(elements) == 4 {
+				data.TempDesposit = elements[1]
+				data.TempRent = elements[2]
+			} else {
+				return data , errors.New("this is an error message")
+			}
+			data.Price = 0
+			data.Parking = convertFeatureToTinyInt(contentSlice[0])
+			data.Cellar = convertFeatureToTinyInt(contentSlice[1])
+			data.Ballcon = convertFeatureToTinyInt(contentSlice[2])
+			data.Elevator = 0
+			data.Floor = 0
+			data.Rent = convertToInt(data.TempRent)
+			data.Desposit = convertToInt(data.TempDesposit)
 		}
 	} else {
 		if contractType == "buy" {
@@ -330,7 +347,21 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 			data.Ballcon = 0
 			data.Floor = convertFloor(data.TempFloor)
 		} else {
-			//for apartement rent
+			if len(elements) == 4 {
+				data.TempDesposit = elements[0]
+				data.TempRent = elements[1]
+			} else {
+				return data , errors.New("this is an error message")
+			}
+			data.TempFloor = elements[3]
+			data.Price = 0
+			data.Elevator = convertFeatureToTinyInt(contentSlice[0])
+			data.Parking = convertFeatureToTinyInt(contentSlice[1])
+			data.Cellar = convertFeatureToTinyInt(contentSlice[2])
+			data.Ballcon = 0
+			data.Floor = convertFloor(data.TempFloor)
+			data.Rent = convertToInt(data.TempRent)
+			data.Desposit = convertToInt(data.TempDesposit)
 		}
 
 	}
