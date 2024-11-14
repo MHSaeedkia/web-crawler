@@ -69,6 +69,16 @@ func main() {
 	// Sites configuration
 	sites := []Site{
 		{
+			BaseURL:       "https://divar.ir/s/iran/buy-villa",
+			LinkSelector:  "a.kt-post-card__action",
+			TitleSelector: "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.kt-page-title > div > h1",
+			RoomSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(3)",
+			YearSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(2)",
+			AreaSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(1)",
+			PlaceType:     "villa",
+			ContractType:  "buy",
+		},
+		{
 			BaseURL:       "https://divar.ir/s/iran/buy-apartment",
 			LinkSelector:  "a.kt-post-card__action",
 			TitleSelector: "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.kt-page-title > div > h1",
@@ -80,17 +90,28 @@ func main() {
 		},
 		/*
 			{
-				BaseURL:       "https://divar.ir/s/iran/buy-apartment",
+				BaseURL:       "https://divar.ir/s/iran/rent-villa",
+				LinkSelector:  "a.kt-post-card__action",
+				TitleSelector: "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.kt-page-title > div > h1",
+				RoomSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(3)",
+				YearSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(2)",
+				AreaSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(1)",
+				PlaceType:     "villa",
+				ContractType:  "rent",
+			},
+			{
+				BaseURL:       "https://divar.ir/s/iran/rent-apartment",
 				LinkSelector:  "a.kt-post-card__action",
 				TitleSelector: "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.kt-page-title > div > h1",
 				RoomSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(3)",
 				YearSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(2)",
 				AreaSelector:  "#app > div.container--has-footer-d86a9.kt-container > div > main > article > div > div.kt-col-5 > section:nth-child(1) > div.post-page__section--padded > table:nth-child(1) > tbody > tr > td:nth-child(1)",
 				PlaceType:     "apartment",
-				ContractType:  "buy",
+				ContractType:  "rent",
 			},
 
 		*/
+
 		// Add other sites as needed
 	}
 
@@ -140,32 +161,26 @@ func convertFloor(floor string) int {
 		'۵': '5', '۶': '6', '۷': '7', '۸': '8', '۹': '9',
 	}
 
-	// Convert Persian numbers in the string to English digits
+	str := strings.Split(floor, " ")
 	var englishStr strings.Builder
-	for _, char := range floor {
-		if englishDigit, ok := persianToEnglish[char]; ok {
+	for _, char := range str[0] {
+		if englishDigit, exists := persianToEnglish[char]; exists {
 			englishStr.WriteRune(englishDigit)
-		} else if char >= '0' && char <= '9' {
+		} else {
 			englishStr.WriteRune(char)
 		}
 	}
 
-	// Match the format "x از y" (e.g., "17 از 21") or single integer (e.g., "2")
-	re := regexp.MustCompile(`(\d+)`)
-	matches := re.FindAllString(englishStr.String(), -1)
+	// Remove any non-numeric characters (optional, if Persian text might have spaces, etc.)
+	reg, _ := regexp.Compile("[^0-9]+")
+	englishStrCleaned := reg.ReplaceAllString(englishStr.String(), "")
 
-	// If we have any digits
-	if len(matches) > 0 {
-		// If there's more than one number, take the first one
-		floorValue, err := strconv.Atoi(matches[0])
-		if err != nil {
-			return 0
-		}
-		return floorValue
+	// Convert to integer, return 0 if conversion fails
+	number, err := strconv.Atoi(englishStrCleaned)
+	if err != nil {
+		return 0
 	}
-
-	// Return 0 if no valid number was found
-	return 0
+	return number
 }
 
 func scrapeSite(ctx context.Context, site Site, contractType, placeType string, db *gorm.DB) {
@@ -301,17 +316,23 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 			data.Ballcon = convertFeatureToTinyInt(contentSlice[2])
 			data.Elevator = 0
 			data.Floor = 0
+		} else {
+			//for villa rent
 		}
 	} else {
 		if contractType == "buy" {
 			data.TempPrice = elements[0]
+			data.TempFloor = elements[2]
 			data.Price = convertToInt(data.TempPrice)
 			data.Elevator = convertFeatureToTinyInt(contentSlice[0])
 			data.Parking = convertFeatureToTinyInt(contentSlice[1])
 			data.Cellar = convertFeatureToTinyInt(contentSlice[2])
 			data.Ballcon = 0
-			data.Floor = convertFloor(elements[2])
+			data.Floor = convertFloor(data.TempFloor)
+		} else {
+			//for apartement rent
 		}
+
 	}
 	/*
 		post := models.Posts{
