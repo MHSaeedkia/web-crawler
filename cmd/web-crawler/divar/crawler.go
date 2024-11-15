@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -12,7 +13,8 @@ import (
 	"sync"
 	"syscall"
 	"time"
-	"errors"
+
+	"github.com/MHSaeedkia/web-crawler/internal/models"
 	"github.com/MHSaeedkia/web-crawler/pkg/config"
 	"github.com/chromedp/chromedp"
 	"github.com/jinzhu/gorm"
@@ -41,10 +43,10 @@ type PageData struct {
 	Price         int
 	PlaceType     string
 	ContractType  string
-	Elevator      int
-	Parking       int
-	Cellar        int
-	Ballcon       int
+	Elevator      bool
+	Parking       bool
+	Cellar        bool
+	Ballcon       bool
 	Province      string
 	City          string
 	ReleaseDate   string
@@ -54,7 +56,7 @@ type PageData struct {
 	Floor         int
 	TempRent      string
 	Rent          int
-	TempDesposit	string
+	TempDesposit  string
 	Desposit      int
 }
 
@@ -112,7 +114,6 @@ func main() {
 			PlaceType:     "apartment",
 			ContractType:  "rent",
 		},
-
 
 		// Add other sites as needed
 	}
@@ -294,11 +295,11 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 		return num
 	}
 
-	convertFeatureToTinyInt := func(feature string) int {
+	convertFeatureToTinyInt := func(feature string) bool {
 		if strings.Contains(feature, "ندارد") {
-			return 0
+			return false
 		}
-		return 1
+		return true
 	}
 
 	// Convert TempRoom, TempBuildYear, TempArea, and TempPrice
@@ -316,7 +317,7 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 			data.Parking = convertFeatureToTinyInt(contentSlice[0])
 			data.Cellar = convertFeatureToTinyInt(contentSlice[1])
 			data.Ballcon = convertFeatureToTinyInt(contentSlice[2])
-			data.Elevator = 0
+			data.Elevator = false
 			data.Floor = 0
 			data.Rent = 0
 			data.Desposit = 0
@@ -325,13 +326,13 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 				data.TempDesposit = elements[1]
 				data.TempRent = elements[2]
 			} else {
-				return data , errors.New("this is an error message")
+				return data, errors.New("this is an error message")
 			}
 			data.Price = 0
 			data.Parking = convertFeatureToTinyInt(contentSlice[0])
 			data.Cellar = convertFeatureToTinyInt(contentSlice[1])
 			data.Ballcon = convertFeatureToTinyInt(contentSlice[2])
-			data.Elevator = 0
+			data.Elevator = false
 			data.Floor = 0
 			data.Rent = convertToInt(data.TempRent)
 			data.Desposit = convertToInt(data.TempDesposit)
@@ -344,66 +345,63 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 			data.Elevator = convertFeatureToTinyInt(contentSlice[0])
 			data.Parking = convertFeatureToTinyInt(contentSlice[1])
 			data.Cellar = convertFeatureToTinyInt(contentSlice[2])
-			data.Ballcon = 0
+			data.Ballcon = false
 			data.Floor = convertFloor(data.TempFloor)
 		} else {
 			if len(elements) == 4 {
 				data.TempDesposit = elements[0]
 				data.TempRent = elements[1]
 			} else {
-				return data , errors.New("this is an error message")
+				return data, errors.New("this is an error message")
 			}
 			data.TempFloor = elements[3]
 			data.Price = 0
 			data.Elevator = convertFeatureToTinyInt(contentSlice[0])
 			data.Parking = convertFeatureToTinyInt(contentSlice[1])
 			data.Cellar = convertFeatureToTinyInt(contentSlice[2])
-			data.Ballcon = 0
+			data.Ballcon = false
 			data.Floor = convertFloor(data.TempFloor)
 			data.Rent = convertToInt(data.TempRent)
 			data.Desposit = convertToInt(data.TempDesposit)
 		}
 
 	}
-	/*
-		post := models.Posts{
-			SourceSiteId:   1,
-			CitiesID:       1,
-			UsersID:        1,
-			Status:         1,
-			ExternalSiteID: link,
-			Title:          data.Title,
-			Description:    data.Description,
-			Price:          data.Price,
-			PriceHistory:   "",
-			MainIMG:        data.ImageUrl,
-			GalleryIMG:     "",
-			SellerName:     "Unknown",
-			LandArea:       float64(data.Area),
-			BuiltYear:      data.BuildYear,
-			//Rooms:         data.Rooms,
-			IsApartment: false,
-			DealType:    1,
-			Floors:      1,
-			Elevator:    false,
-			Storage:     false,
-			//Ballcon:	false,
-			//Parking:  false,
-			Location: "Sample location",
-			PostDate: time.Now(),
-			//City:	data.Province,
-			//NeighborHood: data.City,
-		}
+	post := models.Posts{
+		SourceSiteId: 1,
+		// CitiesID:       nil,
+		// UsersID:        nil,
+		// Status:         nil,
+		ExternalSiteID: link,
+		Title:          data.Title,
+		Description:    data.Description,
+		Price:          data.Price,
+		PriceHistory:   "",
+		MainIMG:        data.ImageUrl,
+		GalleryIMG:     "",
+		SellerName:     "Unknown",
+		LandArea:       float64(data.Area),
+		BuiltYear:      data.BuildYear,
+		//Rooms:         data.Rooms,
+		IsApartment: false,
+		DealType:    1,
+		Floors:      data.Floor,
+		Elevator:    data.Elevator,
+		Storage:     false,
+		//Ballcon:	false,
+		//Parking:  false,
+		Location: "Sample location",
+		PostDate: time.Now(),
+		//City:	data.Province,
+		//NeighborHood: data.City,
+	}
 
-		err1 = db.Create(&post).Error
-		if err1 != nil {
-			log.Printf("Error saving post: %v", err1)
-			return PageData{}, err1
-		}
+	err1 = db.Create(&post).Error
+	if err1 != nil {
+		log.Printf("Error saving post: %v", err1)
+		return PageData{}, err1
+	}
 
-		log.Printf("Saved post with ID %d to database", post.ID)
-
-	*/
+	log.Printf("Saved post with ID %d to database", post.ID)
 
 	return data, nil
 }

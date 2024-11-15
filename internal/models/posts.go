@@ -5,11 +5,11 @@ import (
 )
 
 type Posts struct {
-	ID             int     `gorm:"column:id;type:bigint;primary_key;AUTO_INCREMENT"`
-	SourceSiteId   int     `gorm:"column:source_site_id;type:bigint(20);NOT NULL"`
-	CitiesID       int     `gorm:"column:city_id;type:mediumint;NOT NULL"`
-	UsersID        int     `gorm:"column:user_id;type:mediumint"`
-	Status         int     `gorm:"column:name;type:tinyint"`
+	ID           int `gorm:"column:id;type:bigint;primary_key;AUTO_INCREMENT"`
+	SourceSiteId int `gorm:"column:source_site_id;type:bigint(20);NOT NULL"`
+	// CitiesID       int    `gorm:"column:city_id;type:mediumint;NOT NULL"`
+	// UsersID        int    `gorm:"column:user_id;type:mediumint"`
+	// Status         int    `gorm:"column:name;type:tinyint"`
 	ExternalSiteID string  `gorm:"column:external_site_id;type:varchar(255)"`
 	Title          string  `gorm:"column:title;type:varchar(45)"`
 	Description    string  `gorm:"column:description;type:varchar(255)"`
