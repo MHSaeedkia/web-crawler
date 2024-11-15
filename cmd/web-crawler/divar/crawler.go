@@ -7,13 +7,12 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	"regexp"
-	"strconv"
 	"strings"
 	"sync"
 	"syscall"
 	"time"
 
+	"github.com/MHSaeedkia/web-crawler/cmd/web-crawler/utils"
 	"github.com/MHSaeedkia/web-crawler/internal/models"
 	"github.com/MHSaeedkia/web-crawler/pkg/config"
 	"github.com/chromedp/chromedp"
@@ -121,7 +120,7 @@ func main() {
 	var wg sync.WaitGroup
 
 	for _, site := range sites {
-		contractType, placeType := extractContractAndPlaceType(site.BaseURL)
+		contractType, placeType := utils.ExtractContractAndPlaceType(site.BaseURL)
 
 		wg.Add(1)
 		go func(site Site, contractType, placeType string) {
@@ -143,47 +142,6 @@ func main() {
 	// Wait for any remaining work
 	wg.Wait()
 	log.Println("All tasks completed. Program shutting down gracefully.")
-}
-
-func extractContractAndPlaceType(url string) (contractType, placeType string) {
-	parts := strings.Split(url, "/")
-	if len(parts) >= 6 {
-		types := strings.Split(parts[5], "-")
-		if len(types) >= 2 {
-			contractType = types[0]
-			placeType = types[1]
-		}
-	}
-	return
-}
-
-func convertFloor(floor string) int {
-	// Persian to English digits map
-	persianToEnglish := map[rune]rune{
-		'۰': '0', '۱': '1', '۲': '2', '۳': '3', '۴': '4',
-		'۵': '5', '۶': '6', '۷': '7', '۸': '8', '۹': '9',
-	}
-
-	str := strings.Split(floor, " ")
-	var englishStr strings.Builder
-	for _, char := range str[0] {
-		if englishDigit, exists := persianToEnglish[char]; exists {
-			englishStr.WriteRune(englishDigit)
-		} else {
-			englishStr.WriteRune(char)
-		}
-	}
-
-	// Remove any non-numeric characters (optional, if Persian text might have spaces, etc.)
-	reg, _ := regexp.Compile("[^0-9]+")
-	englishStrCleaned := reg.ReplaceAllString(englishStr.String(), "")
-
-	// Convert to integer, return 0 if conversion fails
-	number, err := strconv.Atoi(englishStrCleaned)
-	if err != nil {
-		return 0
-	}
-	return number
 }
 
 func scrapeSite(ctx context.Context, site Site, contractType, placeType string, db *gorm.DB) {
@@ -268,44 +226,10 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 		data.City = parts[1]
 	}
 
-	persianToEnglish := map[rune]rune{
-		'۰': '0', '۱': '1', '۲': '2', '۳': '3', '۴': '4',
-		'۵': '5', '۶': '6', '۷': '7', '۸': '8', '۹': '9',
-	}
-
-	// Helper function to convert Persian numbers in string to integer
-	convertToInt := func(input string) int {
-		var englishStr strings.Builder
-		for _, char := range input {
-			if englishDigit, ok := persianToEnglish[char]; ok {
-				englishStr.WriteRune(englishDigit)
-			} else if char >= '0' && char <= '9' {
-				englishStr.WriteRune(char)
-			}
-		}
-		reg, _ := regexp.Compile("[^0-9]+")
-		englishStrStripped := reg.ReplaceAllString(englishStr.String(), "")
-
-		// Convert to int
-		num, err := strconv.Atoi(englishStrStripped)
-		if err != nil {
-			log.Printf("Error converting %s to int: %v", input, err)
-			return 0
-		}
-		return num
-	}
-
-	convertFeatureToTinyInt := func(feature string) bool {
-		if strings.Contains(feature, "ندارد") {
-			return false
-		}
-		return true
-	}
-
 	// Convert TempRoom, TempBuildYear, TempArea, and TempPrice
-	data.Room = convertToInt(data.TempRoom)
-	data.BuildYear = convertToInt(data.TempBuildYear)
-	data.Area = convertToInt(data.TempArea)
+	data.Room = utils.ConvertToInt(data.TempRoom)
+	data.BuildYear = utils.ConvertToInt(data.TempBuildYear)
+	data.Area = utils.ConvertToInt(data.TempArea)
 	if placeType == "villa" {
 		if contractType == "buy" {
 			if len(elements) == 3 {
@@ -313,10 +237,10 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 			} else if len(elements) > 3 {
 				data.TempPrice = elements[2]
 			}
-			data.Price = convertToInt(data.TempPrice)
-			data.Parking = convertFeatureToTinyInt(contentSlice[0])
-			data.Cellar = convertFeatureToTinyInt(contentSlice[1])
-			data.Ballcon = convertFeatureToTinyInt(contentSlice[2])
+			data.Price = utils.ConvertToInt(data.TempPrice)
+			data.Parking = utils.ConvertFeatureToBool(contentSlice[0])
+			data.Cellar = utils.ConvertFeatureToBool(contentSlice[1])
+			data.Ballcon = utils.ConvertFeatureToBool(contentSlice[2])
 			data.Elevator = false
 			data.Floor = 0
 			data.Rent = 0
@@ -329,24 +253,24 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 				return data, errors.New("this is an error message")
 			}
 			data.Price = 0
-			data.Parking = convertFeatureToTinyInt(contentSlice[0])
-			data.Cellar = convertFeatureToTinyInt(contentSlice[1])
-			data.Ballcon = convertFeatureToTinyInt(contentSlice[2])
+			data.Parking = utils.ConvertFeatureToBool(contentSlice[0])
+			data.Cellar = utils.ConvertFeatureToBool(contentSlice[1])
+			data.Ballcon = utils.ConvertFeatureToBool(contentSlice[2])
 			data.Elevator = false
 			data.Floor = 0
-			data.Rent = convertToInt(data.TempRent)
-			data.Desposit = convertToInt(data.TempDesposit)
+			data.Rent = utils.ConvertToInt(data.TempRent)
+			data.Desposit = utils.ConvertToInt(data.TempDesposit)
 		}
 	} else {
 		if contractType == "buy" {
 			data.TempPrice = elements[0]
 			data.TempFloor = elements[2]
-			data.Price = convertToInt(data.TempPrice)
-			data.Elevator = convertFeatureToTinyInt(contentSlice[0])
-			data.Parking = convertFeatureToTinyInt(contentSlice[1])
-			data.Cellar = convertFeatureToTinyInt(contentSlice[2])
+			data.Price = utils.ConvertToInt(data.TempPrice)
+			data.Elevator = utils.ConvertFeatureToBool(contentSlice[0])
+			data.Parking = utils.ConvertFeatureToBool(contentSlice[1])
+			data.Cellar = utils.ConvertFeatureToBool(contentSlice[2])
 			data.Ballcon = false
-			data.Floor = convertFloor(data.TempFloor)
+			data.Floor = utils.ConvertFloor(data.TempFloor)
 		} else {
 			if len(elements) == 4 {
 				data.TempDesposit = elements[0]
@@ -356,13 +280,13 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 			}
 			data.TempFloor = elements[3]
 			data.Price = 0
-			data.Elevator = convertFeatureToTinyInt(contentSlice[0])
-			data.Parking = convertFeatureToTinyInt(contentSlice[1])
-			data.Cellar = convertFeatureToTinyInt(contentSlice[2])
+			data.Elevator = utils.ConvertFeatureToBool(contentSlice[0])
+			data.Parking = utils.ConvertFeatureToBool(contentSlice[1])
+			data.Cellar = utils.ConvertFeatureToBool(contentSlice[2])
 			data.Ballcon = false
-			data.Floor = convertFloor(data.TempFloor)
-			data.Rent = convertToInt(data.TempRent)
-			data.Desposit = convertToInt(data.TempDesposit)
+			data.Floor = utils.ConvertFloor(data.TempFloor)
+			data.Rent = utils.ConvertToInt(data.TempRent)
+			data.Desposit = utils.ConvertToInt(data.TempDesposit)
 		}
 
 	}
