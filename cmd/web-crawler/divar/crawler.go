@@ -13,11 +13,16 @@ import (
 	"time"
 
 	"github.com/MHSaeedkia/web-crawler/cmd/web-crawler/utils"
-	"github.com/MHSaeedkia/web-crawler/internal/models"
+	//"github.com/MHSaeedkia/web-crawler/internal/models"
 	"github.com/MHSaeedkia/web-crawler/pkg/config"
 	"github.com/chromedp/chromedp"
 	"github.com/jinzhu/gorm"
 )
+
+
+var TotalRequest int = 0
+var FailedRequest int = 0
+var SuccessedRequest int = 0
 
 type Site struct {
 	BaseURL       string
@@ -40,15 +45,15 @@ type PageData struct {
 	Area          int
 	TempPrice     string
 	Price         int
-	PlaceType     string
-	ContractType  string
+	PlaceType     bool
+	ContractType  int
 	Elevator      bool
 	Parking       bool
 	Storage       bool
 	Ballcon       bool
 	Province      string
 	City          string
-	ReleaseDate   string
+	ReleaseDate   time.Time
 	ImageUrl      string
 	Description   string
 	TempFloor     string
@@ -120,6 +125,7 @@ func main() {
 	var wg sync.WaitGroup
 
 	for _, site := range sites {
+		time.Sleep(20 * time.Second)
 		contractType, placeType := utils.ExtractContractAndPlaceType(site.BaseURL)
 
 		wg.Add(1)
@@ -142,6 +148,7 @@ func main() {
 	// Wait for any remaining work
 	wg.Wait()
 	log.Println("All tasks completed. Program shutting down gracefully.")
+	fmt.Printf("TotalRequest = %d FailedRequest = %d SuccessedRequest = %d",TotalRequest,FailedRequest,SuccessedRequest)
 }
 
 func scrapeSite(ctx context.Context, site Site, contractType, placeType string, db *gorm.DB) {
@@ -163,6 +170,7 @@ func scrapeSite(ctx context.Context, site Site, contractType, placeType string, 
 	err = chromedp.Run(siteCtx,
 		chromedp.Evaluate(fmt.Sprintf(`Array.from(document.querySelectorAll("%s")).map(a => a.href)`, site.LinkSelector), &links),
 	)
+	TotalRequest += len(links)
 	if err != nil {
 		log.Printf("Failed to retrieve links from %s: %v", site.BaseURL, err)
 		return
@@ -176,19 +184,92 @@ func scrapeSite(ctx context.Context, site Site, contractType, placeType string, 
 			data, err := scrapeLink(siteCtx, link, site, contractType, placeType, db)
 			if err != nil {
 				log.Printf("Failed to scrape page %s: %v", link, err)
+				FailedRequest += 1
 				continue
 			}
-			log.Printf("Extracted data from page %d: %+v", i+1, data)
+			log.Printf("Extracted data from page %d: %+v", i+1, data,link)
+			SuccessedRequest += 1
 		}
 	}
 	log.Printf("Completed scraping all links for site: %s", site.BaseURL)
 }
 
+
+
+func ParseTimeFromString(input string) time.Time {
+	input = strings.TrimSpace(input)
+
+	now := time.Now()
+	year, month, day := now.Date()
+
+	createDate := func(y int, m time.Month, d int) time.Time {
+		return time.Date(y, m, d, 0, 0, 0, 0, time.Local)
+	}
+
+	if strings.Contains(input, "لحظاتی پیش") || strings.Contains(input, "دقایقی پیش") {
+		return createDate(year, month, day)
+	}
+
+
+	if strings.Contains(input, "دیروز") {
+		return createDate(year, month, day-1)
+	}
+
+
+	if strings.Contains(input, "دو روز پیش") {
+		return createDate(year, month, day-2)
+	}
+
+	if strings.Contains(input, "سه روز پیش") {
+		return createDate(year, month, day-3)
+	}
+
+	if strings.Contains(input, "چهار روز پیش") {
+		return createDate(year, month, day-4)
+	}
+
+	if strings.Contains(input, "پنج روز پیش") {
+		return createDate(year, month, day-6)
+	}
+	if strings.Contains(input, "شش روز پیش") {
+		return createDate(year, month, day-7)
+	}
+	if strings.Contains(input, "هفت روز پیش") {
+		return createDate(year, month-1, day)
+	}
+	if strings.Contains(input, "یک ماه پیش") {
+		return createDate(year, month-1, day)
+	}
+
+	if strings.Contains(input, "دو ماه پیش") {
+		return createDate(year, month-2, day)
+	}
+
+	if strings.Contains(input, "سه ماه پیش") {
+		return createDate(year, month-3, day)
+	}
+
+
+	return createDate(year, month-4, day)
+}
+
 func scrapeLink(ctx context.Context, link string, site Site, contractType, placeType string, db *gorm.DB) (PageData, error) {
 	var data PageData
 	var result string
-	data.ContractType = contractType
-	data.PlaceType = placeType
+	if contractType == "buy"{
+		// for buy contracttype is 2
+		data.ContractType = 1
+	} else{
+		// for rent contracttype is 2
+		data.ContractType = 2
+	}
+	if placeType == "villa"{
+		// PlaceType for villa is flase
+		data.PlaceType = false
+	}else{
+		// placeType for apartement in true
+		data.PlaceType = true
+	}
 	time.Sleep(10 * time.Second)
 	timeoutCtx, cancel := context.WithTimeout(ctx, 30*time.Second)
 	defer cancel()
@@ -216,7 +297,8 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 		return PageData{}, err1
 	}
 	parts := strings.Split(result, " در ")
-	data.ReleaseDate = parts[0]
+	data.ReleaseDate = ParseTimeFromString(parts[0])
+	fmt.Println(data.ReleaseDate)
 	Location := strings.Split(parts[1], "،")
 	if len(Location) > 1 {
 		data.Province = Location[0]
@@ -229,6 +311,7 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 	// Convert TempRoom, TempBuildYear, TempArea, and TempPrice
 	linkParts := strings.Split(link, "/")
 	linkID := linkParts[len(linkParts)-1]
+	fmt.Println(linkID)
 	data.Room = utils.ConvertToInt(data.TempRoom)
 	data.BuildYear = utils.ConvertToInt(data.TempBuildYear)
 	data.Area = utils.ConvertToInt(data.TempArea)
@@ -292,39 +375,42 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 		}
 
 	}
-	post := models.Posts{
-		SourceSiteId:   1,
-		ExternalSiteID: linkID,
-		Title:          data.Title,
-		Description:    data.Description,
-		Price:          data.Price,
-		PriceHistory:   "",
-		MainIMG:        data.ImageUrl,
-		GalleryIMG:     "",
-		SellerName:     "Unknown",
-		LandArea:       float64(data.Area),
-		BuiltYear:      data.BuildYear,
-		RoomCount:      data.Room,
-		IsApartment:    false,
-		DealType:       1,
-		Floors:         data.Floor,
-		Elevator:       data.Elevator,
-		Storage:        data.Storage,
-		//Ballcon:	false,
-		//Parking:  false,
-		Location:         "Sample location",
-		PostDate:         time.Now(),
-		CityName:         data.Province,
-		NeighborhoodName: data.City,
-	}
+	/*
+			post := models.Posts{
+			SourceSiteId:   1,
+			ExternalSiteID: linkID,
+			Title:          data.Title,
+			Description:    data.Description,
+			Price:          data.Price,
+			PriceHistory:   "",
+			MainIMG:        data.ImageUrl,
+			GalleryIMG:     "",
+			SellerName:     "Unknown",
+			LandArea:       float64(data.Area),
+			BuiltYear:      data.BuildYear,
+			RoomCount:      data.Room,
+			IsApartment:    data.PlaceType,
+			DealType:       data.ContractType,
+			Floors:         data.Floor,		// for rent contracttype is 2
+			Elevator:       data.Elevator,
+			Storage:        data.Storage,
+			//Ballcon:	false,
+			//Parking:  false,
+			Location:         "Sample location",
+			PostDate:         time.Now(),
+			CityName:         data.Province,
+			NeighborhoodName: data.City,
+		}
 
-	err1 = db.Create(&post).Error
-	if err1 != nil {
-		log.Printf("Error saving post: %v", err1)
-		return PageData{}, err1
-	}
+		err1 = db.Create(&post).Error
+		if err1 != nil {
+			log.Printf("Error saving post: %v", err1)
+			return PageData{}, err1
+		}
 
-	log.Printf("Saved post with ID %d to database", post.ID)
+		log.Printf("Saved post with ID %d to database", post.ID)
+	 */
+
 
 	return data, nil
 }
