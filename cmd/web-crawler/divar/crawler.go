@@ -44,7 +44,7 @@ type PageData struct {
 	ContractType  string
 	Elevator      bool
 	Parking       bool
-	Cellar        bool
+	Storage       bool
 	Ballcon       bool
 	Province      string
 	City          string
@@ -227,6 +227,8 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 	}
 
 	// Convert TempRoom, TempBuildYear, TempArea, and TempPrice
+	linkParts := strings.Split(link, "/")
+	linkID := linkParts[len(linkParts)-1]
 	data.Room = utils.ConvertToInt(data.TempRoom)
 	data.BuildYear = utils.ConvertToInt(data.TempBuildYear)
 	data.Area = utils.ConvertToInt(data.TempArea)
@@ -239,7 +241,7 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 			}
 			data.Price = utils.ConvertToInt(data.TempPrice)
 			data.Parking = utils.ConvertFeatureToBool(contentSlice[0])
-			data.Cellar = utils.ConvertFeatureToBool(contentSlice[1])
+			data.Storage = utils.ConvertFeatureToBool(contentSlice[1])
 			data.Ballcon = utils.ConvertFeatureToBool(contentSlice[2])
 			data.Elevator = false
 			data.Floor = 0
@@ -254,7 +256,7 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 			}
 			data.Price = 0
 			data.Parking = utils.ConvertFeatureToBool(contentSlice[0])
-			data.Cellar = utils.ConvertFeatureToBool(contentSlice[1])
+			data.Storage = utils.ConvertFeatureToBool(contentSlice[1])
 			data.Ballcon = utils.ConvertFeatureToBool(contentSlice[2])
 			data.Elevator = false
 			data.Floor = 0
@@ -268,7 +270,7 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 			data.Price = utils.ConvertToInt(data.TempPrice)
 			data.Elevator = utils.ConvertFeatureToBool(contentSlice[0])
 			data.Parking = utils.ConvertFeatureToBool(contentSlice[1])
-			data.Cellar = utils.ConvertFeatureToBool(contentSlice[2])
+			data.Storage = utils.ConvertFeatureToBool(contentSlice[2])
 			data.Ballcon = false
 			data.Floor = utils.ConvertFloor(data.TempFloor)
 		} else {
@@ -282,7 +284,7 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 			data.Price = 0
 			data.Elevator = utils.ConvertFeatureToBool(contentSlice[0])
 			data.Parking = utils.ConvertFeatureToBool(contentSlice[1])
-			data.Cellar = utils.ConvertFeatureToBool(contentSlice[2])
+			data.Storage = utils.ConvertFeatureToBool(contentSlice[2])
 			data.Ballcon = false
 			data.Floor = utils.ConvertFloor(data.TempFloor)
 			data.Rent = utils.ConvertToInt(data.TempRent)
@@ -291,11 +293,8 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 
 	}
 	post := models.Posts{
-		SourceSiteId: 1,
-		// CitiesID:       nil,
-		// UsersID:        nil,
-		// Status:         nil,
-		ExternalSiteID: link,
+		SourceSiteId:   1,
+		ExternalSiteID: linkID,
 		Title:          data.Title,
 		Description:    data.Description,
 		Price:          data.Price,
@@ -305,18 +304,18 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 		SellerName:     "Unknown",
 		LandArea:       float64(data.Area),
 		BuiltYear:      data.BuildYear,
-		//Rooms:         data.Rooms,
-		IsApartment: false,
-		DealType:    1,
-		Floors:      data.Floor,
-		Elevator:    data.Elevator,
-		Storage:     false,
+		RoomCount:      data.Room,
+		IsApartment:    false,
+		DealType:       1,
+		Floors:         data.Floor,
+		Elevator:       data.Elevator,
+		Storage:        data.Storage,
 		//Ballcon:	false,
 		//Parking:  false,
-		Location: "Sample location",
-		PostDate: time.Now(),
-		//City:	data.Province,
-		//NeighborHood: data.City,
+		Location:         "Sample location",
+		PostDate:         time.Now(),
+		CityName:         data.Province,
+		NeighborhoodName: data.City,
 	}
 
 	err1 = db.Create(&post).Error
