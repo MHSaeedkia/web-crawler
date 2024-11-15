@@ -7,7 +7,7 @@ import (
 type Posts struct {
 	ID             int                    `gorm:"column:id;type:bigint;primary_key;AUTO_INCREMENT"`
 	SrcSitesID     int                    `gorm:"column:source_site_id;type:bigint(20);NOT NULL"`
-	CitiesID       int                    `gorm:"column:city_id;type:mediumint;NOT NULL"`
+	CitiesID       string                    `gorm:"column:city_id;type:varchar(255);NOT NULL"`
 	UsersID        int                    `gorm:"column:user_id;type:mediumint"`
 	Status         int                    `gorm:"column:name;type:tinyint"`
 	ExternalSiteID string                 `gorm:"column:external_site;type:varchar(255)"`
@@ -27,6 +27,8 @@ type Posts struct {
 	Elevator       bool                   `gorm:"column:has_elevator;type:tinyint(1)"`
 	Storage        bool                   `gorm:"column:has_storage;type:tinyint(1)"`
 	Location       string                 `gorm:"column:location;type:varchar(45)"`
+	City           string                 `gorm:"column:city;type:varchar(255)"`
+	Neighbourhood  string                 `gorm:"column:neighbourhood;type:varchar(255)"`
 	PostDate       time.Time              `gorm:"column:post_date;type:datetime"`
 	DeletedAt      time.Time              `gorm:"column:deleted_at;type:datetime"`
 	CreatedAt      time.Time              `gorm:"column:created_at;type:datetime"`
