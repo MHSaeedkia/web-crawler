@@ -6,6 +6,7 @@ import (
 	"os"
 	"project-root/app"
 	"project-root/modules/auth"
+	post "project-root/modules/post"
 	report "project-root/modules/report"
 	sourceSite "project-root/modules/source-site"
 	"project-root/modules/user"
@@ -30,6 +31,7 @@ func Bootstrap() {
 		&auth.AuthServiceProvider{},
 		&report.ReportServiceProvider{},
 		&sourceSite.SourceSiteServiceProvider{},
+		&post.PostServiceProvider{},
 
 		// ---------------------------------------
 	}
