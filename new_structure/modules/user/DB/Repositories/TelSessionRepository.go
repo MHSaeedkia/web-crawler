@@ -29,3 +29,5 @@ func (repo *TelSessionRepository) UpdateByChatID(chatID int64, updatedSession *M
 		Where("chat_id = ?", chatID).
 		Updates(updatedSession).Error
 }
+
+var _ TelSessionRepositoryInterface = &TelSessionRepository{}

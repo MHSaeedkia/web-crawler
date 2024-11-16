@@ -54,6 +54,11 @@ Be sure to enter the path list of your module's test folders in this file
 ```
 go run main.go telebot:start
 ```
+If you are using Windows, use the following commands to get v2ray proxy cmd.
+```
+set HTTP_PROXY=http://127.0.0.1:10809
+set HTTPS_PROXY=http://127.0.0.1:10809
+```
 
 Generate tables
 ```

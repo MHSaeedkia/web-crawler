@@ -55,7 +55,7 @@ func (p *IsNotificationCreateReportPage) OnClickInlineBtn(btnKey string, telSess
 }
 
 func createReport(isNotification int, telSession *Models.TelSession) Page.PageInterface {
-	err := Facades.ReportRepo().Create(&ReportModels.Report{
+	report, err := Facades.ReportRepo().Create(&ReportModels.Report{
 		UserID:         telSession.LoggedUserID,
 		Title:          telSession.GetReportTempData().Title,
 		IsNotification: isNotification,
@@ -67,8 +67,21 @@ func createReport(isNotification int, telSession *Models.TelSession) Page.PageIn
 		return Page.GetPage(Enums.MainReportUserPageNumber)
 	}
 
+	filter, errF := Facades.ReportFilterRepo().Create(&ReportModels.ReportFilter{
+		ReportID: report.ID,
+		Report:   report,
+	})
+
+	if errF != nil {
+		Facades.ReportRepo().Delete(report.ID)
+		telSession.GetGeneralTempData().LastMessage = "There was a problem while creating the report/filter."
+		return Page.GetPage(Enums.MainReportUserPageNumber)
+	}
+
+	telSession.GetReportTempData().ReportId = report.ID
+	telSession.GetReportTempData().FilterId = filter.ID
 	telSession.GetGeneralTempData().LastMessage = "The report was created successfully."
-	return Page.GetPage(Enums.MainReportUserPageNumber)
+	return Page.GetPage(Enums.MainUpdateReportFilterPageNumber)
 }
 
 var _ Page.PageInterface = &IsNotificationCreateReportPage{}

@@ -5,6 +5,9 @@ import (
 	"project-root/modules/report/DB/Migrations"
 	"project-root/modules/report/Http/Controllers"
 	"project-root/modules/report/Http/Controllers/Create"
+	Global "project-root/modules/report/Http/Controllers/Filter/Global"
+	"project-root/modules/report/Http/Controllers/Filter/Range"
+	Toggle "project-root/modules/report/Http/Controllers/Filter/Toggle"
 	SysDatabase "project-root/sys-modules/database/Lib"
 	"project-root/sys-modules/telebot/Lib/Page"
 )
@@ -21,6 +24,21 @@ func (s *ReportServiceProvider) Register() {
 		// create
 		&Create.TitleCreateReportPage{},
 		&Create.IsNotificationCreateReportPage{},
+
+		// filter
+		&Controllers.MainUpdateReportFilterPage{},
+		&Range.RoomUpdateFilterPage{},
+		&Range.PriceUpdateFilterPage{},
+		&Range.AreaUpdateFilterPage{},
+		&Range.BuiltUpdateFilterPage{},
+		&Range.FloorUpdateFilterPage{},
+		&Toggle.StorageUpdateFilterPage{},
+		&Toggle.ElevatorUpdateFilterPage{},
+		&Toggle.ApartmentUpdateFilterPage{},
+		&Global.CityUpdateFilterPage{},
+		&Global.NeighborhoodUpdateFilterPage{},
+		&Global.DealTypeUpdateFilterPage{},
+		&Global.PublishDateUpdateFilterPage{},
 	})
 }
 

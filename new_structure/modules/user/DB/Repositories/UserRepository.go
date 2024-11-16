@@ -48,3 +48,5 @@ func (repo *UserRepository) Delete(id int) error {
 func (repo *UserRepository) Truncate() error {
 	return repo.Db.Where("1 = 1").Delete(&Models.User{}).Error
 }
+
+var _ UserRepositoryInterface = &UserRepository{}

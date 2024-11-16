@@ -5,3 +5,11 @@ const (
 	Sale
 	Buy
 )
+
+func GetDealTypes() []string {
+	return []string{
+		"Rent",
+		"Sale",
+		"Buy",
+	}
+}
