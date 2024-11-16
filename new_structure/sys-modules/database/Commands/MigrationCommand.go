@@ -6,6 +6,9 @@ import (
 	"project-root/sys-modules/database/Facades"
 	SysDatabase "project-root/sys-modules/database/Lib"
 	"sort"
+	"strconv"
+	"strings"
+	"unicode"
 )
 
 type MigrationCommand struct{}
@@ -33,7 +36,11 @@ func (c *MigrationCommand) Handle(args []string) {
 		i++
 	}
 	if actionName == "up" {
-		sort.StringsAreSorted(keys)
+		sort.Slice(keys, func(i, j int) bool {
+			keyI := extractKey(keys[i])
+			keyJ := extractKey(keys[j])
+			return keyI < keyJ
+		})
 	} else {
 		sort.Strings(keys)
 	}
@@ -52,6 +59,33 @@ func (c *MigrationCommand) Handle(args []string) {
 		print("Migrated:  "+migration.Name(), isVerbose)
 	}
 	print("successful migrate", isVerbose)
+}
+func extractKey(migrationName string) int64 {
+	parts := strings.Split(migrationName, "_")
+
+	var numericKey string
+	for _, part := range parts {
+		if !isNumeric(part) {
+			break
+		}
+		numericKey += part
+	}
+
+	num, err := strconv.ParseInt(numericKey, 10, 64)
+	if err != nil {
+		return 0
+	}
+	return num
+}
+
+// بررسی اینکه آیا یک رشته کاملاً عددی است
+func isNumeric(s string) bool {
+	for _, r := range s {
+		if !unicode.IsDigit(r) {
+			return false
+		}
+	}
+	return true
 }
 
 func print(msg string, isVerbose bool) {
