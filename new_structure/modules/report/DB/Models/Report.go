@@ -12,4 +12,5 @@ type Report struct {
 	Title          string       `gorm:"column:title;type:varchar(255);"`
 	IsNotification int          `gorm:"column:is_notification;type:tinyint"`
 	CreatedAt      time.Time    `gorm:"column:created_at;type:datetime"`
+	DeletedAt      *time.Time   `gorm:"column:deleted_at;type:datetime;default:null"`
 }

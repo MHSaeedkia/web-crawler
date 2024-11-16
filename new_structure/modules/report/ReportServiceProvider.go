@@ -8,6 +8,7 @@ import (
 	Global "project-root/modules/report/Http/Controllers/Filter/Global"
 	"project-root/modules/report/Http/Controllers/Filter/Range"
 	Toggle "project-root/modules/report/Http/Controllers/Filter/Toggle"
+	Update "project-root/modules/report/Http/Controllers/Update"
 	SysDatabase "project-root/sys-modules/database/Lib"
 	"project-root/sys-modules/telebot/Lib/Page"
 )
@@ -24,6 +25,11 @@ func (s *ReportServiceProvider) Register() {
 		// create
 		&Create.TitleCreateReportPage{},
 		&Create.IsNotificationCreateReportPage{},
+
+		// update
+		&Update.MainSelectedReportPage{},
+		&Update.TitleUpdateReportPage{},
+		&Update.IsNotificationUpdateReportPage{},
 
 		// filter
 		&Controllers.MainUpdateReportFilterPage{},

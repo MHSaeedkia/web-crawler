@@ -7,6 +7,11 @@ const (
 	TitleCreateReportPageNumber          = 2201
 	IsNotificationCreateReportPageNumber = 2202
 
+	// Update
+	MainSelectedReportPageNumber         = 2250
+	TitleUpdateReportPageNumber          = 2251
+	IsNotificationUpdateReportPageNumber = 2252
+
 	// ----------------- Filter -----------------
 	MainUpdateReportFilterPageNumber = 2300
 

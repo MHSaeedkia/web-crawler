@@ -82,9 +82,12 @@ func (ts *TelSession) GetAuthTempData() *AuthTempData {
 
 // ------- [Report]
 type ReportTempData struct {
-	Title    string `json:"title"`
-	ReportId int    `json:"report_id"`
-	FilterId int    `json:"filter_id"`
+	Title            string `json:"title"`
+	ReportId         int    `json:"report_id"`
+	FilterId         int    `json:"filter_id"`
+	LastPageNumber   int    `json:"last_page_number"`
+	ReportIdSelected int    `json:"report_id_selected"`
+	IsNotification   int    `json:"is_notification"`
 }
 
 func (ts *TelSession) GetReportTempData() *ReportTempData {
@@ -108,8 +111,12 @@ func (ts *TelSession) GetReportTempData() *ReportTempData {
 
 	// default
 	defaultAuth := &ReportTempData{
-		Title:    "",
-		ReportId: 0,
+		Title:            "",
+		ReportId:         0,
+		FilterId:         0,
+		LastPageNumber:   1,
+		ReportIdSelected: 0,
+		IsNotification:   0,
 	}
 	ts.TempData[saveKey] = defaultAuth
 	return defaultAuth
