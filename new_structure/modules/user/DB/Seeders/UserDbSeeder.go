@@ -13,7 +13,7 @@ import (
 type UserDbSeeder struct{}
 
 func (s UserDbSeeder) Name() string {
-	return "1_users_table"
+	return "100_users_table"
 }
 
 func (s UserDbSeeder) Handle(db *gorm.DB) {

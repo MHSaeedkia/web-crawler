@@ -7,6 +7,7 @@ import (
 	"project-root/app"
 	"project-root/modules/auth"
 	report "project-root/modules/report"
+	sourceSite "project-root/modules/source-site"
 	"project-root/modules/user"
 	SysConsole "project-root/sys-modules/console"
 	"project-root/sys-modules/console/Lib"
@@ -28,6 +29,7 @@ func Bootstrap() {
 		&user.UserServiceProvider{},
 		&auth.AuthServiceProvider{},
 		&report.ReportServiceProvider{},
+		&sourceSite.SourceSiteServiceProvider{},
 
 		// ---------------------------------------
 	}
