@@ -31,6 +31,6 @@ func main() {
 
 	// Generate and print the query
 	query := dbConfig.GenerateFilterQuery(dbConn.DB, filter)
-	fmt.Println(query)
+	fmt.Println(query.Statement.Clauses)
 
 }

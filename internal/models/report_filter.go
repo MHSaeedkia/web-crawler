@@ -6,7 +6,8 @@ import (
 
 type ReportFilter struct {
 	ID             int       `gorm:"column:id;primaryKey;AUTOINCREMENT"`
-	ReportID       int       `gorm:"column:reports_id;type:bigint"`
+	ReportID       int       `gorm:"column:report_id"`
+	Report         Reports   `gorm:"foreignKey:ReportID;references:ID"`
 	CitiesID       int       `gorm:"column:cities_id;type:bigint"`
 	BuiltStart     int       `gorm:"column:built_start;type:smallint"`
 	BuiltEnd       int       `gorm:"column:built_end;type:smallint"`
