@@ -1,8 +1,9 @@
-package Create
+package Controllers
 
 import (
 	"fmt"
 	tele "gopkg.in/telebot.v4"
+	PostEnums "project-root/modules/post/Enums"
 	"project-root/modules/report/Enums"
 	"project-root/modules/report/Facades"
 	"project-root/modules/user/DB/Models"
@@ -18,10 +19,12 @@ func (p *MainSelectedReportPage) PageNumber() int {
 
 func (p *MainSelectedReportPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
 	var newReplyMarkup = &tele.ReplyMarkup{}
+	btnPost := newReplyMarkup.Data("Post", "btn_post")
 	btnEdit := newReplyMarkup.Data("Edit", "btn_edit")
 	btnDelete := newReplyMarkup.Data("Delete", "btn_delete")
 	btnBack := newReplyMarkup.Data("Back", "btn_back")
 	newReplyMarkup.Inline(
+		newReplyMarkup.Row(btnPost),
 		newReplyMarkup.Row(btnEdit, btnDelete),
 		newReplyMarkup.Row(btnBack),
 	)
@@ -38,6 +41,10 @@ func (p *MainSelectedReportPage) OnClickInlineBtn(btnKey string, telSession *Mod
 	switch btnKey {
 	case "btn_edit":
 		return Page.GetPage(Enums.TitleUpdateReportPageNumber)
+	case "btn_post":
+		filter, _ := Facades.ReportFilterRepo().FindByReportId(telSession.GetReportTempData().ReportIdSelected)
+		telSession.GetPostTempData().FilterId = filter.ID
+		return Page.GetPage(PostEnums.MainPostSelectedReportPageNumber)
 	case "btn_delete":
 		err := Facades.ReportRepo().SoftDelete(telSession.GetReportTempData().ReportIdSelected)
 		if err != nil {

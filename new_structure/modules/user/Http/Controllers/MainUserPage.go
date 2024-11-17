@@ -17,17 +17,15 @@ func (p *MainUserPage) PageNumber() int {
 
 func (p *MainUserPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
 	var newReplyMarkup = &tele.ReplyMarkup{}
-	btnProfile := newReplyMarkup.Data("Profile", "btn_profile")
 	btnBookmark := newReplyMarkup.Data("Bookmark", "btn_bookmark")
 	btnMonitoring := newReplyMarkup.Data("Monitoring", "btn_monitoring")
-	btnPost := newReplyMarkup.Data("Post", "btn_post")
 	btnExport := newReplyMarkup.Data("Export", "btn_export")
 	btnReport := newReplyMarkup.Data("Report", "btn_report")
 	btnLogout := newReplyMarkup.Data("Logout", "btn_logout")
 
 	newReplyMarkup.Inline(
-		newReplyMarkup.Row(btnProfile, btnBookmark, btnMonitoring),
-		newReplyMarkup.Row(btnPost, btnExport, btnReport),
+		newReplyMarkup.Row(btnExport, btnReport),
+		newReplyMarkup.Row(btnBookmark, btnMonitoring),
 		newReplyMarkup.Row(btnLogout),
 	)
 	return "Welcome dear " + telSession.LoggedUser.Username + " user", newReplyMarkup
@@ -39,10 +37,8 @@ func (p *MainUserPage) OnInput(value string, telSession *Models.TelSession) Page
 
 func (p *MainUserPage) OnClickInlineBtn(btnKey string, telSession *Models.TelSession) Page.PageInterface {
 	switch btnKey {
-	case "btn_profile":
 	case "btn_bookmark":
 	case "btn_monitoring":
-	case "btn_post":
 	case "btn_export":
 	case "btn_report":
 		return Page.GetPage(ReportEnums.MainReportUserPageNumber)

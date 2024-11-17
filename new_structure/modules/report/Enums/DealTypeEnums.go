@@ -1,9 +1,9 @@
 package Enums
 
 const (
-	Rent = iota
-	Sale
-	Buy
+	RentDealType = iota
+	SaleDealType
+	BuyDealType
 )
 
 func GetDealTypes() []string {

@@ -34,7 +34,7 @@ func (repo *ReportFilterRepository) FindByID(id int) (*Models.ReportFilter, erro
 
 func (repo *ReportFilterRepository) FindByReportId(reportID int) (*Models.ReportFilter, error) {
 	var reportFilter Models.ReportFilter
-	if err := repo.Db.Where("reports_id = ?", reportID).First(&reportFilter).Error; err != nil {
+	if err := repo.Db.Preload("Report").Where("reports_id = ?", reportID).First(&reportFilter).Error; err != nil {
 		return nil, err
 	}
 	return &reportFilter, nil

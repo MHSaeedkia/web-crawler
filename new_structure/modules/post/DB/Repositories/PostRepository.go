@@ -3,6 +3,7 @@ package Repositories
 import (
 	"gorm.io/gorm"
 	"project-root/modules/post/DB/Models"
+	ReportModels "project-root/modules/report/DB/Models"
 )
 
 type PostRepository struct {
@@ -63,6 +64,27 @@ func (repo *PostRepository) FindByStatus(status int) ([]Models.Post, error) {
 		return nil, err
 	}
 	return posts, nil
+}
+
+func (repo *PostRepository) GetPostsForFilter(filter *ReportModels.ReportFilter, perPage, pageNum int) (*[]Models.Post, int, error) {
+	var posts []Models.Post
+	var totalRecords int64
+
+	// count record
+	if err := repo.Db.Model(&Models.Post{}).Count(&totalRecords).Error; err != nil {
+		return nil, 0, err
+	}
+
+	// total page
+	totalPages := int((totalRecords + int64(perPage) - 1) / int64(perPage))
+
+	// get
+	offset := (pageNum - 1) * perPage
+	if err := repo.Db.Limit(perPage).Offset(offset).Find(&posts).Error; err != nil {
+		return nil, 0, err
+	}
+
+	return &posts, totalPages, nil
 }
 
 var _ PostRepositoryInterface = &PostRepository{}

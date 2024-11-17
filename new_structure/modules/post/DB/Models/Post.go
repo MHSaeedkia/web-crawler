@@ -12,11 +12,11 @@ type Post struct {
 	SrcSite          *Models.SourceSite     `gorm:"foreignKey:SrcSitesID;references:ID"`
 	UsersID          *int                   `gorm:"column:user_id;type:mediumint;default:null"`
 	User             *userModels.User       `gorm:"foreignKey:UsersID;references:ID"`
-	Status           int                    `gorm:"column:name;type:tinyint"`
+	Status           int                    `gorm:"column:status;type:tinyint"`
 	ExternalSiteID   *string                `gorm:"column:external_site;type:varchar(255);default:null"`
 	Title            string                 `gorm:"column:title;type:varchar(255)"`
 	Description      *string                `gorm:"column:description;type:varchar(255);default:null"`
-	Price            *int                   `gorm:"column:price;type:bigint;default:null"`
+	Price            *int64                 `gorm:"column:price;type:bigint;default:null"`
 	PriceHistory     map[string]interface{} `gorm:"column:price_history;serializer:json"`
 	MainIMG          *string                `gorm:"column:main_img;type:varchar(255);default:null"`
 	GalleryIMGs      map[string]interface{} `gorm:"column:gallery_img;serializer:json"`
@@ -33,6 +33,7 @@ type Post struct {
 	PostDate         *time.Time             `gorm:"column:post_date;type:datetime;default:null"`
 	CityName         *string                `gorm:"column:city_name;type:varchar(100);default:null"`
 	NeighborhoodName *string                `gorm:"column:neighborhood_name;type:varchar(100);default:null"`
+	IsPublic         bool                   `gorm:"column:is_public;type:tinyint(1);default:1"`
 	DeletedAt        *time.Time             `gorm:"column:deleted_at;type:datetime;default:null"`
 	CreatedAt        time.Time              `gorm:"column:created_at;type:datetime;NOT NULL"`
 	UpdateAt         *time.Time             `gorm:"column:updated_at;type:datetime;NOT NULL"`

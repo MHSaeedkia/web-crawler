@@ -27,7 +27,7 @@ func (s *ReportServiceProvider) Register() {
 		&Create.IsNotificationCreateReportPage{},
 
 		// update
-		&Update.MainSelectedReportPage{},
+		&Controllers.MainSelectedReportPage{},
 		&Update.TitleUpdateReportPage{},
 		&Update.IsNotificationUpdateReportPage{},
 

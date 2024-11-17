@@ -121,3 +121,39 @@ func (ts *TelSession) GetReportTempData() *ReportTempData {
 	ts.TempData[saveKey] = defaultAuth
 	return defaultAuth
 }
+
+// ------- [Post]
+type PostTempData struct {
+	PostId         int `json:"post_id"`
+	LastPageNumber int `json:"last_page_number"`
+	FilterId       int `json:"filter_id"`
+}
+
+func (ts *TelSession) GetPostTempData() *PostTempData {
+	saveKey := "post"
+	if existItem, ok := ts.TempData[saveKey].(*PostTempData); ok {
+		return existItem
+	}
+
+	// deserialize
+	if itemMap, ok := ts.TempData[saveKey].(map[string]interface{}); ok {
+		jsonData, err := json.Marshal(itemMap)
+		if err == nil {
+			var item PostTempData
+			err := json.Unmarshal(jsonData, &item)
+			if err == nil {
+				ts.TempData[saveKey] = &item
+				return &item
+			}
+		}
+	}
+
+	// default
+	defaultAuth := &PostTempData{
+		PostId:         0,
+		FilterId:       0,
+		LastPageNumber: 1,
+	}
+	ts.TempData[saveKey] = defaultAuth
+	return defaultAuth
+}
