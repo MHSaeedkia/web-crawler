@@ -18,6 +18,8 @@ import (
 	"github.com/MHSaeedkia/web-crawler/pkg/config"
 	"github.com/chromedp/chromedp"
 	"github.com/jinzhu/gorm"
+	"github.com/shirou/gopsutil/cpu"
+	"github.com/shirou/gopsutil/mem"
 )
 
 var TotalRequest int = 0
@@ -65,16 +67,38 @@ type PageData struct {
 }
 
 func main() {
-	// Set up a context that listens for the interrupt signal from the OS
-	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
-	defer stop()
-	// Connect to the database
-	db, err := config.ConnectDB()
-	if err != nil {
-		log.Fatal("Error connecting to the database:", err)
-		return
-	}
-	defer db.Close()
+    // Set up a context that listens for the interrupt signal from the OS
+    ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
+    defer stop()
+
+    // Connect to the database
+    db, err := config.ConnectDB()
+    if err != nil {
+        log.Fatal("Error connecting to the database:", err)
+        return
+    }
+    defer db.Close()
+
+    // Initialize crawl log
+    logEntry := models.CrawlLogs{
+        SrcSitesID:    1, // Assuming ID for source site
+        Status:        1, // Status: 1 = In Progress
+        TotalRequests: 0,
+        Requests:      0,
+        Success:       0,
+        Faild:         0,
+        StartTime:     time.Now(),
+    }
+
+    // Save initial log entry
+    if err = db.Create(&logEntry).Error; err != nil {
+        log.Fatal("Failed to create crawl log:", err)
+        return
+    }
+
+    // Initialize statistics variables
+    var TotalRequest, SuccessedRequest, FailedRequest int
+
 
 	// Sites configuration
 	sites := []Site{
@@ -147,6 +171,24 @@ func main() {
 
 	// Wait for any remaining work
 	wg.Wait()
+
+	// Finalize log entry
+	logEntry.Status = 2 // Status: 2 = Completed
+	logEntry.EndTime = time.Now()
+	logEntry.TotalRequests = TotalRequest
+	logEntry.Requests = TotalRequest
+	logEntry.Success = SuccessedRequest
+	logEntry.Faild = FailedRequest
+
+	// Capture CPU and RAM usage
+	logEntry.CPUUsed = getCurrentCPUUsage()
+	logEntry.RAMUsed = getCurrentRAMUsage()
+
+	// Save updated log entry
+	err = db.Save(logEntry).Error
+	if err != nil {
+		log.Printf("Failed to update crawl log: %v", err)
+	}
 	log.Println("All tasks completed. Program shutting down gracefully.")
 	fmt.Printf("TotalRequest = %d FailedRequest = %d SuccessedRequest = %d", TotalRequest, FailedRequest, SuccessedRequest)
 }
@@ -193,7 +235,6 @@ func scrapeSite(ctx context.Context, site Site, contractType, placeType string, 
 	}
 	log.Printf("Completed scraping all links for site: %s", site.BaseURL)
 }
-
 
 func scrapeLink(ctx context.Context, link string, site Site, contractType, placeType string, db *gorm.DB) (PageData, error) {
 	var data PageData
@@ -352,4 +393,24 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 	log.Printf("Saved post with ID %d to database", post.ID)
 
 	return data, nil
+}
+
+// Helper function to get CPU usage
+func getCurrentCPUUsage() float64 {
+	percentages, err := cpu.Percent(0, false)
+	if err != nil || len(percentages) == 0 {
+		log.Printf("Failed to get CPU usage: %v", err)
+		return 0.0
+	}
+	return percentages[0] // Return CPU usage as a percentage
+}
+
+// Helper function to get RAM usage
+func getCurrentRAMUsage() int {
+	vmStat, err := mem.VirtualMemory()
+	if err != nil {
+		log.Printf("Failed to get RAM usage: %v", err)
+		return 0
+	}
+	return int(vmStat.Used / (1024 * 1024)) // Convert bytes to MB
 }
