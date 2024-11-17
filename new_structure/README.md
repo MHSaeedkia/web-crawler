@@ -25,11 +25,13 @@ This project is a web crawler specifically designed to scrape announcements rela
 - The logic of every Telegram page can be tested, because we don't have any dependency on the logic of the Telegram bot
 - You can have several drivers for how to send, edit and delete messages to Telegram
 - You can define several database connections and dynamically change them in env, and all modules will use that connection.
+- The isolation of each module
+- According to SOLID principles and clean code as important as that part
 - The design patterns used are:
   - Factory Method `To inject dependency from outside and change the strategy when writing tests and implementing design patterns like Singleton and Strategy Pattern`
   - Singleton / Lazy `Preventing the creation of multiple connections or other objects and increasing speed`
   -  Facade `Reduce dependencies between classes and use interfaces for direct use with classes`
-  - Strategy Pattern `Changing the strategy while running the test and having several drivers to do the same job`
+  - Strategy `Changing the strategy while running the test and having several drivers to do the same job`
   - Repository `Not repeating queries, changing queries if necessary for other connections such as Redis`
 
 ## Getting Started
