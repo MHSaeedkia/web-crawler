@@ -27,6 +27,3 @@ go.work.sum
 
 # env file
 .env
-./pkg/telegram-bot/.env
-./go.mod
-./go.sum
