@@ -4,6 +4,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // Persian to English digit map for converting numbers
@@ -45,4 +46,59 @@ func ConvertFeatureToBool(feature string) bool {
 		return false
 	}
 	return true
+}
+
+
+func ParseTimeFromString(input string) time.Time {
+	input = strings.TrimSpace(input)
+
+	now := time.Now()
+	year, month, day := now.Date()
+
+	createDate := func(y int, m time.Month, d int) time.Time {
+		return time.Date(y, m, d, 0, 0, 0, 0, time.Local)
+	}
+
+	if strings.Contains(input, "لحظاتی پیش") || strings.Contains(input, "دقایقی پیش") {
+		return createDate(year, month, day)
+	}
+
+	if strings.Contains(input, "دیروز") {
+		return createDate(year, month, day-1)
+	}
+
+	if strings.Contains(input, "دو روز پیش") {
+		return createDate(year, month, day-2)
+	}
+
+	if strings.Contains(input, "سه روز پیش") {
+		return createDate(year, month, day-3)
+	}
+
+	if strings.Contains(input, "چهار روز پیش") {
+		return createDate(year, month, day-4)
+	}
+
+	if strings.Contains(input, "پنج روز پیش") {
+		return createDate(year, month, day-6)
+	}
+	if strings.Contains(input, "شش روز پیش") {
+		return createDate(year, month, day-7)
+	}
+	if strings.Contains(input, "هفت روز پیش") {
+		return createDate(year, month-1, day)
+	}
+	if strings.Contains(input, "یک ماه پیش") {
+		return createDate(year, month-1, day)
+	}
+
+	if strings.Contains(input, "دو ماه پیش") {
+		return createDate(year, month-2, day)
+	}
+
+	if strings.Contains(input, "سه ماه پیش") {
+		return createDate(year, month-3, day)
+	}
+
+	return createDate(year, month-4, day)
 }
