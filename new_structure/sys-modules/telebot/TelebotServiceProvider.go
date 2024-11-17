@@ -6,6 +6,7 @@ import (
 	"project-root/sys-modules/console/Lib"
 	"project-root/sys-modules/env"
 	commands "project-root/sys-modules/telebot/Commands"
+	"project-root/sys-modules/telebot/Lib/Drivers/Default"
 	"time"
 )
 
@@ -31,6 +32,11 @@ func bindBot() {
 		}
 		return b
 	})
+
+	app.App.Singleton("tele_bot_handle_input_driver", func() interface{} {
+		return &Default.DefaultTeleBotHandleInputDriver{}
+	})
+
 }
 
 type TelebotServiceProvider struct{}
