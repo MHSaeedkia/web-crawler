@@ -5,6 +5,7 @@ import (
 	"project-root/modules/post/DB/Models"
 	PostEnums "project-root/modules/post/Enums"
 	"project-root/modules/report/Enums"
+	Lib2 "project-root/modules/source-site/Lib"
 	"project-root/sys-modules/time/Lib"
 	"strings"
 	"time"
@@ -30,7 +31,7 @@ func FormatPostText(post *Models.Post) string {
 		formatBool(false),
 		Lib.FormatTimeAgo(post.CreatedAt),
 		Lib.FormatTimeAgo(*post.UpdateAt),
-		getLink(*post.ExternalSiteID),
+		Lib2.ConvertExternalSiteIdToLink(*post.ExternalSiteID, post.SrcSitesID),
 	))
 
 	if post.Description != nil {
@@ -147,8 +148,4 @@ func formatDealType(value *int) string {
 	default:
 		return "unknown"
 	}
-}
-
-func getLink(externalSiteID string) string {
-	return fmt.Sprintf("(https://divar.ir/v/%s)", externalSiteID)
 }

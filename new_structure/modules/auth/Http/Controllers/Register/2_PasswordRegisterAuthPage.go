@@ -1,7 +1,6 @@
 package Register
 
 import (
-	tele "gopkg.in/telebot.v4"
 	"project-root/modules/auth/Enums"
 	"project-root/modules/user/DB/Models"
 	"project-root/sys-modules/telebot/Lib/Page"
@@ -14,8 +13,11 @@ func (p *PasswordRegisterAuthPage) PageNumber() int {
 	return Enums.PasswordRegisterAuthPageNumber
 }
 
-func (p *PasswordRegisterAuthPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
-	return "Register(2/3) - Please enter your password:", StaticBtns.GetBackStaticBtn()
+func (p *PasswordRegisterAuthPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
+	return &Page.PageContentOV{
+		Message:     "Register(2/3) - Please enter your password:",
+		ReplyMarkup: StaticBtns.GetBackStaticBtn(),
+	}
 }
 
 func (p *PasswordRegisterAuthPage) OnInput(value string, telSession *Models.TelSession) Page.PageInterface {

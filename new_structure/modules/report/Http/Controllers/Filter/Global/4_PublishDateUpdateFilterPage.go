@@ -2,7 +2,6 @@ package Range
 
 import (
 	"fmt"
-	tele "gopkg.in/telebot.v4"
 	Models2 "project-root/modules/report/DB/Models"
 	"project-root/modules/report/Enums"
 	"project-root/modules/report/Facades"
@@ -19,8 +18,11 @@ func (p *PublishDateUpdateFilterPage) PageNumber() int {
 	return Enums.PublishDateUpdateFilterPageNumber
 }
 
-func (p *PublishDateUpdateFilterPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
-	return "Enter the date range, so that first the start date, then the end date, separated by commas \n For example \n 2006-01-02 15:04:05,2008-02-01 00:00:00", Filter.GetDefaultBtnUpdateFilter()
+func (p *PublishDateUpdateFilterPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
+	return &Page.PageContentOV{
+		Message:     "Enter the date range, so that first the start date, then the end date, separated by commas \n For example \n 2006-01-02 15:04:05,2008-02-01 00:00:00",
+		ReplyMarkup: Filter.GetDefaultBtnUpdateFilter(),
+	}
 }
 
 func (p *PublishDateUpdateFilterPage) OnInput(value string, telSession *Models.TelSession) Page.PageInterface {

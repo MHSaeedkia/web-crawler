@@ -1,7 +1,6 @@
 package Range
 
 import (
-	tele "gopkg.in/telebot.v4"
 	Models2 "project-root/modules/report/DB/Models"
 	"project-root/modules/report/Enums"
 	"project-root/modules/report/Facades"
@@ -16,8 +15,11 @@ func (p *CityUpdateFilterPage) PageNumber() int {
 	return Enums.CityUpdateFilterPageNumber
 }
 
-func (p *CityUpdateFilterPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
-	return "Type your city name:", Filter.GetDefaultBtnUpdateFilter()
+func (p *CityUpdateFilterPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
+	return &Page.PageContentOV{
+		Message:     "Type your city name:",
+		ReplyMarkup: Filter.GetDefaultBtnUpdateFilter(),
+	}
 }
 
 func (p *CityUpdateFilterPage) OnInput(value string, telSession *Models.TelSession) Page.PageInterface {

@@ -13,7 +13,7 @@ func (p *MainAuthPage) PageNumber() int {
 	return Enums.MainAuthPageNumber
 }
 
-func (p *MainAuthPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
+func (p *MainAuthPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
 	var newReplyMarkup = &tele.ReplyMarkup{}
 	btnOk := newReplyMarkup.Data("Login", "btn_login")
 	btnNo := newReplyMarkup.Data("Register", "btn_register")
@@ -21,7 +21,10 @@ func (p *MainAuthPage) GeneratePage(telSession *Models.TelSession) (string, *tel
 	newReplyMarkup.Inline(
 		newReplyMarkup.Row(btnOk, btnNo),
 	)
-	return "Select an operation:", newReplyMarkup
+	return &Page.PageContentOV{
+		Message:     "Select an operation:",
+		ReplyMarkup: newReplyMarkup,
+	}
 }
 
 func (p *MainAuthPage) OnInput(value string, telSession *Models.TelSession) Page.PageInterface {

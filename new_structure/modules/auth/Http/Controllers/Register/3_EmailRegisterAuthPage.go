@@ -1,7 +1,6 @@
 package Register
 
 import (
-	tele "gopkg.in/telebot.v4"
 	AuthEnums "project-root/modules/auth/Enums"
 	"project-root/modules/user/DB/Models"
 	"project-root/modules/user/Enums"
@@ -19,8 +18,11 @@ func (p *EmailRegisterAuthPage) PageNumber() int {
 	return AuthEnums.EmailRegisterAuthPageNumber
 }
 
-func (p *EmailRegisterAuthPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
-	return "Register(3/3) - Please enter your email to receive exports:", StaticBtns.GetBackStaticBtn()
+func (p *EmailRegisterAuthPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
+	return &Page.PageContentOV{
+		Message:     "Register(3/3) - Please enter your email to receive exports:",
+		ReplyMarkup: StaticBtns.GetBackStaticBtn(),
+	}
 }
 
 func (p *EmailRegisterAuthPage) OnInput(value string, telSession *Models.TelSession) Page.PageInterface {

@@ -17,7 +17,7 @@ func (p *MainUpdateReportFilterPage) PageNumber() int {
 	return ReportEnums.MainUpdateReportFilterPageNumber
 }
 
-func (p *MainUpdateReportFilterPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
+func (p *MainUpdateReportFilterPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
 	var newReplyMarkup = &tele.ReplyMarkup{}
 	btnRoom := newReplyMarkup.Data("Room", "btn_room")
 	btnLandArea := newReplyMarkup.Data("Land Area", "btn_land_area")
@@ -49,7 +49,10 @@ func (p *MainUpdateReportFilterPage) GeneratePage(telSession *Models.TelSession)
 	)
 
 	filter, _ := Facades.ReportFilterRepo().FindByID(telSession.GetReportTempData().FilterId)
-	return getFilterBody(filter), newReplyMarkup
+	return &Page.PageContentOV{
+		Message:     getFilterBody(filter),
+		ReplyMarkup: newReplyMarkup,
+	}
 }
 
 func getFilterBody(filter *ReportModels.ReportFilter) string {

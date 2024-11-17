@@ -1,14 +1,13 @@
 package Page
 
 import (
-	tele "gopkg.in/telebot.v4"
 	"project-root/modules/user/DB/Models"
 	"strconv"
 )
 
 type PageInterface interface {
 	PageNumber() int
-	GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup)
+	GeneratePage(telSession *Models.TelSession) *PageContentOV
 	OnInput(value string, telSession *Models.TelSession) PageInterface
 	OnClickInlineBtn(btnKey string, telSession *Models.TelSession) PageInterface
 }

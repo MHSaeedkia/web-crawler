@@ -27,8 +27,11 @@ func getMessageToggleUpdateFilter(name string) string {
 	return "Update Report Filter - " + name + " has or not?"
 }
 
-func GetGeneratePageToggleUpdateFilter(name string) (string, *tele.ReplyMarkup) {
-	return getMessageToggleUpdateFilter(name), getToggleBtnUpdateFilter()
+func GetGeneratePageToggleUpdateFilter(name string) *Page.PageContentOV {
+	return &Page.PageContentOV{
+		Message:     getMessageToggleUpdateFilter(name),
+		ReplyMarkup: getToggleBtnUpdateFilter(),
+	}
 }
 
 // TODO: refactor duplicate code

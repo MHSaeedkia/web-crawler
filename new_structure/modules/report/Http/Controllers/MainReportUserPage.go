@@ -19,10 +19,10 @@ func (p *MainReportUserPage) PageNumber() int {
 	return ReportEnums.MainReportUserPageNumber
 }
 
-func (p *MainReportUserPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
+func (p *MainReportUserPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
 	var newReplyMarkup = &tele.ReplyMarkup{}
 
-	reports, countAllPage, err := Facades.ReportRepo().GetReportsByUserIdWithPagination(*telSession.LoggedUserID, 2, telSession.GetReportTempData().LastPageNumber)
+	reports, countAllPage, _ := Facades.ReportRepo().GetReportsByUserIdWithPagination(*telSession.LoggedUserID, 2, telSession.GetReportTempData().LastPageNumber)
 
 	var rows []tele.Row
 
@@ -43,8 +43,10 @@ func (p *MainReportUserPage) GeneratePage(telSession *Models.TelSession) (string
 	rows = append(rows, newReplyMarkup.Row(btnBack))
 
 	newReplyMarkup.Inline(rows...)
-	fmt.Println(countAllPage, err)
-	return FormatReportList(*reports, countAllPage, telSession.GetReportTempData().LastPageNumber), newReplyMarkup
+	return &Page.PageContentOV{
+		Message:     FormatReportList(*reports, countAllPage, telSession.GetReportTempData().LastPageNumber),
+		ReplyMarkup: newReplyMarkup,
+	}
 }
 
 func FormatReportList(reports []ReportModels.Report, allPages int, currentPage int) string {

@@ -21,7 +21,7 @@ func (p *MainPostSelectedReportPage) PageNumber() int {
 	return PostEnums.MainPostSelectedReportPageNumber
 }
 
-func (p *MainPostSelectedReportPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
+func (p *MainPostSelectedReportPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
 	var newReplyMarkup = &tele.ReplyMarkup{}
 
 	filter, _ := Facades.ReportFilterRepo().FindByReportId(telSession.GetReportTempData().ReportIdSelected)
@@ -47,7 +47,10 @@ func (p *MainPostSelectedReportPage) GeneratePage(telSession *Models.TelSession)
 
 	newReplyMarkup.Inline(rows...)
 	fmt.Println(countAllPage, err)
-	return FormatPostList(posts, filter.Report.Title, countAllPage, telSession.GetPostTempData().LastPageNumber), newReplyMarkup
+	return &Page.PageContentOV{
+		Message:     FormatPostList(posts, filter.Report.Title, countAllPage, telSession.GetPostTempData().LastPageNumber),
+		ReplyMarkup: newReplyMarkup,
+	}
 }
 
 func FormatPostList(posts *[]PostModels.Post, titleReport string, allPages, currentPage int) string {

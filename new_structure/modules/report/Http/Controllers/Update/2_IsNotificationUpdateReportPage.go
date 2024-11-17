@@ -16,7 +16,7 @@ func (p *IsNotificationUpdateReportPage) PageNumber() int {
 	return Enums.IsNotificationUpdateReportPageNumber
 }
 
-func (p *IsNotificationUpdateReportPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
+func (p *IsNotificationUpdateReportPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
 	var newReplyMarkup = &tele.ReplyMarkup{}
 	btnYes := newReplyMarkup.Data("Yes", "btn_yes")
 	btnNo := newReplyMarkup.Data("No", "btn_no")
@@ -32,7 +32,10 @@ func (p *IsNotificationUpdateReportPage) GeneratePage(telSession *Models.TelSess
 	report, _ := Facades.ReportRepo().FindReport(telSession.GetReportTempData().ReportIdSelected)
 	telSession.GetReportTempData().IsNotification = report.IsNotification // for skip
 	message := fmt.Sprintf("Update Report(2/2) - If it is checked again (watch-list), should the notification be sent to the robot?\n\n🔶 current value: %s", strconv.Itoa(report.IsNotification))
-	return message, newReplyMarkup
+	return &Page.PageContentOV{
+		Message:     message,
+		ReplyMarkup: newReplyMarkup,
+	}
 }
 
 func (p *IsNotificationUpdateReportPage) OnInput(value string, telSession *Models.TelSession) Page.PageInterface {

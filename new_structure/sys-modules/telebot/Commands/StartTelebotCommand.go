@@ -66,10 +66,11 @@ func handleInput(isBtn bool, value string, c tele.Context) error {
 	session.CurrentPage = targetPage.PageNumber()
 
 	// 3_ generate new message
-	message, replyMarkup := targetPage.GeneratePage(session)
+	pageContentOV := targetPage.GeneratePage(session)
+	//message, replyMarkup := targetPage.GeneratePage(session)
 	lastMessage := session.GetGeneralTempData().LastMessage
 	if lastMessage != "" {
-		message = lastMessage + "\n" + message
+		pageContentOV.Message = lastMessage + "\n" + pageContentOV.Message
 		session.GetGeneralTempData().LastMessage = ""
 	}
 
@@ -77,16 +78,56 @@ func handleInput(isBtn bool, value string, c tele.Context) error {
 	UserFacade.TelSessionRepo().UpdateByChatID(chatId, session)
 
 	// 5_ send message
-	if isBtn {
-		err := c.Edit(message, replyMarkup)
-		if err != nil {
-			fmt.Println(err)
-			return err
-		}
-	} else {
-		c.Send(message, replyMarkup)
-	}
+	err := SendMessage(c, pageContentOV, isBtn)
+	fmt.Println(err) // TODO: critical log
 	return nil
+}
+
+func SendMessage(c tele.Context, pageContentOV *Page.PageContentOV, isBtn bool) error {
+	if pageContentOV.Photo != nil {
+		pageContentOV.Photo.Caption = pageContentOV.Message
+		return sendOrEdit(c, pageContentOV.Photo, pageContentOV.ReplyMarkup, isBtn)
+	}
+
+	if pageContentOV.File != nil {
+		pageContentOV.File.Caption = pageContentOV.Message
+		return sendOrEdit(c, pageContentOV.File, pageContentOV.ReplyMarkup, isBtn)
+	}
+
+	return sendOrEdit(c, pageContentOV.Message, pageContentOV.ReplyMarkup, isBtn)
+}
+
+func sendOrEdit(c tele.Context, content interface{}, markup *tele.ReplyMarkup, isBtn bool) error {
+	// check last message has media ? if click btn (Callback)
+	lastMessageHasMedia := false
+	if isBtn {
+		msg := c.Callback().Message
+		if msg.Photo != nil || msg.Document != nil {
+			lastMessageHasMedia = true
+		}
+	}
+
+	// remove last message if click btn and has media
+	if isBtn && lastMessageHasMedia {
+		c.Delete()
+	}
+
+	// update last message if last message is normal
+	if isBtn && !lastMessageHasMedia {
+		if markup != nil {
+			return c.Edit(content, markup)
+		}
+		return c.Edit(content)
+	}
+
+	// send message if user not click btn
+	// or click btn but last message has media
+	if markup != nil {
+		fmt.Println("HUUUUUUUasdaaaassssUUUUUUU", content)
+		return c.Send(content, markup)
+	}
+	fmt.Println("HUUUUUUUUUUUUUU", content)
+	return c.Send(content)
 }
 
 // find or create session

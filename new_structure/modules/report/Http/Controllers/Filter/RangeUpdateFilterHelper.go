@@ -25,8 +25,11 @@ func getMessageRangeUpdateFilter(name string) string {
 	return "Update Report Filter - Enter your " + name + " range, separated by \",\":\nFor example \"1,5\""
 }
 
-func GetGeneratePageRangeUpdateFilter(name string) (string, *tele.ReplyMarkup) {
-	return getMessageRangeUpdateFilter(name), GetDefaultBtnUpdateFilter()
+func GetGeneratePageRangeUpdateFilter(name string) *Page.PageContentOV {
+	return &Page.PageContentOV{
+		Message:     getMessageRangeUpdateFilter(name),
+		ReplyMarkup: GetDefaultBtnUpdateFilter(),
+	}
 }
 
 func OnInputRangeUpdateFilter(pageNum int, min int, max int, value string, telSession *Models.TelSession, handleUpdate func(num1, num2 *int, filter *Models2.ReportFilter)) Page.PageInterface {

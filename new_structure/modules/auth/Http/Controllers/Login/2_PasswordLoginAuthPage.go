@@ -1,7 +1,6 @@
 package Login
 
 import (
-	tele "gopkg.in/telebot.v4"
 	"project-root/modules/auth/Enums"
 	"project-root/modules/user/DB/Models"
 	UserEnums "project-root/modules/user/Enums"
@@ -17,8 +16,11 @@ func (p *PasswordLoginAuthPage) PageNumber() int {
 	return Enums.PasswordLoginAuthPageNumber
 }
 
-func (p *PasswordLoginAuthPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
-	return "Login(2/2) - Please enter your password:", StaticBtns.GetBackStaticBtn()
+func (p *PasswordLoginAuthPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
+	return &Page.PageContentOV{
+		Message:     "Login(2/2) - Please enter your password:",
+		ReplyMarkup: StaticBtns.GetBackStaticBtn(),
+	}
 }
 
 func (p *PasswordLoginAuthPage) OnInput(value string, telSession *Models.TelSession) Page.PageInterface {

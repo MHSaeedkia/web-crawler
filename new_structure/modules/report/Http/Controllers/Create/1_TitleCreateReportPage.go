@@ -1,7 +1,6 @@
 package Create
 
 import (
-	tele "gopkg.in/telebot.v4"
 	"project-root/modules/report/Enums"
 	"project-root/modules/report/Facades"
 	"project-root/modules/user/DB/Models"
@@ -16,8 +15,11 @@ func (p *TitleCreateReportPage) PageNumber() int {
 	return Enums.TitleCreateReportPageNumber
 }
 
-func (p *TitleCreateReportPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
-	return "Create Report(1/2) - Type a name for your report, this name must be unique:", StaticBtns.GetBackStaticBtn()
+func (p *TitleCreateReportPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
+	return &Page.PageContentOV{
+		Message:     "Create Report(1/2) - Type a name for your report, this name must be unique:",
+		ReplyMarkup: StaticBtns.GetBackStaticBtn(),
+	}
 }
 
 func (p *TitleCreateReportPage) OnInput(value string, telSession *Models.TelSession) Page.PageInterface {

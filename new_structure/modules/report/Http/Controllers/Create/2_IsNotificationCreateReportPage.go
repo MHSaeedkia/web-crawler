@@ -16,7 +16,7 @@ func (p *IsNotificationCreateReportPage) PageNumber() int {
 	return Enums.IsNotificationCreateReportPageNumber
 }
 
-func (p *IsNotificationCreateReportPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
+func (p *IsNotificationCreateReportPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
 	var newReplyMarkup = &tele.ReplyMarkup{}
 	btnYes := newReplyMarkup.Data("Yes", "btn_yes")
 	btnNo := newReplyMarkup.Data("No", "btn_no")
@@ -26,7 +26,10 @@ func (p *IsNotificationCreateReportPage) GeneratePage(telSession *Models.TelSess
 		newReplyMarkup.Row(btnNo, btnYes),
 		newReplyMarkup.Row(btnBack),
 	)
-	return "Create Report(2/2) - If it is checked again (watch-list), should the notification be sent to the robot?", newReplyMarkup
+	return &Page.PageContentOV{
+		Message:     "Create Report(2/2) - If it is checked again (watch-list), should the notification be sent to the robot?",
+		ReplyMarkup: newReplyMarkup,
+	}
 }
 
 func (p *IsNotificationCreateReportPage) OnInput(value string, telSession *Models.TelSession) Page.PageInterface {

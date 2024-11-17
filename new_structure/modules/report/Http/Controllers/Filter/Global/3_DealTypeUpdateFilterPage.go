@@ -2,7 +2,6 @@ package Range
 
 import (
 	"fmt"
-	tele "gopkg.in/telebot.v4"
 	Models2 "project-root/modules/report/DB/Models"
 	"project-root/modules/report/Enums"
 	"project-root/modules/report/Facades"
@@ -19,8 +18,11 @@ func (p *DealTypeUpdateFilterPage) PageNumber() int {
 	return Enums.DealTypeUpdateFilterPageNumber
 }
 
-func (p *DealTypeUpdateFilterPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
-	return GetDealTypesMessage(), Filter.GetDefaultBtnUpdateFilter()
+func (p *DealTypeUpdateFilterPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
+	return &Page.PageContentOV{
+		Message:     GetDealTypesMessage(),
+		ReplyMarkup: Filter.GetDefaultBtnUpdateFilter(),
+	}
 }
 
 func GetDealTypesMessage() string {

@@ -15,7 +15,7 @@ func (p *MainUserPage) PageNumber() int {
 	return Enums.MainUserPageNumber
 }
 
-func (p *MainUserPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
+func (p *MainUserPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
 	var newReplyMarkup = &tele.ReplyMarkup{}
 	btnBookmark := newReplyMarkup.Data("Bookmark", "btn_bookmark")
 	btnMonitoring := newReplyMarkup.Data("Monitoring", "btn_monitoring")
@@ -28,7 +28,10 @@ func (p *MainUserPage) GeneratePage(telSession *Models.TelSession) (string, *tel
 		newReplyMarkup.Row(btnBookmark, btnMonitoring),
 		newReplyMarkup.Row(btnLogout),
 	)
-	return "Welcome dear " + telSession.LoggedUser.Username + " user", newReplyMarkup
+	return &Page.PageContentOV{
+		Message:     "Welcome dear " + telSession.LoggedUser.Username + " user",
+		ReplyMarkup: newReplyMarkup,
+	}
 }
 
 func (p *MainUserPage) OnInput(value string, telSession *Models.TelSession) Page.PageInterface {

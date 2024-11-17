@@ -16,7 +16,7 @@ func (p *TitleUpdateReportPage) PageNumber() int {
 	return Enums.TitleUpdateReportPageNumber
 }
 
-func (p *TitleUpdateReportPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
+func (p *TitleUpdateReportPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
 	var newReplyMarkup = &tele.ReplyMarkup{}
 	btnSkip := newReplyMarkup.Data("Skip", "btn_skip")
 	btnBack := newReplyMarkup.Data("Back", "btn_back")
@@ -27,7 +27,10 @@ func (p *TitleUpdateReportPage) GeneratePage(telSession *Models.TelSession) (str
 	report, _ := Facades.ReportRepo().FindReport(telSession.GetReportTempData().ReportIdSelected)
 	telSession.GetReportTempData().Title = report.Title // for skip
 	message := fmt.Sprintf("update Report(1/2) - Type a name for your report, this name must be unique:\n\n🔶 current value: %s", report.Title)
-	return message, newReplyMarkup
+	return &Page.PageContentOV{
+		Message:     message,
+		ReplyMarkup: newReplyMarkup,
+	}
 }
 
 func (p *TitleUpdateReportPage) OnInput(value string, telSession *Models.TelSession) Page.PageInterface {

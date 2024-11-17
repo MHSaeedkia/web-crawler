@@ -1,6 +1,7 @@
 package Controllers
 
 import (
+	"fmt"
 	tele "gopkg.in/telebot.v4"
 	PostEnums "project-root/modules/post/Enums"
 	Facades2 "project-root/modules/post/Facades"
@@ -16,7 +17,7 @@ func (p *ShowSinglePostPage) PageNumber() int {
 	return PostEnums.ShowSinglePostPageNumber
 }
 
-func (p *ShowSinglePostPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
+func (p *ShowSinglePostPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
 	var newReplyMarkup = &tele.ReplyMarkup{}
 	btnPriceHistory := newReplyMarkup.Data("Price history", "btn_price_history")
 	btnBookmark := newReplyMarkup.Data("Bookmark", "btn_bookmark")
@@ -26,7 +27,19 @@ func (p *ShowSinglePostPage) GeneratePage(telSession *Models.TelSession) (string
 		newReplyMarkup.Row(btnBack),
 	)
 	post, _ := Facades2.PostRepo().FindByID(telSession.GetPostTempData().PostId)
-	return Lib.FormatPostText(post), newReplyMarkup
+	page := &Page.PageContentOV{
+		Message:     Lib.FormatPostText(post),
+		ReplyMarkup: newReplyMarkup,
+	}
+
+	if post != nil && post.MainIMG != nil && *post.MainIMG != "" {
+		fmt.Println("HIIIIIIIIIIIIIIIIIII")
+		page.Photo = &tele.Photo{
+			File: tele.FromURL(*post.MainIMG),
+		}
+	}
+	return page
+
 }
 
 func (p *ShowSinglePostPage) OnInput(value string, telSession *Models.TelSession) Page.PageInterface {

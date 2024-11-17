@@ -1,7 +1,6 @@
 package Range
 
 import (
-	tele "gopkg.in/telebot.v4"
 	Models2 "project-root/modules/report/DB/Models"
 	"project-root/modules/report/Enums"
 	"project-root/modules/report/Http/Controllers/Filter"
@@ -15,7 +14,7 @@ func (p *AreaUpdateFilterPage) PageNumber() int {
 	return Enums.AreaUpdateFilterPageNumber
 }
 
-func (p *AreaUpdateFilterPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
+func (p *AreaUpdateFilterPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
 	return Filter.GetGeneratePageRangeUpdateFilter("Area")
 }
 

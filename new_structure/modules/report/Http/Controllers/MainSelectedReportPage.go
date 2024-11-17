@@ -17,7 +17,7 @@ func (p *MainSelectedReportPage) PageNumber() int {
 	return Enums.MainSelectedReportPageNumber
 }
 
-func (p *MainSelectedReportPage) GeneratePage(telSession *Models.TelSession) (string, *tele.ReplyMarkup) {
+func (p *MainSelectedReportPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
 	var newReplyMarkup = &tele.ReplyMarkup{}
 	btnPost := newReplyMarkup.Data("Post", "btn_post")
 	btnEdit := newReplyMarkup.Data("Edit", "btn_edit")
@@ -30,7 +30,10 @@ func (p *MainSelectedReportPage) GeneratePage(telSession *Models.TelSession) (st
 	)
 	report, _ := Facades.ReportRepo().FindReport(telSession.GetReportTempData().ReportIdSelected)
 	message := fmt.Sprintf("report  “%s”  is selected, what operation do you want to perform?", report.Title)
-	return message, newReplyMarkup
+	return &Page.PageContentOV{
+		Message:     message,
+		ReplyMarkup: newReplyMarkup,
+	}
 }
 
 func (p *MainSelectedReportPage) OnInput(value string, telSession *Models.TelSession) Page.PageInterface {
