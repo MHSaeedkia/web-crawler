@@ -3,14 +3,24 @@ package StaticBtns
 import (
 	"fmt"
 	tele "gopkg.in/telebot.v4"
+	"project-root/sys-modules/env"
 	"project-root/sys-modules/telebot/Lib/Page"
 	"regexp"
+	"strconv"
 )
 
 /*type PaginationPage struct {
 	ReplyMarkupData PaginationReplyMarkupData
 	OnClickBtnData  PaginationOnClickBtnData
 }*/
+
+func GetDefaultPerPage() int {
+	perPage, err := strconv.Atoi(env.Env("PER_PAGE"))
+	if err != nil {
+		panic("PER_PAGE env not valid")
+	}
+	return perPage
+}
 
 // ------------ ReplyMarkupData
 type PaginationReplyMarkupData struct {
@@ -78,7 +88,7 @@ func (pagination *PaginationOnClickBtnData) HandleInputPagination(btnKey string)
 		return Page.GetPage(pagination.BackPageNumber)
 	default:
 		// dynamic btn
-		itemId, err := parseBtnKey(btnKey, "post")
+		itemId, err := parseBtnKey(btnKey, pagination.PrefixBtnKey)
 		if err == nil {
 			return pagination.OnSelectItemId(itemId)
 		}
@@ -90,7 +100,6 @@ func parseBtnKey(btnKey, prefix string) (int, error) {
 	pattern := fmt.Sprintf(`^btn_show_%s_(\d+)`, prefix)
 	re := regexp.MustCompile(pattern)
 	matches := re.FindStringSubmatch(btnKey)
-
 	if len(matches) > 0 {
 		var itemIdID int
 		fmt.Sscanf(matches[1], "%d", &itemIdID)
