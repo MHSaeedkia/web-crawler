@@ -9,12 +9,10 @@ import (
 	ReportEnums "project-root/modules/report/Enums"
 	"project-root/modules/report/Facades"
 	"project-root/modules/user/DB/Models"
-	"project-root/sys-modules/env"
 	"project-root/sys-modules/telebot/Lib/Page"
 	"project-root/sys-modules/telebot/Lib/Pars"
 	"project-root/sys-modules/telebot/Lib/StaticBtns"
 	Time "project-root/sys-modules/time/Lib"
-	"strconv"
 	"strings"
 )
 
@@ -26,8 +24,11 @@ func (p *MainPostSelectedReportPage) PageNumber() int {
 
 func (p *MainPostSelectedReportPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
 	filter, _ := Facades.ReportFilterRepo().FindByReportId(telSession.GetReportTempData().ReportIdSelected)
-	perPage, _ := strconv.Atoi(env.Env("PER_PAGE"))
-	posts, countAllPage, _ := PostFacades.PostRepo().GetPostsForFilter(filter, perPage, telSession.GetPostTempData().LastPageNumber)
+	posts, countAllPage, _ := PostFacades.PostRepo().GetPostsForFilter(
+		filter,
+		StaticBtns.GetDefaultPerPage(),
+		telSession.GetPostTempData().LastPageNumber,
+	)
 
 	// dynamic btn
 	paginationReplyMarkup := StaticBtns.PaginationReplyMarkupData{
@@ -104,7 +105,6 @@ func (p *MainPostSelectedReportPage) OnClickInlineBtn(btnKey string, telSession 
 			telSession.GetPostTempData().LastPageNumber = pageNum
 		},
 		OnSelectItemId: func(itemId int) Page.PageInterface {
-			fmt.Println("ssssssssssssss", itemId)
 			_, err := PostFacades.PostRepo().FindByID(itemId)
 			if err != nil {
 				telSession.GetGeneralTempData().LastMessage = "The post ID is not valid"

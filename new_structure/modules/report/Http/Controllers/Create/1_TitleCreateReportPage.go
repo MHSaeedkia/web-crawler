@@ -4,7 +4,6 @@ import (
 	"project-root/modules/report/Enums"
 	"project-root/modules/report/Facades"
 	"project-root/modules/user/DB/Models"
-	UserEnums "project-root/modules/user/Enums"
 	"project-root/sys-modules/telebot/Lib/Page"
 	"project-root/sys-modules/telebot/Lib/StaticBtns"
 )
@@ -40,7 +39,7 @@ func (p *TitleCreateReportPage) OnInput(value string, telSession *Models.TelSess
 }
 
 func (p *TitleCreateReportPage) OnClickInlineBtn(btnKey string, telSession *Models.TelSession) Page.PageInterface {
-	return StaticBtns.HandleIfClickBackBtn(btnKey, UserEnums.MainUserPageNumber)
+	return StaticBtns.HandleIfClickBackBtn(btnKey, Enums.MainReportUserPageNumber)
 }
 
 var _ Page.PageInterface = &TitleCreateReportPage{}

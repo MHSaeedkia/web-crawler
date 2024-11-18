@@ -8,9 +8,8 @@ import (
 	"project-root/modules/report/Facades"
 	"project-root/modules/user/DB/Models"
 	"project-root/modules/user/Enums"
-	"project-root/sys-modules/env"
 	"project-root/sys-modules/telebot/Lib/Page"
-	"strconv"
+	"project-root/sys-modules/telebot/Lib/StaticBtns"
 	"strings"
 	"time"
 )
@@ -22,32 +21,34 @@ func (p *MainReportUserPage) PageNumber() int {
 }
 
 func (p *MainReportUserPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
-	var newReplyMarkup = &tele.ReplyMarkup{}
-	perPage, _ := strconv.Atoi(env.Env("PER_PAGE"))
-	reports, countAllPage, _ := Facades.ReportRepo().GetReportsByUserIdWithPagination(*telSession.LoggedUserID, perPage, telSession.GetReportTempData().LastPageNumber)
 
-	var rows []tele.Row
+	reports, countAllPage, _ := Facades.ReportRepo().GetReportsByUserIdWithPagination(
+		*telSession.LoggedUserID,
+		StaticBtns.GetDefaultPerPage(),
+		telSession.GetReportTempData().LastPageNumber,
+	)
 
 	// dynamic btn
-	for _, report := range *reports {
-		btn := newReplyMarkup.Data(report.Title, fmt.Sprintf("btn_show_report_%d", report.ID))
-		rows = append(rows, newReplyMarkup.Row(btn))
+	paginationReplyMarkup := StaticBtns.PaginationReplyMarkupData{
+		Items:        []StaticBtns.PaginationReplyMarkupItem{},
+		StaticRowBtn: []tele.Row{},
 	}
 
-	// static btn
+	for _, item := range *reports {
+		paginationReplyMarkup.Items = append(paginationReplyMarkup.Items, StaticBtns.PaginationReplyMarkupItem{
+			ID:    item.ID,
+			Title: item.Title,
+		})
+	}
+
+	// custom btn
+	var newReplyMarkup = &tele.ReplyMarkup{}
 	btnCreateNewReport := newReplyMarkup.Data("Create New Report", "btn_create_new_report")
-	btnPreviousPage := newReplyMarkup.Data("previous page", "btn_previous_page")
-	btnNextPage := newReplyMarkup.Data("next page", "btn_next_page")
-	btnBack := newReplyMarkup.Data("Back", "btn_back")
+	paginationReplyMarkup.StaticRowBtn = append(paginationReplyMarkup.StaticRowBtn, newReplyMarkup.Row(btnCreateNewReport))
 
-	rows = append(rows, newReplyMarkup.Row(btnPreviousPage, btnNextPage))
-	rows = append(rows, newReplyMarkup.Row(btnCreateNewReport))
-	rows = append(rows, newReplyMarkup.Row(btnBack))
-
-	newReplyMarkup.Inline(rows...)
 	return &Page.PageContentOV{
 		Message:     FormatReportList(*reports, countAllPage, telSession.GetReportTempData().LastPageNumber),
-		ReplyMarkup: newReplyMarkup,
+		ReplyMarkup: paginationReplyMarkup.GetReplyMarkup("report"),
 	}
 }
 
@@ -96,36 +97,33 @@ func (p *MainReportUserPage) OnInput(value string, telSession *Models.TelSession
 }
 
 func (p *MainReportUserPage) OnClickInlineBtn(btnKey string, telSession *Models.TelSession) Page.PageInterface {
-	switch btnKey {
-	case "btn_next_page":
-		telSession.GetReportTempData().LastPageNumber += 1
-		return Page.GetPage(ReportEnums.MainReportUserPageNumber)
-	case "btn_previous_page":
-		if telSession.GetReportTempData().LastPageNumber > 1 {
-			telSession.GetReportTempData().LastPageNumber -= 1
-		} else {
-			telSession.GetReportTempData().LastPageNumber = 1
-		}
-		return Page.GetPage(ReportEnums.MainReportUserPageNumber)
-	case "btn_create_new_report":
+	// custom btn
+	if btnKey == "btn_create_new_report" {
 		return Page.GetPage(ReportEnums.TitleCreateReportPageNumber)
-	case "btn_back":
-		return Page.GetPage(Enums.MainUserPageNumber)
-	default:
-		// dynamic btn
-		var reportID int
-		if _, err := fmt.Sscanf(btnKey, "btn_show_report_%d", &reportID); err == nil {
-			_, err := Facades.ReportRepo().FindReport(reportID)
+	}
+
+	// pagination btn
+	paginationHandleBtn := StaticBtns.PaginationOnClickBtnData{
+		PrefixBtnKey:      "report",
+		CurrentPageNumber: p.PageNumber(),
+		BackPageNumber:    Enums.MainUserPageNumber,
+		GetPageNumberSaved: func() int {
+			return telSession.GetReportTempData().LastPageNumber
+		},
+		SavePageNumber: func(pageNum int) {
+			telSession.GetReportTempData().LastPageNumber = pageNum
+		},
+		OnSelectItemId: func(itemId int) Page.PageInterface {
+			_, err := Facades.ReportRepo().FindReport(itemId)
 			if err != nil {
 				telSession.GetGeneralTempData().LastMessage = "The report ID is not valid"
 				return Page.GetPage(ReportEnums.MainReportUserPageNumber)
 			}
-			telSession.GetReportTempData().ReportIdSelected = reportID
+			telSession.GetReportTempData().ReportIdSelected = itemId
 			return Page.GetPage(ReportEnums.MainSelectedReportPageNumber)
-		}
-
+		},
 	}
-	return nil
+	return paginationHandleBtn.HandleInputPagination(btnKey)
 }
 
 var _ Page.PageInterface = &MainReportUserPage{}
