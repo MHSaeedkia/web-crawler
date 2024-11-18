@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	PATH    = "/tmp/"
+	PATH    = "tmp/"
 	TELEBOT = "telebot"
 	WEBC    = "webcrawler"
 	INFO    = "INFO"

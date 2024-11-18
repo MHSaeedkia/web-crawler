@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"os/signal"
 	"strconv"
@@ -16,6 +15,7 @@ import (
 	"github.com/MHSaeedkia/web-crawler/cmd/web-crawler/utils"
 	"github.com/MHSaeedkia/web-crawler/internal/models"
 	"github.com/MHSaeedkia/web-crawler/pkg/config"
+	"github.com/MHSaeedkia/web-crawler/pkg/log"
 	"github.com/chromedp/chromedp"
 	"github.com/jinzhu/gorm"
 )
@@ -72,10 +72,12 @@ func main() {
 	// Connect to the database
 	db, err := config.ConnectDB()
 	if err != nil {
-		log.Fatal("Error connecting to the database:", err)
+		log.Log("Error connecting to the database: "+err.Error(), log.WEBC, log.ERROR)
 		return
 	}
 	defer db.Close()
+
+	log.Log("Database connection established.", log.WEBC, log.INFO)
 
 	// Initialize crawl log
 	logEntry := models.CrawlLogs{
@@ -90,7 +92,7 @@ func main() {
 
 	// Save initial log entry
 	if err = db.Create(&logEntry).Error; err != nil {
-		log.Fatal("Failed to create crawl log:", err)
+		log.Log("Failed to create crawl log: "+err.Error(), log.WEBC, log.ERROR)
 		return
 	}
 
@@ -164,7 +166,7 @@ func main() {
 
 	// Block until we receive an interrupt or all work is completed
 	<-ctx.Done()
-	log.Println("Received shutdown signal, waiting for all tasks to complete...")
+	log.Log("Received shutdown signal, waiting for all tasks to complete...", log.WEBC, log.WARNING)
 
 	// Wait for any remaining work
 	wg.Wait()
@@ -183,9 +185,9 @@ func main() {
 	// Save updated log entry
 	err = db.Save(logEntry).Error
 	if err != nil {
-		log.Printf("Failed to update crawl log: %v", err)
+		log.Log("Failed to update crawl log: "+err.Error(), log.WEBC, log.ERROR)
 	}
-	log.Println("All tasks completed. Program shutting down gracefully.")
+	log.Log("All tasks completed. Program shutting down gracefully.", log.WEBC, log.INFO)
 	fmt.Printf("TotalRequest = %d FailedRequest = %d SuccessedRequest = %d", TotalRequest, FailedRequest, SuccessedRequest)
 }
 
@@ -193,16 +195,16 @@ func scrapeSite(ctx context.Context, site Site, contractType, placeType string, 
 	siteCtx, cancel := chromedp.NewContext(ctx)
 	defer cancel()
 
-	log.Printf("Navigating to base URL: %s", site.BaseURL)
+	log.Log("Navigating to base URL: "+site.BaseURL, log.WEBC, log.INFO)
 	err := chromedp.Run(siteCtx,
 		chromedp.Navigate(site.BaseURL),
 		chromedp.WaitVisible(site.LinkSelector, chromedp.ByQueryAll),
 	)
 	if err != nil {
-		log.Printf("Failed to load base URL %s: %v", site.BaseURL, err)
+		log.Log("Failed to load base URL "+site.BaseURL+": "+err.Error(), log.WEBC, log.ERROR)
 		return
 	}
-	log.Printf("Successfully loaded base URL: %s", site.BaseURL)
+	log.Log("Successfully loaded base URL: "+site.BaseURL, log.WEBC, log.INFO)
 
 	var links []string
 	err = chromedp.Run(siteCtx,
@@ -210,26 +212,26 @@ func scrapeSite(ctx context.Context, site Site, contractType, placeType string, 
 	)
 	TotalRequest += len(links)
 	if err != nil {
-		log.Printf("Failed to retrieve links from %s: %v", site.BaseURL, err)
+		log.Log("Failed to retrieve links from "+site.BaseURL+": "+err.Error(), log.WEBC, log.ERROR)
 		return
 	}
 	for i, link := range links {
 		select {
 		case <-ctx.Done():
-			log.Println("Shutdown signal received, stopping further processing")
+			log.Log("Shutdown signal received, stopping further processing", log.WEBC, log.WARNING)
 			return
 		default:
 			data, err := scrapeLink(siteCtx, link, site, contractType, placeType, db)
 			if err != nil {
-				log.Printf("Failed to scrape page %s: %v", link, err)
+				log.Log(fmt.Sprintf("Failed to scrape page %s: %v", link, err), log.WEBC, log.WARNING)
 				FailedRequest += 1
 				continue
 			}
-			log.Printf("Extracted data from page %d: %+v", i+1, data, link)
+			log.Log(fmt.Sprintf("Extracted data from page %d: %+v", i+1, data), log.WEBC, log.INFO)
 			SuccessedRequest += 1
 		}
 	}
-	log.Printf("Completed scraping all links for site: %s", site.BaseURL)
+	log.Log("Completed scraping all links for site: "+site.BaseURL, log.WEBC, log.INFO)
 }
 
 func scrapeLink(ctx context.Context, link string, site Site, contractType, placeType string, db *gorm.DB) (PageData, error) {
@@ -380,13 +382,15 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 		NeighborhoodName: data.City,
 	}
 
+	log.Log("Processing link: "+link, log.WEBC, log.INFO)
+
 	err1 = db.Create(&post).Error
 	if err1 != nil {
-		log.Printf("Error saving post: %v", err1)
+		log.Log("Error saving post: %v", log.WEBC, log.INFO)
 		return PageData{}, err1
 	}
 
-	log.Printf("Saved post with ID %d to database", post.ID)
+	log.Log("Saved post with ID "+strconv.Itoa(post.ID)+" to database", log.WEBC, log.INFO)
 
 	return data, nil
 }
