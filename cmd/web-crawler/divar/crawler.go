@@ -20,9 +20,6 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
-var TotalRequest int = 0
-var FailedRequest int = 0
-var SuccessedRequest int = 0
 
 type Site struct {
 	BaseURL       string
@@ -318,7 +315,6 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 			} else {
 				return data, errors.New("this is an error message")
 			}
-			data.Price = 0
 			data.Parking = utils.ConvertFeatureToBool(contentSlice[0])
 			data.Storage = utils.ConvertFeatureToBool(contentSlice[1])
 			data.Ballcon = utils.ConvertFeatureToBool(contentSlice[2])
@@ -326,6 +322,7 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 			data.Floor = 0
 			data.Rent = utils.ConvertToInt(data.TempRent)
 			data.Desposit = utils.ConvertToInt(data.TempDesposit)
+			data.Price = data.Desposit
 		}
 	} else {
 		if contractType == "buy" {
@@ -345,7 +342,6 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 				return data, errors.New("this is an error message")
 			}
 			data.TempFloor = elements[3]
-			data.Price = 0
 			data.Elevator = utils.ConvertFeatureToBool(contentSlice[0])
 			data.Parking = utils.ConvertFeatureToBool(contentSlice[1])
 			data.Storage = utils.ConvertFeatureToBool(contentSlice[2])
@@ -353,6 +349,7 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 			data.Floor = utils.ConvertFloor(data.TempFloor)
 			data.Rent = utils.ConvertToInt(data.TempRent)
 			data.Desposit = utils.ConvertToInt(data.TempDesposit)
+			data.Price = data.Desposit
 		}
 
 	}
