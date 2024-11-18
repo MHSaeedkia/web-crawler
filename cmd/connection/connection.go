@@ -122,7 +122,6 @@ func (c *dbConfig) GenerateFilterQuery(db *gorm.DB, filter models.ReportFilter) 
 
 	return query
 }
-
 func isZero(value reflect.Value) bool {
 	switch value.Kind() {
 	case reflect.String:
