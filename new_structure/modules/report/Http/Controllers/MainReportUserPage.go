@@ -8,7 +8,9 @@ import (
 	"project-root/modules/report/Facades"
 	"project-root/modules/user/DB/Models"
 	"project-root/modules/user/Enums"
+	"project-root/sys-modules/env"
 	"project-root/sys-modules/telebot/Lib/Page"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -21,8 +23,8 @@ func (p *MainReportUserPage) PageNumber() int {
 
 func (p *MainReportUserPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
 	var newReplyMarkup = &tele.ReplyMarkup{}
-
-	reports, countAllPage, _ := Facades.ReportRepo().GetReportsByUserIdWithPagination(*telSession.LoggedUserID, 2, telSession.GetReportTempData().LastPageNumber)
+	perPage, _ := strconv.Atoi(env.Env("PER_PAGE"))
+	reports, countAllPage, _ := Facades.ReportRepo().GetReportsByUserIdWithPagination(*telSession.LoggedUserID, perPage, telSession.GetReportTempData().LastPageNumber)
 
 	var rows []tele.Row
 
