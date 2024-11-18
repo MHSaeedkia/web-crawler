@@ -35,7 +35,7 @@ func FormatPostText(post *Models.Post) string {
 	))
 
 	if post.Description != nil {
-		result.WriteString(fmt.Sprintf("description:          %s\n", *post.Description))
+		result.WriteString(fmt.Sprintf("description:          %s\n", limitString(*post.Description, 350)))
 	}
 
 	result.WriteString("---------------------- details --------------------\n")
@@ -58,6 +58,13 @@ func FormatPostText(post *Models.Post) string {
 }
 
 // Helper functions
+
+func limitString(input string, maxLength int) string {
+	if len(input) > maxLength {
+		return input[:maxLength] + "..."
+	}
+	return input
+}
 
 func formatPrice(price *int64) string {
 	if price == nil {
