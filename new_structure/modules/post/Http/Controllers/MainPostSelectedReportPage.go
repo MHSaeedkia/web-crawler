@@ -12,6 +12,7 @@ import (
 	"project-root/sys-modules/env"
 	"project-root/sys-modules/telebot/Lib/Page"
 	"project-root/sys-modules/telebot/Lib/Pars"
+	"project-root/sys-modules/telebot/Lib/StaticBtns"
 	Time "project-root/sys-modules/time/Lib"
 	"strconv"
 	"strings"
@@ -24,35 +25,26 @@ func (p *MainPostSelectedReportPage) PageNumber() int {
 }
 
 func (p *MainPostSelectedReportPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
-	var newReplyMarkup = &tele.ReplyMarkup{}
-
 	filter, _ := Facades.ReportFilterRepo().FindByReportId(telSession.GetReportTempData().ReportIdSelected)
 	perPage, _ := strconv.Atoi(env.Env("PER_PAGE"))
-	posts, countAllPage, err := PostFacades.PostRepo().GetPostsForFilter(filter, perPage, telSession.GetPostTempData().LastPageNumber)
-
-	var rows []tele.Row
+	posts, countAllPage, _ := PostFacades.PostRepo().GetPostsForFilter(filter, perPage, telSession.GetPostTempData().LastPageNumber)
 
 	// dynamic btn
-	for _, post := range *posts {
-		btn := newReplyMarkup.Data(post.Title, fmt.Sprintf("btn_show_post_%d", post.ID))
-		rows = append(rows, newReplyMarkup.Row(btn))
+	paginationReplyMarkup := StaticBtns.PaginationReplyMarkupData{
+		Items:        []StaticBtns.PaginationReplyMarkupItem{},
+		StaticRowBtn: []tele.Row{},
 	}
 
-	// static btn
-	btnCreateNewReport := newReplyMarkup.Data("Create New Post", "btn_create_new_post")
-	btnPreviousPage := newReplyMarkup.Data("previous page", "btn_previous_page")
-	btnNextPage := newReplyMarkup.Data("next page", "btn_next_page")
-	btnBack := newReplyMarkup.Data("Back", "btn_back")
+	for _, post := range *posts {
+		paginationReplyMarkup.Items = append(paginationReplyMarkup.Items, StaticBtns.PaginationReplyMarkupItem{
+			ID:    post.ID,
+			Title: post.Title,
+		})
+	}
 
-	rows = append(rows, newReplyMarkup.Row(btnPreviousPage, btnNextPage))
-	rows = append(rows, newReplyMarkup.Row(btnCreateNewReport))
-	rows = append(rows, newReplyMarkup.Row(btnBack))
-
-	newReplyMarkup.Inline(rows...)
-	fmt.Println(countAllPage, err)
 	return &Page.PageContentOV{
 		Message:     FormatPostList(posts, filter.Report.Title, countAllPage, telSession.GetPostTempData().LastPageNumber),
-		ReplyMarkup: newReplyMarkup,
+		ReplyMarkup: paginationReplyMarkup.GetReplyMarkup("post"),
 	}
 }
 
@@ -101,36 +93,28 @@ func (p *MainPostSelectedReportPage) OnInput(value string, telSession *Models.Te
 }
 
 func (p *MainPostSelectedReportPage) OnClickInlineBtn(btnKey string, telSession *Models.TelSession) Page.PageInterface {
-	switch btnKey {
-	case "btn_next_page":
-		telSession.GetPostTempData().LastPageNumber += 1
-		return Page.GetPage(PostEnums.MainPostSelectedReportPageNumber)
-	case "btn_previous_page":
-		if telSession.GetPostTempData().LastPageNumber > 1 {
-			telSession.GetPostTempData().LastPageNumber -= 1
-		} else {
-			telSession.GetPostTempData().LastPageNumber = 1
-		}
-		return Page.GetPage(PostEnums.MainPostSelectedReportPageNumber)
-	case "btn_create_new_report":
-		//return Page.GetPage(ReportEnums.TitleCreateReportPageNumber)
-	case "btn_back":
-		return Page.GetPage(ReportEnums.MainSelectedReportPageNumber)
-	default:
-		// dynamic btn
-		var itemIdID int
-		if _, err := fmt.Sscanf(btnKey, "btn_show_post_%d", &itemIdID); err == nil {
-			_, err := PostFacades.PostRepo().FindByID(itemIdID)
+	paginationHandleBtn := StaticBtns.PaginationOnClickBtnData{
+		PrefixBtnKey:      "post",
+		CurrentPageNumber: p.PageNumber(),
+		BackPageNumber:    ReportEnums.MainSelectedReportPageNumber,
+		GetPageNumberSaved: func() int {
+			return telSession.GetPostTempData().LastPageNumber
+		},
+		SavePageNumber: func(pageNum int) {
+			telSession.GetPostTempData().LastPageNumber = pageNum
+		},
+		OnSelectItemId: func(itemId int) Page.PageInterface {
+			fmt.Println("ssssssssssssss", itemId)
+			_, err := PostFacades.PostRepo().FindByID(itemId)
 			if err != nil {
 				telSession.GetGeneralTempData().LastMessage = "The post ID is not valid"
 				return Page.GetPage(PostEnums.MainPostSelectedReportPageNumber)
 			}
-			telSession.GetPostTempData().PostId = itemIdID
+			telSession.GetPostTempData().PostId = itemId
 			return Page.GetPage(PostEnums.ShowSinglePostPageNumber)
-		}
-
+		},
 	}
-	return nil
+	return paginationHandleBtn.HandleInputPagination(btnKey)
 }
 
 var _ Page.PageInterface = &MainPostSelectedReportPage{}

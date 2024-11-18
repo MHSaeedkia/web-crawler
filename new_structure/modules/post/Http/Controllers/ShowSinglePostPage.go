@@ -1,7 +1,6 @@
 package Controllers
 
 import (
-	"fmt"
 	tele "gopkg.in/telebot.v4"
 	PostEnums "project-root/modules/post/Enums"
 	Facades2 "project-root/modules/post/Facades"
@@ -33,7 +32,6 @@ func (p *ShowSinglePostPage) GeneratePage(telSession *Models.TelSession) *Page.P
 	}
 
 	if post != nil && post.MainIMG != nil && *post.MainIMG != "" {
-		fmt.Println("HIIIIIIIIIIIIIIIIIII")
 		page.Photo = &tele.Photo{
 			File: tele.FromURL(*post.MainIMG),
 		}
