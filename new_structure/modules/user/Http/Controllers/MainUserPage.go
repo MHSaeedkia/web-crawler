@@ -3,6 +3,7 @@ package Controllers
 import (
 	tele "gopkg.in/telebot.v4"
 	AuthEnums "project-root/modules/auth/Enums"
+	MonitoringEnums "project-root/modules/monitoring/Enums"
 	ReportEnums "project-root/modules/report/Enums"
 	"project-root/modules/user/DB/Models"
 	"project-root/modules/user/Enums"
@@ -42,6 +43,7 @@ func (p *MainUserPage) OnClickInlineBtn(btnKey string, telSession *Models.TelSes
 	switch btnKey {
 	case "btn_bookmark":
 	case "btn_monitoring":
+		return Page.GetPage(MonitoringEnums.MainUserMonitoringPageNumber)
 	case "btn_export":
 	case "btn_report":
 		return Page.GetPage(ReportEnums.MainReportUserPageNumber)

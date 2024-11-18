@@ -13,7 +13,7 @@ type CrawlLog struct {
 	Success       int        `gorm:"column:successful_requests;type:mediumint"`
 	Failed        int        `gorm:"column:failed_requests;type:mediumint"`
 	RAMUsed       int        `gorm:"column:ram_used;type:mediumint"`
-	CPUUsed       int        `gorm:"column:cpu_used;type:decimal(10,2)"`
+	CPUUsed       int        `gorm:"column:cpu_used;type:mediumint"`
 	StartTime     time.Time  `gorm:"column:start_time;type:datetime"`
 	EndTime       *time.Time `gorm:"column:end_time;type:datetime;default:null"`
 	CreatedAt     time.Time  `gorm:"column:created_at;type:datetime"`

@@ -38,11 +38,11 @@ func (ts *TelSession) GetGeneralTempData() *GeneralTempData {
 	}
 
 	// default
-	defaultValue := &GeneralTempData{
+	defaultItem := &GeneralTempData{
 		LastMessage: "",
 	}
-	ts.TempData[saveKey] = defaultValue
-	return defaultValue
+	ts.TempData[saveKey] = defaultItem
+	return defaultItem
 }
 
 // ------- [Auth]
@@ -72,12 +72,12 @@ func (ts *TelSession) GetAuthTempData() *AuthTempData {
 	}
 
 	// default
-	defaultAuth := &AuthTempData{
+	defaultItem := &AuthTempData{
 		Username: "",
 		Password: "",
 	}
-	ts.TempData[saveKey] = defaultAuth
-	return defaultAuth
+	ts.TempData[saveKey] = defaultItem
+	return defaultItem
 }
 
 // ------- [Report]
@@ -110,7 +110,7 @@ func (ts *TelSession) GetReportTempData() *ReportTempData {
 	}
 
 	// default
-	defaultAuth := &ReportTempData{
+	defaultItem := &ReportTempData{
 		Title:            "",
 		ReportId:         0,
 		FilterId:         0,
@@ -118,8 +118,8 @@ func (ts *TelSession) GetReportTempData() *ReportTempData {
 		ReportIdSelected: 0,
 		IsNotification:   0,
 	}
-	ts.TempData[saveKey] = defaultAuth
-	return defaultAuth
+	ts.TempData[saveKey] = defaultItem
+	return defaultItem
 }
 
 // ------- [Post]
@@ -149,11 +149,43 @@ func (ts *TelSession) GetPostTempData() *PostTempData {
 	}
 
 	// default
-	defaultAuth := &PostTempData{
+	defaultItem := &PostTempData{
 		PostId:         0,
 		FilterId:       0,
 		LastPageNumber: 1,
 	}
-	ts.TempData[saveKey] = defaultAuth
-	return defaultAuth
+	ts.TempData[saveKey] = defaultItem
+	return defaultItem
+}
+
+// ------- [Monitoring]
+type MonitoringTempData struct {
+	LastPageNumber int `json:"last_page_number"`
+}
+
+func (ts *TelSession) GetMonitoringTempData() *MonitoringTempData {
+	saveKey := "monitoring"
+	if existItem, ok := ts.TempData[saveKey].(*MonitoringTempData); ok {
+		return existItem
+	}
+
+	// deserialize
+	if itemMap, ok := ts.TempData[saveKey].(map[string]interface{}); ok {
+		jsonData, err := json.Marshal(itemMap)
+		if err == nil {
+			var item MonitoringTempData
+			err := json.Unmarshal(jsonData, &item)
+			if err == nil {
+				ts.TempData[saveKey] = &item
+				return &item
+			}
+		}
+	}
+
+	// default
+	defaultItem := &MonitoringTempData{
+		LastPageNumber: 1,
+	}
+	ts.TempData[saveKey] = defaultItem
+	return defaultItem
 }

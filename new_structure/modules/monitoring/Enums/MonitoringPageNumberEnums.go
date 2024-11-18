@@ -1,8 +1,9 @@
 package Enums
 
 const (
-/*
-MainPostSelectedReportPageNumber = 3000
-ShowSinglePostPageNumber         = 3001
-*/
+	MainUserMonitoringPageNumber = 6000
+	/*
+	   MainPostSelectedReportPageNumber = 3000
+	   ShowSinglePostPageNumber         = 3001
+	*/
 )

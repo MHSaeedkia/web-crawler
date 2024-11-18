@@ -41,4 +41,28 @@ func (repo *CrawlLogRepository) Truncate() error {
 	return repo.Db.Where("1 = 1").Delete(&Models.CrawlLog{}).Error
 }
 
+func (repo *CrawlLogRepository) GetCrawlLogsWithPagination(perPage, pageNum int) (*[]Models.CrawlLog, int, error) {
+	var crawlLogs []Models.CrawlLog
+	var totalRecords int64
+	if err := repo.Db.Model(&Models.CrawlLog{}).Count(&totalRecords).Error; err != nil {
+		return nil, 0, err
+	}
+	totalPages := int((totalRecords + int64(perPage) - 1) / int64(perPage)) // round up
+	if pageNum < 1 {
+		pageNum = 1
+	}
+	if perPage < 1 {
+		perPage = 10
+	}
+
+	offset := (pageNum - 1) * perPage
+
+	// --
+	if err := repo.Db.Order("created_at DESC").Limit(perPage).Offset(offset).Find(&crawlLogs).Error; err != nil {
+		return nil, 0, err
+	}
+
+	return &crawlLogs, totalPages, nil
+}
+
 var _ CrawlLogRepositoryInterface = &CrawlLogRepository{}

@@ -11,4 +11,5 @@ type CrawlLogRepositoryInterface interface {
 	Update(crawlLog *Models.CrawlLog) error
 	Delete(id int) error
 	Truncate() error
+	GetCrawlLogsWithPagination(perPage, pageNum int) (*[]Models.CrawlLog, int, error)
 }
