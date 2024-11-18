@@ -2,8 +2,8 @@ package Commands
 
 import (
 	"fmt"
+	"project-root/modules/web-crawler/Lib/divar"
 	"project-root/sys-modules/console/Lib"
-	"project-root/sys-modules/database/Facades"
 )
 
 type GetPostsWebCrawlerCommand struct{}
@@ -17,10 +17,8 @@ func (c *GetPostsWebCrawlerCommand) Description() string {
 }
 
 func (c *GetPostsWebCrawlerCommand) Handle(args []string) {
-	db := Facades.Db()
-	//db.
-	fmt.Println("Executing MyCommand with Param1:", db)
-
+	fmt.Println("crawler start...")
+	divar.RunCrawlerPosts()
 }
 
 var _ Lib.CommandInterface = &GetPostsWebCrawlerCommand{}

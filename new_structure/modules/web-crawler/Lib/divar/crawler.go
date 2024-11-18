@@ -1,4 +1,4 @@
-package main
+package divar
 
 import (
 	"context"
@@ -7,17 +7,16 @@ import (
 	"log"
 	"os"
 	"os/signal"
+	PostModels "project-root/modules/post/DB/Models"
+	PostFacades "project-root/modules/post/Facades"
 	"strconv"
 	"strings"
 	"sync"
 	"syscall"
 	"time"
 
-	"github.com/MHSaeedkia/web-crawler/cmd/web-crawler/utils"
-	"github.com/MHSaeedkia/web-crawler/internal/models"
-	"github.com/MHSaeedkia/web-crawler/pkg/config"
 	"github.com/chromedp/chromedp"
-	"github.com/jinzhu/gorm"
+	"project-root/modules/web-crawler/Lib/utils"
 )
 
 var TotalRequest int = 0
@@ -64,17 +63,10 @@ type PageData struct {
 	Desposit      int
 }
 
-func main() {
+func RunCrawlerPosts() {
 	// Set up a context that listens for the interrupt signal from the OS
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer stop()
-	// Connect to the database
-	db, err := config.ConnectDB()
-	if err != nil {
-		log.Fatal("Error connecting to the database:", err)
-		return
-	}
-	defer db.Close()
 
 	// Sites configuration
 	sites := []Site{
@@ -131,7 +123,7 @@ func main() {
 		wg.Add(1)
 		go func(site Site, contractType, placeType string) {
 			defer wg.Done()
-			scrapeSite(ctx, site, contractType, placeType, db)
+			scrapeSite(ctx, site, contractType, placeType)
 		}(site, contractType, placeType)
 	}
 
@@ -151,7 +143,7 @@ func main() {
 	fmt.Printf("TotalRequest = %d FailedRequest = %d SuccessedRequest = %d", TotalRequest, FailedRequest, SuccessedRequest)
 }
 
-func scrapeSite(ctx context.Context, site Site, contractType, placeType string, db *gorm.DB) {
+func scrapeSite(ctx context.Context, site Site, contractType, placeType string) {
 	siteCtx, cancel := chromedp.NewContext(ctx)
 	defer cancel()
 
@@ -181,7 +173,7 @@ func scrapeSite(ctx context.Context, site Site, contractType, placeType string, 
 			log.Println("Shutdown signal received, stopping further processing")
 			return
 		default:
-			data, err := scrapeLink(siteCtx, link, site, contractType, placeType, db)
+			data, err := scrapeLink(siteCtx, link, site, contractType, placeType)
 			if err != nil {
 				log.Printf("Failed to scrape page %s: %v", link, err)
 				FailedRequest += 1
@@ -194,8 +186,7 @@ func scrapeSite(ctx context.Context, site Site, contractType, placeType string, 
 	log.Printf("Completed scraping all links for site: %s", site.BaseURL)
 }
 
-
-func scrapeLink(ctx context.Context, link string, site Site, contractType, placeType string, db *gorm.DB) (PageData, error) {
+func scrapeLink(ctx context.Context, link string, site Site, contractType, placeType string) (PageData, error) {
 	var data PageData
 	var result string
 	if contractType == "buy" {
@@ -317,7 +308,41 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 		}
 
 	}
-	post := models.Posts{
+
+	// optimize data for save data
+	intPrice := int64(data.Price)
+	priceHistory := map[string]interface{}{data.ReleaseDate.String(): strconv.Itoa(data.Price)}
+	LandArea := float64(data.Area)
+	timeNow := time.Now()
+	// save data
+	createPostErr := PostFacades.PostRepo().Create(&PostModels.Post{
+		SrcSitesID:     1,
+		ExternalSiteID: &linkID,
+		Title:          data.Title,
+		Description:    &data.Description,
+		Price:          &intPrice,
+		PriceHistory:   priceHistory,
+		MainIMG:        &data.ImageUrl,
+		GalleryIMGs:    nil,
+		SellerName:     nil,
+		LandArea:       &LandArea,
+		BuiltYear:      &data.BuildYear,
+		Rooms:          &data.Room,
+		IsApartment:    &data.PlaceType,
+		DealType:       &data.ContractType,
+		Floors:         &data.Floor, // for rent contracttype is 2
+		Elevator:       &data.Elevator,
+		Storage:        &data.Storage,
+		//Ballcon:	false,
+		//Parking:  false,
+		Location:         nil,
+		PostDate:         &data.ReleaseDate,
+		CityName:         &data.Province,
+		NeighborhoodName: &data.City,
+		UpdateAt:         &timeNow,
+		CreatedAt:        timeNow,
+	})
+	/*post := models.Posts{
 		SourceSiteId:   1,
 		ExternalSiteID: linkID,
 		Title:          data.Title,
@@ -341,15 +366,14 @@ func scrapeLink(ctx context.Context, link string, site Site, contractType, place
 		PostDate:         data.ReleaseDate,
 		CityName:         data.Province,
 		NeighborhoodName: data.City,
+	}*/
+
+	if createPostErr != nil {
+		log.Printf("Error saving post: %v", createPostErr)
+		return PageData{}, createPostErr
 	}
 
-	err1 = db.Create(&post).Error
-	if err1 != nil {
-		log.Printf("Error saving post: %v", err1)
-		return PageData{}, err1
-	}
-
-	log.Printf("Saved post with ID %d to database", post.ID)
+	log.Printf("Saved post with ID %d to database", linkID)
 
 	return data, nil
 }

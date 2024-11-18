@@ -15,7 +15,7 @@ type Post struct {
 	Status           int                    `gorm:"column:status;type:tinyint"`
 	ExternalSiteID   *string                `gorm:"column:external_site;type:varchar(255);default:null"`
 	Title            string                 `gorm:"column:title;type:varchar(255)"`
-	Description      *string                `gorm:"column:description;type:varchar(255);default:null"`
+	Description      *string                `gorm:"column:description;type:text;default:null"`
 	Price            *int64                 `gorm:"column:price;type:bigint;default:null"`
 	PriceHistory     map[string]interface{} `gorm:"column:price_history;serializer:json"`
 	MainIMG          *string                `gorm:"column:main_img;type:varchar(255);default:null"`
