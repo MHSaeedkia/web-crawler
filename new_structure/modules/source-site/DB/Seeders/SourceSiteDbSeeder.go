@@ -16,12 +16,14 @@ func (s SourceSiteDbSeeder) Name() string {
 func (s SourceSiteDbSeeder) Handle(db *gorm.DB) {
 	Facades.SourceSiteRepo().Truncate()
 	sourceSite1 := &Models.SourceSite{
+		ID:            1,
 		Title:         "Divar",
 		Config:        map[string]interface{}{"key": "value", "active": true},
 		CrawlInterval: 10,
 		MaxPosts:      100,
 	}
 	sourceSite2 := &Models.SourceSite{
+		ID:            2,
 		Title:         "Sheypoor",
 		Config:        map[string]interface{}{"key": "value", "active": false},
 		CrawlInterval: 10,

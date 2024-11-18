@@ -6,7 +6,6 @@ import (
 	PostEnums "project-root/modules/post/Enums"
 	"project-root/modules/post/Facades"
 	"project-root/modules/report/Enums"
-	Models2 "project-root/modules/source-site/DB/Models"
 	"project-root/sys-modules/database/Lib"
 	"time"
 )
@@ -27,7 +26,7 @@ func (s PostDbSeeder) Handle(db *gorm.DB) {
 	posts := []Models.Post{
 		{
 			SrcSitesID:       1,
-			SrcSite:          &Models2.SourceSite{},
+			SrcSite:          nil,
 			UsersID:          nil,
 			User:             nil,
 			Status:           PostEnums.ProcessingPostStatus,
@@ -57,7 +56,7 @@ func (s PostDbSeeder) Handle(db *gorm.DB) {
 		},
 		{
 			SrcSitesID:       1,
-			SrcSite:          &Models2.SourceSite{},
+			SrcSite:          nil,
 			UsersID:          nil,
 			User:             nil,
 			Status:           PostEnums.SuccessfulPostStatus, // successful
