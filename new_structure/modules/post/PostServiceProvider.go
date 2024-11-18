@@ -22,6 +22,7 @@ func (s *PostServiceProvider) Register() {
 	Page.RegisterPages([]Page.PageInterface{
 		&Controllers.MainPostSelectedReportPage{},
 		&Controllers.ShowSinglePostPage{},
+		&Controllers.PriceHistorySinglePostPage{},
 	})
 }
 

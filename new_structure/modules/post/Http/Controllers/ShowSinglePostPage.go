@@ -48,6 +48,12 @@ func (p *ShowSinglePostPage) OnClickInlineBtn(btnKey string, telSession *Models.
 
 	switch btnKey {
 	case "btn_price_history":
+		post, _ := Facades2.PostRepo().FindByID(telSession.GetPostTempData().PostId)
+		if post.PriceHistory == nil || len(post.PriceHistory) <= 0 {
+			telSession.GetGeneralTempData().LastMessage = "We have no price history"
+			return Page.GetPage(p.PageNumber())
+		}
+		return Page.GetPage(PostEnums.PriceHistorySinglePostPageNumber)
 	case "btn_bookmark":
 	}
 
