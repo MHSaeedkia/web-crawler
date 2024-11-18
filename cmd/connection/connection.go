@@ -40,6 +40,13 @@ func (c *dbConfig) AutoMigrate(dbConn *databaseConnection) error {
 		&models.TelSessions{},
 		&models.UserBookMarks{},
 		&models.Users{},
+		&models.Cities{},
+		&models.States{},
+		&models.Reports{},
+		&models.Exports{},
+		&models.ReportFilter{},
+		&models.SourceSites{},
+
 	}
 
 	for _, table := range tables {
