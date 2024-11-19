@@ -131,3 +131,8 @@ It checks all the posts and if the price changes, it saves it in priceHistory wi
 ```
 go run main.go web-crawler:update-price-posts
 ```
+### Figma Ui
+[Open the figma project](https://www.figma.com/design/vvrW1r6sfVMZPwWQPv0uWC/Crawler-bot---user-filter?node-id=0-1&t=UsMi4xvD8TQ2yniH-1)
+
+### ERD
+![Alt Text](doc/ERD_FINAL.png)
