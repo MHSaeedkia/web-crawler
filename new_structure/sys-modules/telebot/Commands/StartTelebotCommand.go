@@ -4,6 +4,7 @@ import (
 	"fmt"
 	tele "gopkg.in/telebot.v4"
 	"project-root/sys-modules/console/Lib"
+	"project-root/sys-modules/log/Lib/FireLog"
 	"project-root/sys-modules/telebot/Facades"
 )
 
@@ -37,6 +38,7 @@ func (c *StartTelebotCommand) Handle(args []string) {
 }
 
 func startServer() {
+	FireLog.Log("start bot...", "telebot", "INFO")
 	fmt.Println("server start...")
 	Facades.Bot().Start()
 }
