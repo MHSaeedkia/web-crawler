@@ -1,13 +1,13 @@
-package main
+package divar
 
 import (
 	"context"
 	"fmt"
 	"log"
+	"project-root/sys-modules/database/Facades"
 	"time"
 
 	"github.com/MHSaeedkia/web-crawler/cmd/web-crawler/utils"
-	"github.com/MHSaeedkia/web-crawler/pkg/config"
 	"github.com/chromedp/chromedp"
 )
 
@@ -73,18 +73,13 @@ func ScrapeAndCheckPrice(link string, givenPrice int, placeType bool, contractTy
 	return price, nil // Return new price if changed
 }
 
-func updatePriceCrawler() {
+func UpdatePriceCrawler() {
 	// Connect to the database
-	db, err := config.ConnectDB()
-	if err != nil {
-		log.Fatal("Error connecting to the database:", err)
-		return
-	}
-	defer db.Close()
+	db := Facades.Db()
 
 	// Fetch all posts with ExternalSiteID and Price
 	var posts []Post
-	if err := db.Select("id, external_site_id, price, price_history").Find(&posts).Error; err != nil {
+	if err := db.Select("id, external_site, price, price_history").Find(&posts).Error; err != nil {
 		log.Fatal("Failed to fetch posts:", err)
 		return
 	}
@@ -118,8 +113,4 @@ func updatePriceCrawler() {
 			}
 		}
 	}
-}
-
-func main() {
-	updatePriceCrawler()
 }

@@ -127,3 +127,7 @@ Start collecting posts and save in posts table
 ```
 go run main.go web-crawler:get-posts
 ```
+It checks all the posts and if the price changes, it saves it in priceHistory with the date
+```
+go run main.go web-crawler:update-price-posts
+```

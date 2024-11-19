@@ -9,6 +9,7 @@ import (
 func (s *WebCrawlerServiceProvider) Register() {
 	// Commands
 	SysCommand.RegisterCommand(&Commands.GetPostsWebCrawlerCommand{})
+	SysCommand.RegisterCommand(&Commands.UpdatePricePostsWebCrawlerCommand{})
 }
 
 func (s *WebCrawlerServiceProvider) Boot() {
