@@ -4,7 +4,6 @@ import (
 	"project-root/sys-modules/console/Lib"
 	"project-root/sys-modules/database/Facades"
 	SysDatabase "project-root/sys-modules/database/Lib"
-	"sort"
 )
 
 type SeedCommand struct{}
@@ -21,21 +20,12 @@ func (c *SeedCommand) Handle(args []string) {
 	isVerbose := hasVerb(args)
 
 	// sort name a-z
-	seeders := SysDatabase.GetSeeders()
-	keys := make([]string, len(seeders))
-	i := 0
-	for k := range seeders {
-		keys[i] = k
-		i++
-	}
-	sort.StringsAreSorted(keys)
-
+	seeders := SysDatabase.GetSortedSeeders()
 	// call
 	print("start seed...", isVerbose)
-	for _, key := range keys {
-		seeder := seeders[key]
+	for _, seeder := range seeders {
 		print("Seeding: "+seeder.Name(), isVerbose)
-		seeders[key].Handle(Facades.Db())
+		seeder.Handle(Facades.Db())
 		print("Seeded:  "+seeder.Name(), isVerbose)
 	}
 	print("successful seeders", isVerbose)
