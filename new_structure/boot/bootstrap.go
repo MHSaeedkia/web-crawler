@@ -6,6 +6,7 @@ import (
 	"os"
 	"project-root/app"
 	"project-root/modules/auth"
+	export "project-root/modules/export"
 	monitoring "project-root/modules/monitoring"
 	post "project-root/modules/post"
 	report "project-root/modules/report"
@@ -36,6 +37,7 @@ func Bootstrap() {
 		&post.PostServiceProvider{},
 		&webCrawler.WebCrawlerServiceProvider{},
 		&monitoring.MonitoringServiceProvider{},
+		&export.ExportServiceProvider{},
 		// ---------------------------------------
 	}
 
