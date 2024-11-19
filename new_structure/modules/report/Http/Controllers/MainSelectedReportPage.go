@@ -3,6 +3,7 @@ package Controllers
 import (
 	"fmt"
 	tele "gopkg.in/telebot.v4"
+	export "project-root/modules/export/Enums"
 	PostEnums "project-root/modules/post/Enums"
 	"project-root/modules/report/Enums"
 	"project-root/modules/report/Facades"
@@ -52,7 +53,7 @@ func (p *MainSelectedReportPage) OnClickInlineBtn(btnKey string, telSession *Mod
 	case "btn_crate_export":
 		filter, _ := Facades.ReportFilterRepo().FindByReportId(telSession.GetReportTempData().ReportIdSelected)
 		telSession.GetPostTempData().FilterId = filter.ID
-		return Page.GetPage(PostEnums.MainPostSelectedReportPageNumber)
+		return Page.GetPage(export.CreateExportReportPage)
 	case "btn_delete":
 		err := Facades.ReportRepo().SoftDelete(telSession.GetReportTempData().ReportIdSelected)
 		if err != nil {

@@ -1,5 +1,5 @@
 package Enums
 
 const (
-// MainUserMonitoringPageNumber = 6000
+	CreateExportReportPage = 7000
 )
