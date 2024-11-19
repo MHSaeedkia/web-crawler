@@ -70,17 +70,71 @@ func (repo *PostRepository) GetPostsForFilter(filter *ReportModels.ReportFilter,
 	var posts []Models.Post
 	var totalRecords int64
 
-	// count record
-	if err := repo.Db.Model(&Models.Post{}).Count(&totalRecords).Error; err != nil {
+	query := repo.Db.Model(&Models.Post{})
+
+	if filter.BuiltStart != nil {
+		query = query.Where("built_year >= ?", *filter.BuiltStart)
+	}
+	if filter.BuiltEnd != nil {
+		query = query.Where("built_year <= ?", *filter.BuiltEnd)
+	}
+	if filter.AreaMin != nil {
+		query = query.Where("land_area >= ?", *filter.AreaMin)
+	}
+	if filter.AreaMax != nil {
+		query = query.Where("land_area <= ?", *filter.AreaMax)
+	}
+	if filter.PriceMin != nil {
+		query = query.Where("price >= ?", *filter.PriceMin)
+	}
+	if filter.PriceMax != nil {
+		query = query.Where("price <= ?", *filter.PriceMax)
+	}
+	if filter.RoomCountMin != nil {
+		query = query.Where("rooms >= ?", *filter.RoomCountMin)
+	}
+	if filter.RoomCountMax != nil {
+		query = query.Where("rooms <= ?", *filter.RoomCountMax)
+	}
+	if filter.DealType != nil {
+		query = query.Where("deal_type = ?", *filter.DealType)
+	}
+	if filter.CityName != nil {
+		query = query.Where("city_name = ?", *filter.CityName)
+	}
+	if filter.NeighborhoodName != nil {
+		query = query.Where("neighborhood_name = ?", *filter.NeighborhoodName)
+	}
+	if filter.PostStartDate != nil {
+		query = query.Where("post_date >= ?", *filter.PostStartDate)
+	}
+	if filter.PostEndDate != nil {
+		query = query.Where("post_date <= ?", *filter.PostEndDate)
+	}
+	if filter.Elevator != nil {
+		query = query.Where("has_elevator = ?", *filter.Elevator)
+	}
+	if filter.Storage != nil {
+		query = query.Where("has_storage = ?", *filter.Storage)
+	}
+	if filter.Parking != nil {
+		query = query.Where("parking = ?", *filter.Parking)
+	}
+	if filter.IsApartment != nil {
+		query = query.Where("is_apartment = ?", *filter.IsApartment)
+	}
+	if filter.Location != nil && filter.LocationRadius != nil {
+		query = query.Where("ST_Distance_Sphere(point(location), point(?, ?)) <= ?", *filter.Location, *filter.LocationRadius)
+	}
+
+	if err := query.Count(&totalRecords).Error; err != nil {
 		return nil, 0, err
 	}
 
-	// total page
 	totalPages := int((totalRecords + int64(perPage) - 1) / int64(perPage))
 
-	// get
 	offset := (pageNum - 1) * perPage
-	if err := repo.Db.Limit(perPage).Offset(offset).Find(&posts).Error; err != nil {
+	if err := query.Limit(perPage).Offset(offset).Find(&posts).Error; err != nil {
 		return nil, 0, err
 	}
 
