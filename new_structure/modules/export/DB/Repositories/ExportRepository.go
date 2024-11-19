@@ -42,12 +42,19 @@ func (repo *ExportRepository) Truncate() error {
 	return repo.Db.Where("1 = 1").Delete(&Models.Export{}).Error
 }
 
-func (repo *ExportRepository) GetExportsWithPagination(perPage, pageNum int) (*[]Models.Export, int, error) {
+func (repo *ExportRepository) GetExportsWithPagination(userID, perPage, pageNum int) (*[]Models.Export, int, error) {
 	var exports []Models.Export
 	var totalRecords int64
-	if err := repo.Db.Model(&Models.Export{}).Count(&totalRecords).Error; err != nil {
+
+	err := repo.Db.Model(&Models.Export{}).
+		Joins("INNER JOIN reports ON reports.id = exports.report_id").
+		Where("reports.users_id = ?", userID).
+		Count(&totalRecords).Error
+
+	if err != nil {
 		return nil, 0, err
 	}
+
 	totalPages := int((totalRecords + int64(perPage) - 1) / int64(perPage)) // round up
 	if pageNum < 1 {
 		pageNum = 1
@@ -58,8 +65,16 @@ func (repo *ExportRepository) GetExportsWithPagination(perPage, pageNum int) (*[
 
 	offset := (pageNum - 1) * perPage
 
-	// --
-	if err := repo.Db.Preload("Report").Order("created_at DESC").Limit(perPage).Offset(offset).Find(&exports).Error; err != nil {
+	err = repo.Db.Model(&Models.Export{}).
+		Joins("INNER JOIN reports ON reports.id = exports.report_id").
+		Where("reports.users_id = ?", userID).
+		Preload("Report").
+		Order("exports.created_at DESC").
+		Limit(perPage).
+		Offset(offset).
+		Find(&exports).Error
+
+	if err != nil {
 		return nil, 0, err
 	}
 

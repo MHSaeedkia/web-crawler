@@ -24,7 +24,7 @@ func (p *MainExportPage) PageNumber() int {
 
 func (p *MainExportPage) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {
 
-	exports, countAllPage, _ := Facades.ExportRepo().GetExportsWithPagination(StaticBtns.GetDefaultPerPage(), telSession.GetExportTempData().LastPageNumber)
+	exports, countAllPage, _ := Facades.ExportRepo().GetExportsWithPagination(*telSession.LoggedUserID, StaticBtns.GetDefaultPerPage(), telSession.GetExportTempData().LastPageNumber)
 	//crawlLogs, countAllPage, _ := Facades2.CrawlLogRepo().GetCrawlLogsWithPagination(StaticBtns.GetDefaultPerPage(), telSession.GetMonitoringTempData().LastPageNumber)
 
 	// dynamic btn

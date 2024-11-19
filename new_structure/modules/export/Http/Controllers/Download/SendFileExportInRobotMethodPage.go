@@ -24,7 +24,6 @@ func (p *SendFileExportInRobotMethodPage) GeneratePage(telSession *Models.TelSes
 	export, _ := Facades.ExportRepo().FindByID(exportIds[0])
 	fileFormat := Enums.ConvertFileTypeToStr(export.FileType)
 	//var newReplyMarkup = &tele.ReplyMarkup{}
-	telSession.CurrentPage = Enums.MainExportPageNumber
 	return &Page.PageContentOV{
 		Message:     "File Exported:",
 		ReplyMarkup: StaticBtns.GetBackStaticBtn(),
