@@ -20,6 +20,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+var TotalRequest, SuccessedRequest, FailedRequest int
 
 type Site struct {
 	BaseURL       string
