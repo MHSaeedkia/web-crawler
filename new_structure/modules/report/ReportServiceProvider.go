@@ -3,6 +3,7 @@ package user
 import (
 	"project-root/app"
 	"project-root/modules/report/DB/Migrations"
+	"project-root/modules/report/DB/Seeders"
 	"project-root/modules/report/Http/Controllers"
 	"project-root/modules/report/Http/Controllers/Create"
 	Global "project-root/modules/report/Http/Controllers/Filter/Global"
@@ -17,6 +18,11 @@ func (s *ReportServiceProvider) Register() {
 	// Migrations
 	SysDatabase.RegisterMigration(&Migrations.CreateReportTable{})
 	SysDatabase.RegisterMigration(&Migrations.CreateReportFilterTable{})
+
+	// Seeders
+	SysDatabase.RegisterSeeders([]SysDatabase.DbSeederInterface{
+		&Seeders.ReportDbSeeder{},
+	})
 
 	// Pages
 	Page.RegisterPages([]Page.PageInterface{
