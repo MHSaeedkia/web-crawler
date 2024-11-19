@@ -1,7 +1,8 @@
-package export
+package Tests
 
 import (
 	"fmt"
+	"project-root/modules/export/Lib"
 	"testing"
 	"time"
 
@@ -116,12 +117,12 @@ func TestZipExport(t *testing.T) {
 	)
 	post = postGenerator()
 	for i := range 5 {
-		path, err = FinalExport(post, i%2)
+		path, err = export.FinalExport(post, i%2)
 		assert.Nil(t, err)
 		paths = append(paths, path)
 	}
 
-	fileName, _ := ZipExport(paths, "/tmp")
+	fileName, _ := export.ZipExport(paths, "/tmp")
 	fmt.Println("fileName : ", fileName)
 	assert.Nil(t, err)
 }
@@ -135,14 +136,14 @@ func TestDeleteExport(t *testing.T) {
 	)
 	post = postGenerator()
 	for i := range 5 {
-		path, err = FinalExport(post, i%2)
+		path, err = export.FinalExport(post, i%2)
 		assert.Nil(t, err)
 		paths = append(paths, path)
 	}
 
 	time.Sleep(3 * time.Second)
 
-	err = DeleteExport(paths)
+	err = export.DeleteExport(paths)
 	assert.Nil(t, err)
 }
 
@@ -158,12 +159,12 @@ func TestEmailExport(t *testing.T) {
 
 	post = postGenerator()
 	for i := range 5 {
-		path, err = FinalExport(post, i%2)
+		path, err = export.FinalExport(post, i%2)
 		assert.Nil(t, err)
 		paths = append(paths, path)
 	}
 
-	fileName, _ = ZipExport(paths, "/tmp")
-	err = EmailExport(email, fileName)
+	fileName, _ = export.ZipExport(paths, "/tmp")
+	err = export.EmailExport(email, fileName)
 	assert.Nil(t, err)
 }
