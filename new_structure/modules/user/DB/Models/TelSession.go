@@ -189,3 +189,36 @@ func (ts *TelSession) GetMonitoringTempData() *MonitoringTempData {
 	ts.TempData[saveKey] = defaultItem
 	return defaultItem
 }
+
+// ------- [Export]
+type ExportTempData struct {
+	LastPageNumber int   `json:"last_page_number"`
+	ExportIds      []int `json:"export_ids"`
+}
+
+func (ts *TelSession) GetExportTempData() *ExportTempData {
+	saveKey := "export"
+	if existItem, ok := ts.TempData[saveKey].(*ExportTempData); ok {
+		return existItem
+	}
+
+	// deserialize
+	if itemMap, ok := ts.TempData[saveKey].(map[string]interface{}); ok {
+		jsonData, err := json.Marshal(itemMap)
+		if err == nil {
+			var item ExportTempData
+			err := json.Unmarshal(jsonData, &item)
+			if err == nil {
+				ts.TempData[saveKey] = &item
+				return &item
+			}
+		}
+	}
+
+	// default
+	defaultItem := &ExportTempData{
+		LastPageNumber: 1,
+	}
+	ts.TempData[saveKey] = defaultItem
+	return defaultItem
+}

@@ -18,7 +18,7 @@ import (
 type CreateExportReport struct{}
 
 func (p *CreateExportReport) PageNumber() int {
-	return Enums.CreateExportReportPage
+	return Enums.CreateExportReportPageNumber
 }
 
 func (p *CreateExportReport) GeneratePage(telSession *Models.TelSession) *Page.PageContentOV {

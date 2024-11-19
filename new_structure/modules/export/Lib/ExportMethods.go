@@ -9,7 +9,6 @@ import (
 	"project-root/modules/export/Enums"
 	"project-root/modules/post/DB/Models"
 
-	"github.com/google/uuid"
 	"github.com/xuri/excelize/v2"
 	"gopkg.in/gomail.v2"
 )
@@ -72,32 +71,27 @@ func Excle(report []Models.Post, fileName string) (string, error) {
 }
 
 func FinalExport(report []Models.Post, method int) (string, error) {
-
-	fileName := generateUniqueFileName("xlsx")
 	var (
-		err error
+		fileName string
+		err      error
 	)
 	switch method {
 	case Enums.CsvFileType:
-		fileName := generateUniqueFileName("csv")
-		_, err = Csv(report, fileName)
+		fileName = generateUniqueFileName("csv")
+		fileName, err = Csv(report, fileName)
 	case Enums.ExcelFileType:
-		fileName := generateUniqueFileName("xlsx")
-		_, err = Excle(report, fileName)
+		fileName = generateUniqueFileName("xlsx")
+		fileName, err = Excle(report, fileName)
 	}
 	return fileName, err
 }
 
-func ZipExport(pahts []string, path string) (string, error) {
+func ZipExport(pahts []string) (string, error) {
 	var (
-		uid      uuid.UUID
 		fileName string
 		err      error
 	)
-	uid = uuid.New()
-
-	fileName = fmt.Sprintf("%s/%s.zip", path, uid /*string(uuid)[:len(string(uuid))-1]*/)
-
+	fileName = generateUniqueFileName("zip")
 	zipFile, err := os.Create(fileName)
 	if err != nil {
 		return "", err

@@ -12,7 +12,7 @@ func ConvertFileTypeToStr(fileType int) string {
 	case CsvFileType:
 		status = "csv"
 	case ExcelFileType:
-		status = "excel"
+		status = "xlsx"
 	case ZipFileType:
 		status = "zip"
 	}

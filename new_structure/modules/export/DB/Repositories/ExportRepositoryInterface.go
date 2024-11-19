@@ -12,4 +12,5 @@ type ExportRepositoryInterface interface {
 	Delete(id int) error
 	Truncate() error
 	GetExportsWithPagination(perPage, pageNum int) (*[]Models.Export, int, error)
+	ValidateExportIDs(ids []int, userID int) error
 }

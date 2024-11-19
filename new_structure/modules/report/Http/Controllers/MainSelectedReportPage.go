@@ -53,7 +53,7 @@ func (p *MainSelectedReportPage) OnClickInlineBtn(btnKey string, telSession *Mod
 	case "btn_crate_export":
 		filter, _ := Facades.ReportFilterRepo().FindByReportId(telSession.GetReportTempData().ReportIdSelected)
 		telSession.GetPostTempData().FilterId = filter.ID
-		return Page.GetPage(export.CreateExportReportPage)
+		return Page.GetPage(export.CreateExportReportPageNumber)
 	case "btn_delete":
 		err := Facades.ReportRepo().SoftDelete(telSession.GetReportTempData().ReportIdSelected)
 		if err != nil {

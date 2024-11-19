@@ -1,6 +1,7 @@
 package Repositories
 
 import (
+	"errors"
 	"gorm.io/gorm"
 	"project-root/modules/export/DB/Models"
 )
@@ -58,11 +59,35 @@ func (repo *ExportRepository) GetExportsWithPagination(perPage, pageNum int) (*[
 	offset := (pageNum - 1) * perPage
 
 	// --
-	if err := repo.Db.Order("created_at DESC").Limit(perPage).Offset(offset).Find(&exports).Error; err != nil {
+	if err := repo.Db.Preload("Report").Order("created_at DESC").Limit(perPage).Offset(offset).Find(&exports).Error; err != nil {
 		return nil, 0, err
 	}
 
 	return &exports, totalPages, nil
+}
+
+func (repo *ExportRepository) ValidateExportIDs(ids []int, userID int) error {
+	if len(ids) == 0 {
+		return errors.New("no IDs provided")
+	}
+
+	var count int64
+	err := repo.Db.Table("exports").
+		Select("COUNT(*)").
+		Joins("INNER JOIN reports ON reports.id = exports.report_id").
+		Where("exports.id IN ?", ids).
+		Where("reports.users_id = ?", userID).
+		Count(&count).Error
+
+	if err != nil {
+		return err
+	}
+
+	if count != int64(len(ids)) {
+		return errors.New("one or more IDs are invalid or do not belong to the user")
+	}
+
+	return nil
 }
 
 var _ ExportRepositoryInterface = &ExportRepository{}
