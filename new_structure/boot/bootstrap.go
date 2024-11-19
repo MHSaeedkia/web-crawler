@@ -10,6 +10,7 @@ import (
 	report "project-root/modules/report"
 	sourceSite "project-root/modules/source-site"
 	"project-root/modules/user"
+	webCrawler "project-root/modules/web-crawler"
 	SysConsole "project-root/sys-modules/console"
 	"project-root/sys-modules/console/Lib"
 	SysDatabase "project-root/sys-modules/database"
@@ -32,7 +33,7 @@ func Bootstrap() {
 		&report.ReportServiceProvider{},
 		&sourceSite.SourceSiteServiceProvider{},
 		&post.PostServiceProvider{},
-
+		&webCrawler.WebCrawlerServiceProvider{},
 		// ---------------------------------------
 	}
 

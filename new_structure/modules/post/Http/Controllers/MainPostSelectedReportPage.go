@@ -9,9 +9,11 @@ import (
 	ReportEnums "project-root/modules/report/Enums"
 	"project-root/modules/report/Facades"
 	"project-root/modules/user/DB/Models"
+	"project-root/sys-modules/env"
 	"project-root/sys-modules/telebot/Lib/Page"
 	"project-root/sys-modules/telebot/Lib/Pars"
 	Time "project-root/sys-modules/time/Lib"
+	"strconv"
 	"strings"
 )
 
@@ -25,7 +27,8 @@ func (p *MainPostSelectedReportPage) GeneratePage(telSession *Models.TelSession)
 	var newReplyMarkup = &tele.ReplyMarkup{}
 
 	filter, _ := Facades.ReportFilterRepo().FindByReportId(telSession.GetReportTempData().ReportIdSelected)
-	posts, countAllPage, err := PostFacades.PostRepo().GetPostsForFilter(filter, 1, telSession.GetPostTempData().LastPageNumber)
+	perPage, _ := strconv.Atoi(env.Env("PER_PAGE"))
+	posts, countAllPage, err := PostFacades.PostRepo().GetPostsForFilter(filter, perPage, telSession.GetPostTempData().LastPageNumber)
 
 	var rows []tele.Row
 

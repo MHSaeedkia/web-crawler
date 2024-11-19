@@ -1,0 +1,716 @@
+INFO: 2024/11/18 20:56:12 log.go:73: Database connection established.
+INFO: 2024/11/18 20:56:34 log.go:73: Navigating to base URL: https://divar.ir/s/iran/buy-villa
+INFO: 2024/11/18 20:56:54 log.go:73: Navigating to base URL: https://divar.ir/s/iran/buy-apartment
+INFO: 2024/11/18 20:57:01 log.go:73: Successfully loaded base URL: https://divar.ir/s/iran/buy-villa
+INFO: 2024/11/18 20:57:14 log.go:73: Navigating to base URL: https://divar.ir/s/iran/rent-villa
+INFO: 2024/11/18 20:57:26 log.go:73: Successfully loaded base URL: https://divar.ir/s/iran/buy-apartment
+INFO: 2024/11/18 20:57:26 log.go:73: Processing link: https://divar.ir/v/%D8%A7%D8%B3%D8%AA%D8%AE%D8%B1%D8%AF%D8%A7%D8%AE%D9%84%DB%8C-%D9%81%D8%A7%D8%B5%D9%84%D9%87-%D8%AA%D8%A7%D8%B3%D8%A7%D8%AD%D9%84-%DB%B7%D8%AF%D9%82%DB%8C%D9%82%D9%87-%D8%B3%D9%86%D8%AF%D8%AF%D8%A7%D8%B1/wZgUbovS
+INFO: 2024/11/18 20:57:28 log.go:73: Saved post with ID 228 to database
+INFO: 2024/11/18 20:57:28 log.go:73: Extracted data from page 1: {Title:استخرداخلی/فاصله تاساحل ۷دقیقه/سنددار TempRoom:۳ Room:3 TempBuildYear:۱۴۰۳ BuildYear:1403 TempArea:۳۰۰ Area:300 TempPrice:۶٬۰۰۰٬۰۰۰٬۰۰۰ تومان Price:6000000000 PlaceType:false ContractType:1 Elevator:false Parking:true Storage:true Ballcon:true Province: City:محمودآباد ReleaseDate:2024-07-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/q9yis_Dp5keUf9mmg9zAWQ/67b16851-1203-4f2b-b1c8-e70ce4b6edec.jpg Description:کد:1412
+♦️ویلا:دوبلکس
+♦️متراژزمین:250متر
+♦️متراژبنا:300متر
+♦️تعدادخواب:۳خواب مستر
+♦️انشعابات:۳کنتوراختصاصی
+
+♦️تهاتر:خودرو؛آپارتمان،ملک تجاری
+♦️شرایط اقساط=تماس/چت
+♦️ساعت پاسخگویی:۲۴ساعته
+
+♦️قلب سرمایه گذاری درمنطقه راباماتجربه کنید. TempFloor: Floor:0 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 20:57:34 log.go:73: Navigating to base URL: https://divar.ir/s/iran/rent-apartment
+INFO: 2024/11/18 20:57:51 log.go:73: Processing link: https://divar.ir/v/%D9%88%DB%8C%D9%84%D8%A7-%D8%AF%D9%88%D8%A8%D9%84%DA%A9%D8%B3-%D8%A7%D8%B3%D8%AA%D8%AE%D8%B1-%D8%AF%D8%A7%D8%B1/wZk07e70
+INFO: 2024/11/18 20:57:52 log.go:73: Saved post with ID 229 to database
+INFO: 2024/11/18 20:57:52 log.go:73: Extracted data from page 2: {Title:ویلا دوبلکس استخر دار TempRoom:۲ Room:2 TempBuildYear:۱۴۰۰ BuildYear:1400 TempArea:۲۲۰ Area:220 TempPrice:۶٬۳۰۰٬۰۰۰٬۰۰۰ تومان Price:6300000000 PlaceType:false ContractType:1 Elevator:false Parking:true Storage:true Ballcon:true Province: City:زیرآب ReleaseDate:2024-07-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/afra/post/KJqK-9VP6HIY90KMkHxDHQ/fb2b2db0-b430-4c6e-9100-1dfd90fd92d7.jpg Description:ویلا استخر دار
+
+ویو عالی،
+
+در بهترین ییلاقات سواد کوه لولاک،
+
+مبله با تمام امکانات و وسایل زندگی شیک
+
+نما سنگ
+
+فروش به صورت اقساطی
+
+معاوضه با ماشین و آپارتمان
+
+با مصالح ساختمانی و آهن آلات نیز قابل تهاتر میباشد. TempFloor: Floor:0 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 20:57:54 log.go:73: Successfully loaded base URL: https://divar.ir/s/iran/rent-villa
+INFO: 2024/11/18 20:58:04 log.go:73: Successfully loaded base URL: https://divar.ir/s/iran/rent-apartment
+WARNING: 2024/11/18 20:58:06 log.go:75: Failed to scrape page https://divar.ir/v/%D8%AF%D9%88-%D9%88%D8%A7%D8%AD%D8%AF-%D8%A2%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86-%D8%A8%D9%87-%D9%85%D8%AC%D9%85%D9%88%D8%B9-%DB%B1%DB%B2%DB%B1-%D9%85%D8%AA%D8%B1-%D8%A8%D9%87-%D8%B5%D9%88%D8%B1%D8%AA-%DB%8C%DA%A9%D8%AC%D8%A7/wZyATOSk: context deadline exceeded
+INFO: 2024/11/18 20:58:14 log.go:73: Processing link: https://divar.ir/v/%D8%A8%D8%A7%D8%BA-%D9%88%DB%8C%D9%84%D8%A7%DB%B7%DB%B0%DB%B0%D9%85%D8%AA%D8%B1%DB%8C-%D8%AF%D8%B1-%D8%B3%D8%B1%D8%AF%D8%B1%D9%88%D8%AF-%D8%B1%D9%88%D8%B3%D8%AA%D8%A7%DB%8C-%D9%88%D8%B1%D9%86%D9%82/wZ7g3e2d
+INFO: 2024/11/18 20:58:18 log.go:73: Saved post with ID 230 to database
+INFO: 2024/11/18 20:58:18 log.go:73: Extracted data from page 3: {Title:باغ ویلا۷۰۰متری در سردرود روستای ورنق TempRoom:۱ Room:1 TempBuildYear:۱۴۰۰ BuildYear:1400 TempArea:۷۰۰ Area:700 TempPrice:۱٬۷۹۰٬۰۰۰٬۰۰۰ تومان Price:1790000000 PlaceType:false ContractType:1 Elevator:false Parking:true Storage:true Ballcon:true Province: City:تبریز ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/luu0JW-VZmHUheC0Vq0jeQ/a7840fc3-089d-4627-9e74-ec1f5dc6b981.jpg Description:این باغ در روستای سرسبز و خوش آب و هوای ورنق میباشد
+ادرس دقیق . سردرود. سه راهی خلجان. به طرف خلجان بعد از خلجان روستای ورنق
+فاصله از تبریز فقط نیم ساعت
+از سردرود۵دقیقه
+متراژ باغ ۷۰۰متر میباشد و ویلای ۴۵متری دارد
+دارای تراس و سرویس بهداشتی و جای پارک چند خودرو .
+یک استخر کوچک جهت ذخیره اب موجوده
+نیم ساعت آب مالکیتا" که تو قولنامه نوشته میشه
+سند قولنامه هست و سند مادر و امضای دهیاری تقدیم میشه
+دارای نقشه utm
+فاصله با برق فقط ۱۰۰متره ولی از همسایه میتونم برق بگیرم براتون
+گاز نداره
+امنیت منطقه بسیار بالا میباشد یعنی تا حالا من ندیدم کسی بگه ازم دزدی شد با مردمان بسیار مهربان
+که اینا از همه مهمتره
+جهت بازدید لطفا از قبل هماهنگ بشین با تشکر TempFloor: Floor:0 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 20:58:21 log.go:73: Processing link: https://divar.ir/v/%D9%88%DB%8C%D9%84%D8%A7%DB%8C%DB%8C-%DB%B1%DB%B0%DB%B0-%D9%85%D8%AA%D8%B1%DB%8C-%D8%AD%DB%8C%D8%A7%D8%B7-%D8%AF%D8%A7%D8%B1-%D8%A7%D9%81%D8%B3%D8%B1%D8%A7%D9%86-%D8%AF%D9%88-%D8%AE%D9%84%DB%8C%D8%AC-%D9%87%D9%81%D8%AA/wZz0YbhL
+INFO: 2024/11/18 20:58:22 log.go:73: Processing link: https://divar.ir/v/%D8%A8%D9%84%D9%88%DA%A9-%DA%A9%D8%A7%D9%85%D9%84-%DB%B4%D9%88%D8%A7%D8%AD%D8%AF%DB%8C-%D9%85%D8%A8%D9%84%D9%87-%D8%B5%D8%AF%D9%81-%D8%B5%D8%A7%D9%84%D8%AD%DB%8C/wZzMwJ4n
+INFO: 2024/11/18 20:58:22 log.go:73: Saved post with ID 231 to database
+INFO: 2024/11/18 20:58:22 log.go:73: Extracted data from page 1: {Title:ویلایی ۱۰۰ متری حیاط دار، افسران دو،خلیج هفت TempRoom:۲ Room:2 TempBuildYear:۱۳۸۵ BuildYear:1385 TempArea:۹۵ Area:95 TempPrice: Price:0 PlaceType:false ContractType:2 Elevator:false Parking:false Storage:true Ballcon:true Province: City:گرگان ReleaseDate:2024-07-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/_JrzNymYLj2X-dN26hogQA/4985861c-0197-4dae-ad5c-4c5360e21382.jpg Description:خونه بسیار بزرگ با حیاط بسیار زیبا
+پمپ آب دارد و ملک تخلیه میباشد
+دو طبقه ، دو واحد، ملک مورد نظر طبقه اول
+میباشد
+هر دو واحد دارای کنتور برق و گاز جدا هستند و راه رفت و آمد کاملا جدا
+تازه بازسازی و رنگ آمیزی شده TempFloor: Floor:0 TempRent:۷٬۰۰۰٬۰۰۰ تومان Rent:7000000 TempDesposit:۶۰٬۰۰۰٬۰۰۰ تومان Desposit:60000000}
+INFO: 2024/11/18 20:58:23 log.go:73: Processing link: https://divar.ir/v/%D8%A2%D9%BE%D9%80%D8%A7%D8%B1%D8%AA%D9%80%D9%85%D8%A7%D9%86-%DB%B5%DB%B0-%D9%85%D9%80%D8%AA%D8%B1-%D8%B7%D9%80%D8%A8%D9%82%D9%87-%D8%A7%D9%88%D9%84-%D8%B2%D9%88%D8%AC-%D9%BE%D9%80%D8%B3%D9%80%D9%86%D8%AF-%D8%A7%D9%86%D8%AF%DB%8C%D8%B4%D9%87/wZ3QxLNr
+INFO: 2024/11/18 20:58:25 log.go:73: Saved post with ID 233 to database
+INFO: 2024/11/18 20:58:25 log.go:73: Extracted data from page 1: {Title:بلوک کامل ۴واحدی مبله صدف(صالحی) TempRoom:+۴ Room:4 TempBuildYear:۱۳۹۰ BuildYear:1390 TempArea:۳۰۰ Area:300 TempPrice: Price:0 PlaceType:true ContractType:2 Elevator:false Parking:true Storage:false Ballcon:false Province: City:کیش ReleaseDate:2024-07-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/Ap2_-8rbTAWD19_vF6tm6g/93bb05a0-ea9b-4350-8ee8-654d548a327f.jpg Description:شهرک صدف
+بلوک کامل
+۴واحدی
+۴واحد ۸۰متری ۲خواب
+مبله کامل
+تمیز و ۲ سرویس
+اجاره به صورت ۶ماه پیش گرفته میشود TempFloor:۱ از ۲ Floor:1 TempRent:۱۱۵٬۰۰۰٬۰۰۰ تومان Rent:115000000 TempDesposit:۶۰۰٬۰۰۰٬۰۰۰ تومان Desposit:600000000}
+INFO: 2024/11/18 20:58:25 log.go:73: Saved post with ID 232 to database
+INFO: 2024/11/18 20:58:25 log.go:73: Extracted data from page 2: {Title:آپـارتـمان ۵۰ مـتر*طـبقه اول* زوج پـسـند اندیشه TempRoom:۱ Room:1 TempBuildYear:۱۳۹۲ BuildYear:1392 TempArea:۵۰ Area:50 TempPrice:۱٬۶۰۰٬۰۰۰٬۰۰۰ تومان Price:1600000000 PlaceType:true ContractType:1 Elevator:false Parking:true Storage:true Ballcon:false Province: City:اندیشه ReleaseDate:2024-07-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/videos/thumbnails/a719227b-1bf4-46bf-890e-946cd0240cc9.jpg Description:در طبقه اول یک ساختمان تراورتن
+مشاعات فوق‌العاده عالی و تمیز
+همسایگان عالی
+بهترین خیابان فاز یک (دوم شرقی)
+یک خوابه
+پارکینگ مشاعات حیاط
+بالکن و کمد دیواری
+سیــستم گرمایــش پکیـج و رادیـاتور
+دیزاین شده و صفرتاصد تعویض شده وسایل و شیر آلات
+تخلیه آماده بازدید
+مبلغ رهن و وام از قیمت کل کســر شده است TempFloor:۱ از ۳ Floor:1 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 20:58:32 log.go:73: Processing link: https://divar.ir/v/%D9%85%D9%86%D8%B2%D9%84-%D9%88%DB%8C%D9%84%D8%A7%DB%8C%DB%8C-%DB%B2%DB%B0%DB%B0%D9%85%D8%AA%D8%B1%D8%B2%D9%85%DB%8C%D9%86-%DB%B1%DB%B1%DB%B0%D9%85%D8%AA%D8%B1%D8%A8%D9%86%D8%A7/wZ7g3q_z
+INFO: 2024/11/18 20:58:35 log.go:73: Saved post with ID 234 to database
+INFO: 2024/11/18 20:58:35 log.go:73: Extracted data from page 4: {Title:منزل ویلایی ۲۰۰مترزمین ۱۱۰متربنا TempRoom:۲ Room:2 TempBuildYear:۱۳۹۴ BuildYear:1394 TempArea:۱۱۰ Area:110 TempPrice:۸۰۰٬۰۰۰٬۰۰۰ تومان Price:800000000 PlaceType:false ContractType:1 Elevator:false Parking:true Storage:true Ballcon:true Province: City:قاين ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/videos/thumbnails/e7773142-a991-4abe-8d05-3b0c403f7634.jpg Description:منزل فوق درمحمدابادعلم میباشدوشرایط فوروششم یانقدی یامعاوضه باهزارواحدی یارانندگان میباشد TempFloor: Floor:0 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 20:58:44 log.go:73: Processing link: https://divar.ir/v/%D8%B1%D9%87%D9%86-%D8%A7%D8%AC%D8%A7%D8%B1%D9%87-%D8%A2%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86-%DB%B1%DB%B0%DB%B0-%D9%85%D8%AA%D8%B1%DB%8C-%D8%A8%D8%A7%D8%B2%D8%B3%D8%A7%D8%B2%DB%8C-%D8%B4%D8%AF%D9%87-%D8%AA%DA%A9-%D9%88%D8%A7%D8%AD%D8%AF%DB%8C/wZukQbsf
+INFO: 2024/11/18 20:58:50 log.go:73: Processing link: https://divar.ir/v/%D9%BE%D8%B1%D8%AF%DB%8C%D8%B3-%D9%81%D8%A7%D8%B2%DB%B1%DB%B1-%D8%B7%D8%A8%D9%82%D9%87-%DB%B1%DB%B0-%D9%86%D9%88%D8%B3%D8%A7%D8%B2-%D8%B3%D9%88%D8%AF-%D8%AA%D8%B6%D9%85%DB%8C%D9%86%DB%8C-%DA%A9%D9%88%D8%B2%D9%88-%D9%BE%D8%A7%D8%B1%D8%B3/gZAzUKqz
+INFO: 2024/11/18 20:58:52 log.go:73: Saved post with ID 235 to database
+INFO: 2024/11/18 20:58:52 log.go:73: Extracted data from page 2: {Title:رهن اجاره آپارتمان ۱۰۰ متری بازسازی شده تک واحدی TempRoom:۲ Room:2 TempBuildYear:قبل از ۱۳۷۰ BuildYear:1370 TempArea:۱۰۰ Area:100 TempPrice: Price:0 PlaceType:false ContractType:2 Elevator:false Parking:false Storage:true Ballcon:false Province:تهران City: دروازه شمیران ReleaseDate:2024-07-18 00:00:00 +0330 +0330 ImageUrl: Description:باسلام و عرض ادب
+واحد مسکونی تک واحدی ، طبقه سوم ، دو خواب ، بازسازی شده ، پارکینگ جهت پارک موتور و دوچرخه دارد ، آشپزخانه بزرگ کابینت‌ها mdf تعداد کابینت‌ها زیاد و جادار گاز رومیزی ، انباری داخل واحد ، آیفون تصویری ، سالن پذیرایی بزرگ دوتا فرش دوازده متری جا میشه و دور تا دورش کلی خالی میباشد برای گذاشتن مبلمان و میز ناهارخوری و دکوریجات ، نورگیرعالی ، پرده خور خوب ، دوخواب که یکی از خوابها کمد دیواری بزرگ دارد ، سرویس بهداشتی ایرانی فرنگی ، سرمایش گرمایش اسپیلت که البته گرمایش بخاری گازی هم دارد ، پله ها کوتاه و پهن برای اسباب کشی راحت و آسان ، حیاط چمن مصنوعی کار شده و یک پارک کوچک برای بازی فرزندان دلبندتان تهویه شده لوازم بازی الاکلنگ تاب سرسره و نیمکت کار شده است ، همسایه ها خوب ، ساختمان ساکت و آرام ، نزدیک دو متروی دروازه دولت و دروازه شمیران ، نزدیک به ایستگاه بی آر تی ، دسترسی آسان به مرکز خرید و مراکز درمانی ، تخفیف پس از پسند پای نوشتن قولنامه ، بازدید مساویست با پسند TempFloor: Floor:0 TempRent:۱۰۰٬۰۰۰ تومان Rent:100000 TempDesposit:۸۰۰٬۰۰۰٬۰۰۰ تومان Desposit:800000000}
+INFO: 2024/11/18 20:58:56 log.go:73: Processing link: https://divar.ir/v/5000%D9%85%D8%AA%D8%B1-%D8%A8%D8%A7%D8%BA-%D9%88%DB%8C%D9%84%D8%A7-%D9%86%D8%A7%D9%85%D9%87-%D8%AC%D9%87%D8%A7%D8%AF-%D8%B3%D9%86%D8%AF%DB%B6%D8%AF%D8%A7%D9%86%DA%AF-%D8%B1%D8%B3%D9%88%D9%84-%D8%A7%DA%A9%D8%B1%D9%85-%D8%A8%DA%A9%D9%87/wZS8uVFf
+INFO: 2024/11/18 20:58:59 log.go:73: Saved post with ID 236 to database
+INFO: 2024/11/18 20:58:59 log.go:73: Extracted data from page 3: {Title:پردیس فاز۱۱ طبقه ۱۰ نوساز سود تضمینی کوزو پارس TempRoom:۲ Room:2 TempBuildYear:۱۴۰۲ BuildYear:1402 TempArea:۸۷ Area:87 TempPrice:۲٬۳۰۰٬۰۰۰٬۰۰۰ تومان Price:2300000000 PlaceType:true ContractType:1 Elevator:true Parking:true Storage:true Ballcon:false Province: City:پردیس ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/afra/post/7P1AWZokOpOwVEMcndngCQ/9c19fc79-4ab4-4286-ab26-6ba11176fc37.jpg Description:♦️به نام حق♦️
+
+
+
+✅منطقه ای ارام و دلنشین با ویو ابدی غرق در نور
+✅رو بورس ترین منطقه کشور
+✅قویترین پیمانکار بین و المللی
+✅در مجاورت سد لتیان /باغات رودهن/ییلاق لواسانات
+✅منطقه به سرعت در حال پیشرفت و ترقی
+
+
+
+
+✔️باعث افتخار ماست کارگذار شما در تمام اقدامات نقل و انتقال در شهر پردیس باشیم
+✔️ما به تامین نیاز شما می اندیشیم
+
+
+
+
+☎️ساعت تماس:
+۹صبح
+تا
+۹شب
+
+**** ** *** ** TempFloor:۱۰ Floor:10 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 20:59:00 log.go:73: Saved post with ID 237 to database
+INFO: 2024/11/18 20:59:00 log.go:73: Extracted data from page 5: {Title:5000متر باغ ویلا نامه جهاد سند۶دانگ رسول اکرم بکه TempRoom:۱ Room:1 TempBuildYear:قبل از ۱۳۷۰ BuildYear:1370 TempArea:۵۰۰۰ Area:5000 TempPrice:۳۴٬۰۰۰٬۰۰۰٬۰۰۰ تومان Price:34000000000 PlaceType:false ContractType:1 Elevator:false Parking:true Storage:true Ballcon:true Province: City:شهریار ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/jjM9X3x02E6MiOJ4gOGjHA/6fcbd376-5a5c-409a-bbd6-ab0d4f32ffd1.jpg Description:با سلام و احترام
+
+⛔قابله توجه خریداران ⛔
+⛔ کاسبای محترم ⛔
+⛔ بهترین فرصت ⛔
+⛔ برای خریده طلایی⛔
+
+✅باغ ویلا ۵۰۰۰ متری سند تک برگ ششدانگ در رسول اکرم بکه
+
+✅۴دیوار و بنای ۸۰متری دارای نامه جهاد کشاورزی می‌باشد
+
+✅دارای آب برق و گاز کنتور
+
+✅دارای بهترین درختان میوه سلامت جنگل
+
+✅دارای سهمیه آب کشاورزی از موتورخانه ب مدت ۵ساعت
+
+✅موقعیت ملک فوق‌العاده عالی
+
+✅بهترین فرصت برای خریدارن محترم ایجاد شده ازش استفاده کنید
+
+✅فروشند واقعی پول لازم
+
+لطفاً فقط تماس TempFloor: Floor:0 TempRent: Rent:0 TempDesposit: Desposit:0}
+WARNING: 2024/11/18 20:59:05 log.go:75: Failed to scrape page https://divar.ir/v/%D8%A7%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86-%D8%A7%D9%84%D9%87%DB%8C%D9%87-%D8%AC%D9%86%D9%88%D8%A8%DB%8C-%DA%AF%D9%84%D8%B3%D8%A7%D8%B1-%D9%85%D8%B1%D9%88%D8%A7%D8%B1%DB%8C%D8%AF-%DB%B4/wZ2M1JIy: context deadline exceeded
+INFO: 2024/11/18 20:59:18 log.go:73: Processing link: https://divar.ir/v/%D8%A7%D8%AC%D8%A7%D8%B1%D9%87-%DB%8C%DA%A9-%D8%B7%D8%A8%D9%82%D9%87-%D9%87%D9%85%DA%A9%D9%81-%D8%A7%D8%B2-%D8%AF%D9%88-%D8%B7%D8%A8%D9%82%D9%87/wZ7g39s6
+INFO: 2024/11/18 20:59:21 log.go:73: Saved post with ID 238 to database
+INFO: 2024/11/18 20:59:21 log.go:73: Extracted data from page 3: {Title:اجاره یک طبقه همکف از دو طبقه TempRoom:۲ Room:2 TempBuildYear:قبل از ۱۳۷۰ BuildYear:1370 TempArea:۸۰ Area:80 TempPrice: Price:0 PlaceType:false ContractType:2 Elevator:false Parking:false Storage:true Ballcon:true Province: City:ملایر ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl: Description:یک طبقه همکف از دوطبقه ...حیاط مشترک TempFloor: Floor:0 TempRent:۶٬۰۰۰٬۰۰۰ تومان Rent:6000000 TempDesposit:۲۰٬۰۰۰٬۰۰۰ تومان Desposit:20000000}
+INFO: 2024/11/18 20:59:23 log.go:73: Processing link: https://divar.ir/v/%D8%A2%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86-%D9%85%D8%A8%D9%84%D9%87/wZ7gX2iC
+INFO: 2024/11/18 20:59:24 log.go:73: Processing link: https://divar.ir/v/%D8%A2%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86-80-%D9%85%D8%AA%D8%B1%DB%8C-%D8%AF%D8%B1-%D8%B3%D9%87%D9%86%D8%AF-%D9%81%D8%A7%D8%B2-2/wZ7g3ltW
+INFO: 2024/11/18 20:59:25 log.go:73: Saved post with ID 239 to database
+INFO: 2024/11/18 20:59:25 log.go:73: Extracted data from page 3: {Title:آپارتمان مبله TempRoom:۱ Room:1 TempBuildYear:۱۳۸۸ BuildYear:1388 TempArea:۶۰ Area:60 TempPrice: Price:0 PlaceType:true ContractType:2 Elevator:false Parking:true Storage:true Ballcon:false Province: City:گرگان ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/Qvc7JNW2yKAxTfEqiAURdA/4db2543f-26c9-4b3a-8f26-e497ecb88753.jpg Description:تک واحدی شیک و جمع و جور با وسایل کامل واقع در منطقه حافظیه گرگان، دسترسی عالی به تمامی امکانات ، فاصله از بلوار ناهارخوران بیست متر، TempFloor:۲ از ۴ Floor:2 TempRent:مجانی Rent:0 TempDesposit:۴۵۰٬۰۰۰٬۰۰۰ تومان Desposit:450000000}
+INFO: 2024/11/18 20:59:26 log.go:73: Saved post with ID 240 to database
+INFO: 2024/11/18 20:59:26 log.go:73: Extracted data from page 4: {Title:آپارتمان 80 متری در سهند فاز 2 TempRoom:۲ Room:2 TempBuildYear:۱۳۹۷ BuildYear:1397 TempArea:۸۰ Area:80 TempPrice:۱٬۶۸۰٬۰۰۰٬۰۰۰ تومان Price:1680000000 PlaceType:true ContractType:1 Elevator:true Parking:true Storage:true Ballcon:false Province: City:سهند ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/cxEB7GR-Epzz6n7lrq7A7w/6b8e83a8-6da0-402a-90dc-3a9083638724.jpg Description:توضیحات
+✅شخصی ساز
+✅ طبقه اول
+✅ با آسانسور و پارکینگ و انباری و تراس
+✅نصبیات کامل فول
+✅پکیج و رادیاتور در همه اتاق ها
+✅کف سرامیک
+✅سند تک برگ
+✅سرویس ایرانی و فرنگی
+آدرس:
+سهند.فاز دو.چهاراه نگین.علوی 6.کوی جنب مجتمع فردوس یک.انتهای کوی ساختمان مروارید
+صاحب ملک هستم
+امکان معاوضه توافقی با واحد در تبریز یا خودرو
+تخفیف جزئی پای معامله TempFloor:۱ از ۵ Floor:1 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 20:59:40 log.go:73: Processing link: https://divar.ir/v/%D8%A2%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86-72%D9%85%D8%AA%D8%B1%DB%8C-%D8%A8%D8%A7%D9%87%D9%86%D8%B1/wZ7gHweF
+WARNING: 2024/11/18 20:59:40 log.go:75: Failed to scrape page https://divar.ir/v/%D8%AE%D8%A7%D9%86%D9%87-%D9%88%DB%8C%D9%84%D8%A7%DB%8C%DB%8C-%D9%88%D8%A7%D9%85-%D8%AF%D8%A7%D8%B1-%D8%A8%D9%87-%D9%85%D8%AA%D8%B1%D8%A7%DA%98-%DB%B1%DB%B3%DB%B3-%D9%85%D8%AA%D8%B1-%D8%B3%D9%86%D8%AF-%D8%AA%DA%A9-%D8%A8%D8%B1%DA%AF/gZI-Eiu2: context deadline exceeded
+WARNING: 2024/11/18 20:59:40 log.go:75: Failed to scrape page https://divar.ir/v/%D8%A7%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86%DB%B4%DB%B1%D9%85%D8%AA%D8%B1%DB%8C-%D9%86%D9%82%D9%84%DB%8C/wZgwliJb: this is an error message
+INFO: 2024/11/18 20:59:41 log.go:73: Saved post with ID 241 to database
+INFO: 2024/11/18 20:59:41 log.go:73: Extracted data from page 5: {Title:آپارتمان 72متری باهنر TempRoom:۱ Room:1 TempBuildYear:۱۳۹۷ BuildYear:1397 TempArea:۷۲ Area:72 TempPrice:۱٬۶۵۰٬۰۰۰٬۰۰۰ تومان Price:1650000000 PlaceType:true ContractType:1 Elevator:true Parking:true Storage:true Ballcon:false Province: City:سمنان ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/zeeuTS6X6hbtwuxOPXU0ag/466cadfc-fb33-4470-aefc-1b95a2ef7f94.jpg Description:موقعیت ملک بسیار عالی در محله ای آرام، ساختمان 3طبقه 6واحدی، واحد210 میلیون در رهن مستاجر می‌باشد که از مبلغ کل کسر میشود، تخفیف پای معامله TempFloor:۲ Floor:2 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 20:59:41 log.go:73: Processing link: https://divar.ir/v/%D8%B1%D9%87%D9%86-%DA%A9%D8%A7%D9%85%D9%84-%D9%85%D9%86%D8%A7%D8%B2%D9%84-%DA%A9%D8%A7%D8%B1%D9%88%D9%86-%D9%86%DA%AF%D8%A7%D8%B1%D8%B3%D8%AA%D8%A7%D9%86-%D9%81%D8%A7%D8%B2-%DB%B2-%D8%AE%DB%8C%D8%A7%D8%A8%D8%A7%D9%86-%D8%A7%DB%8C%D8%AB%D8%A7%D8%B1-%DB%B8/wZ7gH8l9
+INFO: 2024/11/18 20:59:42 log.go:73: Saved post with ID 242 to database
+INFO: 2024/11/18 20:59:42 log.go:73: Extracted data from page 4: {Title:رهن کامل منازل کارون نگارستان فاز ۲ خیابان ایثار ۸ TempRoom:۲ Room:2 TempBuildYear:۱۳۹۰ BuildYear:1390 TempArea:۱۳۰ Area:130 TempPrice: Price:0 PlaceType:false ContractType:2 Elevator:false Parking:true Storage:true Ballcon:true Province: City:دزفول ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/hLCalLLufm1xjgE9ggGNKw/8a1fa9c0-aac4-4d1c-a55f-ee972d887118.jpg Description:منازل کارونی،قطعه ۲۰۰ متری ،حیاط مجزا،طبقه بالا دو خواب ،یک خواب کمد دیواری،حیاط بسیار بزرگ و جای پارک بیش از ۳ خودرو...
+با منازل ۱۳۰ متری کوی کارون فرق داره چون متراژ این قطعه ۲۰۰ متری می باشد...
+فقط بصورت رهن کامل واگذار میشود. TempFloor: Floor:0 TempRent:مجانی Rent:0 TempDesposit:۴۰۰٬۰۰۰٬۰۰۰ تومان Desposit:400000000}
+INFO: 2024/11/18 20:59:53 log.go:73: Processing link: https://divar.ir/v/%D8%A2%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86-%DB%B7%DB%B5-%D9%85%D8%AA%D8%B1%DB%8C-%D9%88%DB%8C%D9%88-%D8%AF%D8%B1%DB%8C%D8%A7-%D9%86%D8%AE%D8%B3%D8%AA-%D9%88%D8%B2%DB%8C%D8%B1%DB%8C/wZ7gXsJb
+INFO: 2024/11/18 20:59:55 log.go:73: Processing link: https://divar.ir/v/%D9%85%D8%AC%D8%AA%D9%85%D8%B9-%D9%88%DB%8C%D9%84%D8%A7%DB%8C%DB%8C-12-%D9%82%D8%B7%D8%B9%D9%87-400-%D9%85%D8%AA%D8%B1%DB%8C-%D8%B5%D9%88%D9%81%DB%8C%D8%A7%D9%86-%D9%86%D8%B9%D9%85%D8%AA-%D8%A7%D9%84%D9%87/wZh8CQgA
+INFO: 2024/11/18 20:59:55 log.go:73: Saved post with ID 243 to database
+INFO: 2024/11/18 20:59:55 log.go:73: Extracted data from page 5: {Title:آپارتمان ۷۵ متری ویو دریا نخست وزیری TempRoom:۲ Room:2 TempBuildYear:۱۳۹۰ BuildYear:1390 TempArea:۷۵ Area:75 TempPrice: Price:0 PlaceType:true ContractType:2 Elevator:true Parking:true Storage:true Ballcon:false Province: City:بابلسر ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/japW28rBef_OtIXnp6HxkA/451ef80b-109c-466e-bacd-f60a6d44ab6f.jpg Description:تاپ لوکیشن بابلسر
+واقع در خیابان ۳۵ متری نخست وزیری
+روبه روی کافه رستوران دوانژ
+ویو دریا
+پارکینگ طبقاتی اسانسوری
+وصل به فاضلاب شهری
+منبه آب ۱۸ هزار لیتری
+تمامی سرویس های موتور خانه و اسانسور انجام شده
+دوربین مدار بسته
+لابی و نگهبانی ۲۴ ساعته
+کم ساکن
+مدیریت قوی
+جهت بازدید تماس بگیرید
+حسنی
+املاک نارنجستان TempFloor:۷ از ۱۱ Floor:7 TempRent:۷٬۰۰۰٬۰۰۰ تومان Rent:7000000 TempDesposit:۳۵۰٬۰۰۰٬۰۰۰ تومان Desposit:350000000}
+INFO: 2024/11/18 20:59:56 log.go:73: Saved post with ID 244 to database
+INFO: 2024/11/18 20:59:56 log.go:73: Extracted data from page 7: {Title:مجتمع ویلایی 12 قطعه 400 متری ، صوفیان ، نعمت اله TempRoom:بدون اتاق Room:0 TempBuildYear:۱۴۰۳ BuildYear:1403 TempArea:۱ Area:1 TempPrice:۲۹۶٬۰۰۰٬۰۰۰ تومان Price:296000000 PlaceType:false ContractType:1 Elevator:false Parking:false Storage:false Ballcon:false Province: City:تبریز ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/csY-caLiB8d0en3Vl4hEfg/86c8d1f3-4e2f-432c-8b1c-257d32045557.jpg Description:قطعات مورد نظر 12 قطعه می‌باشند
+راه عبور با کوچه با عرض 5 متر و طول 170 متر کاملا خصوصی و بن بست میباشد
+منطقه ای کاملا دنج و آرام
+فاصله این ملک از جاده اصلی صوفیان به شبستر 1400 متر
+تامین آب از چاه عمیق و لوله کشی شده تا اول قطعات
+و زیر نظر مسئول آب برای ابیاری و رسیدگی
+
+بنایی و آماده سازی ملک با نقشه خود شما در اسرع وقت توسط افراد مجرب انجام میشه
+دسترسی محلی بسیار آسان
+زمین مورد نظر ملک آبا و اجدادی میباشد
+معاوضه ملک با خودرو و آپارتمان نیز انجام میشه
+تلفن تماس************ TempFloor: Floor:0 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 20:59:56 log.go:73: Processing link: https://divar.ir/v/%D8%A2%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86-%D8%AF%D8%B1%D9%BE%D8%B4%D8%AA-%D8%AF%D8%A7%D9%86%D8%B4%DA%AF%D8%A7%D9%87-%D8%A2%D8%B2%D8%A7%D8%AF%D9%88%D9%BE%DB%8C%D8%A7%D9%85-%D9%86%D9%88%D8%B1%D8%B1%D8%A8%D8%A7%D8%B7-%DA%A9%D8%B1%DB%8C%D9%85/gZjgPkJ6
+INFO: 2024/11/18 20:59:56 log.go:73: Processing link: https://divar.ir/v/%D8%AE%D8%A7%D9%86%D9%87-%D8%B7%D8%A8%D9%82%D9%87-%D8%A7%D9%88%D9%84-%D8%AE%DB%8C%D8%A7%D8%A8%D8%A7%D9%86-%D8%A7%D8%A8%D9%88%D8%B0%D8%B1-%D9%86%D9%88%D8%B1/wZiMBZKb
+INFO: 2024/11/18 20:59:56 log.go:73: Saved post with ID 245 to database
+INFO: 2024/11/18 20:59:56 log.go:73: Extracted data from page 6: {Title:آپارتمان درپشت دانشگاه آزادوپیام نوررباط کریم TempRoom:۲ Room:2 TempBuildYear:۱۴۰۲ BuildYear:1402 TempArea:۹۰ Area:90 TempPrice:۱۰۰٬۰۰۰٬۰۰۰ تومان Price:100000000 PlaceType:true ContractType:1 Elevator:true Parking:true Storage:true Ballcon:false Province: City:رباط‌کریم ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/afra/post/sCntVoGcQIjXCYpG4VZ4yA/66024688-4a55-4524-973c-2d8702e97888.jpg Description:دارای اقساط ۱۰قسط ۴۰میلیونی هر۶ماه۴۰میلیون
+پارکینگ مسقف
+انباری
+دوخواب
+آسانسور
+مدارک تکمیل
+قابل استعلام ازشرکت عمران
+قابل انتقال درتمامی دفاترثبت اسناد
+
+تهاطرباماشین هم داریم
+جهت اطلاعات بیشترتماس TempFloor:۳ Floor:3 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 20:59:57 log.go:73: Saved post with ID 246 to database
+INFO: 2024/11/18 20:59:57 log.go:73: Extracted data from page 5: {Title:خانه طبقه اول خیابان ابوذر، نور TempRoom:۱ Room:1 TempBuildYear:۱۳۹۹ BuildYear:1399 TempArea:۷۰ Area:70 TempPrice: Price:0 PlaceType:false ContractType:2 Elevator:false Parking:false Storage:false Ballcon:false Province: City:ارومیه ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl: Description:خانه کاملا تمیز ، بدون هیچ مشکلی
+مناسب عروس داماد، مناسب دو الی سه نفر
+محیط کوچه کاملا ارام همسایه های باشخصیت و اروم ،
+یک اتاق و اشپزخونه مجهز کابینت شده
+بدون هیچ ایرادی یا مشکلی خونه کاملا شیک و نقلی تازه ساخته. TempFloor: Floor:0 TempRent:۴٬۰۰۰٬۰۰۰ تومان Rent:4000000 TempDesposit:۸۰٬۰۰۰٬۰۰۰ تومان Desposit:80000000}
+INFO: 2024/11/18 21:00:09 log.go:73: Processing link: https://divar.ir/v/%D9%81%D8%B1%D9%88%D8%B4-%D8%AE%D8%A7%D9%86%D9%87-%D9%88%DB%8C%D9%84%D8%A7%DB%8C%DB%8C-%DB%B2%DB%B0%DB%B0%D9%85%D8%AA%D8%B1%DB%8C-%D8%AF%D9%88%D8%AE%D9%88%D8%A7%D8%A8%D9%87/wZ7gnITO
+INFO: 2024/11/18 21:00:10 log.go:73: Processing link: https://divar.ir/v/%DB%B1%DB%B5%DB%B0%D9%85%D8%AA%D8%B1%DB%8C-%DB%B3%D8%AE%D9%88%D8%A7%D8%A8%D9%87/wZ7gX3BW
+INFO: 2024/11/18 21:00:10 log.go:73: Saved post with ID 247 to database
+INFO: 2024/11/18 21:00:10 log.go:73: Extracted data from page 8: {Title:فروش خانه ویلایی ۲۰۰متری .دوخوابه. TempRoom:۲ Room:2 TempBuildYear:۱۳۹۴ BuildYear:1394 TempArea:۱۵۰ Area:150 TempPrice:۲٬۳۰۰٬۰۰۰٬۰۰۰ تومان Price:2300000000 PlaceType:false ContractType:1 Elevator:false Parking:true Storage:false Ballcon:false Province: City:رامهرمز ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/uD9hF174354Xp1xRfAebjQ/ab2280e3-b0e7-4b38-a0d8-0a6d3ab808c3.jpg Description:سلام فروش فوری خانه ویلایی
+به صورت شرایطی
+دوستان خونه توی خوشه دار کوچه رادمهر ۲
+برای خودم ساختم طبقه بالاش هم آزاده پایه کوبی شده آماده اس برای ساخت از نظر استحکام حرف نداره
+امکانات فول سندش به صورت برگه خریده
+قیمتش به نسبت خونه های اطرافش واقعا ارزونه
+چون نیاز به پول دارم
+به صورت شرایطی هم میفروشم
+لطفا مشتری واقعی پیام بذاره.
+با تشکر از سایت دیوار TempFloor: Floor:0 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 21:00:10 log.go:73: Processing link: https://divar.ir/v/%D8%AE%DB%8C%D8%A7%D8%A8%D8%A7%D9%86-%DB%B4-%D9%81%D8%A7%D8%B2-%DB%B2-%DA%A9%D9%84%DB%8C%D8%AF-%D8%A7%D9%88%D9%84-%DB%B3%D9%BE%D8%A7%D8%B1%DA%A9%DB%8C%D9%86%DA%AF-%D8%B3%D9%86%D8%AF%DB%8C/wZ7gXnCN
+INFO: 2024/11/18 21:00:11 log.go:73: Saved post with ID 248 to database
+INFO: 2024/11/18 21:00:11 log.go:73: Extracted data from page 6: {Title:۱۵۰متری ۳خوابه TempRoom:۳ Room:3 TempBuildYear:۱۳۹۵ BuildYear:1395 TempArea:۱۵۰ Area:150 TempPrice: Price:0 PlaceType:true ContractType:2 Elevator:true Parking:true Storage:true Ballcon:false Province: City:تبریز ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl: Description:برخیابان اصلی TempFloor:۸ Floor:8 TempRent:۲۵٬۰۰۰٬۰۰۰ تومان Rent:25000000 TempDesposit:۵۰۰٬۰۰۰٬۰۰۰ تومان Desposit:500000000}
+INFO: 2024/11/18 21:00:13 log.go:73: Processing link: https://divar.ir/v/%D8%AE%D8%A7%D9%86%D9%87-%D9%88%DB%8C%D9%84%D8%A7%DB%8C%DB%8C-%D8%A7%D8%AC%D8%A7%D8%B1%D9%87-%D8%AD%D8%B5%D8%A7%D8%B1-%D8%AE%D8%B7-%DB%B4/wZ7gnXWx
+INFO: 2024/11/18 21:00:13 log.go:73: Saved post with ID 249 to database
+INFO: 2024/11/18 21:00:13 log.go:73: Extracted data from page 7: {Title:خیابان ۴ فاز ۲ /* کلید اول /* ۳پارکینگ سندی TempRoom:۳ Room:3 TempBuildYear:۱۴۰۱ BuildYear:1401 TempArea:۱۶۰ Area:160 TempPrice:۱۰٬۸۸۰٬۰۰۰٬۰۰۰ تومان Price:10880000000 PlaceType:true ContractType:1 Elevator:true Parking:true Storage:true Ballcon:false Province:اهواز City: کیانپارس ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/Z1Ix7j5PFBvd73kbHgO6zg/4e8aa6fc-0154-418f-90f1-0255ba4b7d2a.jpg Description:✴️بنام یگانه معمار هستی✴️
+
+❇️سید محمد شریفی❇️
+
+✳️خرید خوب و به قیمت هنر ماست✳️
+
+
+❗سازه ای خوش ساخت، خوش نقشه و خوش قیمت
+
+⬇️ ⬇️ ⬇️
+
+✅خرید هوشمندانه را با ما تجربه کنید
+
+❕سالن وسیع با قابلیت چیدمان بی نظیر
+
+❕آشپزخانه ی مشرف به سالن با کابینت های هایگلاس پر تعداد
+
+❕تراس قابل چیدمان همراه با درب و پنجره ی upvc تمام قد
+
+❕3خواب با متراژ عالی و کمد های هایگلاس لوکس
+
+❕نما و مشاعات لوکس ❕سنگ نما درجه 1 و دیدنی❕
+
+⚜️بازدید=خرید⚜️
+
+⬇️ ⬇️ ⬇️
+
+✅قابلیت 2300رهن
+
+✅قابلیت 800وام
+
+
+⭕آفر ویژه مشاور در اتاق نشست⭕
+
+⚜️جهت اطلاعات بیشتر تماس حاصل فرمایید⚜️
+
+مشاور ملکی شما : سید محمد شریفی TempFloor:۳ Floor:3 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 21:00:14 log.go:73: Saved post with ID 250 to database
+INFO: 2024/11/18 21:00:14 log.go:73: Extracted data from page 6: {Title:خانه ویلایی اجاره حصار خط ۴ TempRoom:۱ Room:1 TempBuildYear:۱۳۸۳ BuildYear:1383 TempArea:۷۰ Area:70 TempPrice: Price:0 PlaceType:false ContractType:2 Elevator:false Parking:false Storage:true Ballcon:false Province:کرج City: اسلام‌آباد ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/Arg5FC8Rvr4f53ufJFr8bA/4c9b539e-dda2-41f5-936c-eefd38b9a6c5.jpg Description:کرج ، حصار خط چهارم خ شهید بهشتی ( دره الموت ) سه راه انگوران کوچه بهاران ۲ طبقه همکف
+سرویس حمام و دستشویی بازسازی شده ، حیاط ، کمد دیواری ، تک خواب ، ماشین رو تا درب منزل ، کابینت فلزی TempFloor: Floor:0 TempRent:۲٬۵۰۰٬۰۰۰ تومان Rent:2500000 TempDesposit:۱۰۰٬۰۰۰٬۰۰۰ تومان Desposit:100000000}
+INFO: 2024/11/18 21:00:23 log.go:73: Processing link: https://divar.ir/v/%D8%AF%D9%88%D8%A8%D9%84%DA%A9%D8%B3-%D8%B2%DB%8C%D8%A8%D8%A7%DA%A9%D9%86%D8%A7%D8%B1-%D8%A8%D8%A7-%DB%B2%DB%B6%DB%B0%D9%85%D8%AA%D8%B1-%D8%B2%D9%85%DB%8C%D9%86-%D8%B9%D8%A7%D9%84%DB%8C-%D8%B3%D8%B1%D9%85%D8%A7%DB%8C%D9%87-%DA%AF%D8%B0%D8%A7%D8%B1%DB%8C/wZqoCCsb
+INFO: 2024/11/18 21:00:24 log.go:73: Saved post with ID 251 to database
+INFO: 2024/11/18 21:00:24 log.go:73: Extracted data from page 9: {Title:دوبلکس زیباکنار/با ۲۶۰متر زمین/عالی سرمایه گذاری TempRoom:۳ Room:3 TempBuildYear:۱۴۰۲ BuildYear:1402 TempArea:۱۴۰ Area:140 TempPrice:۳٬۹۰۰٬۰۰۰٬۰۰۰ تومان Price:3900000000 PlaceType:false ContractType:1 Elevator:false Parking:true Storage:true Ballcon:true Province: City:زیباکنار ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/yz31gjWsTr8bdLWJ0C8KhQ/f4e09a77-1f84-465c-8037-869f8aac798f.jpg Description:✅پیشنهاد بهترین گزینه های سرمایه گذاری
+✅شما مشخصات باب سلیقتون رو بگید
+✅ما بهتون معرفی میکنیم
+✅با بیش از ۲۰۰فایل در منطقه زیباکنار وحومه در هر رنج قیمتی
+.
+زمین ۲۶۰متر
+بنا ۱۴۰متر
+مدارک تکمیل
+منطقه امن وآرام
+فاصله تا ساحل کمتر از از ۵دقیقه
+موقعیت عالی برای سرمایه گذاری وسکونت
+.
+❌ صدور کد رهگیری آنلاین در لحظه عقد قرارداد با هولوگرام اتحادیه و بستن کد پستی یکتای ملک برای افزایش امنیت معامله ❌
+❌  هر سوالی در هر زمینه ی ملکی که داشتید،حتی اگه تصور کردید سوال به ظاهر ساده یا پیش پا افتاده ای  هست باز هم تماس بگیرید خوشحال میشیم بتونیم  حتی تو زمینه ی مشاوره کمکتون کنیم ❌
+⭕️ همیشه چند مورد  فایل شخصی و زیر قیمت کارشناسی منطقه رو که مالکاشون فروشنده واقعی و منطعف هستند برای معرفی داریم
+❌ادرس دفتر: روبه روی ورودی اول ساحل حاجی بکنده،دفتر ویلاکده
+❌برای دیدن بخشی از سایر ملکهای ما که اگهی کردیم ،کلمه «ویلاکده» رو‌توی دیوار سرچ کنید TempFloor: Floor:0 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 21:00:27 log.go:73: Processing link: https://divar.ir/v/%D8%B1%D9%87%D9%86-%D8%A7%D8%AC%D8%A7%D8%B1%D9%87-%D8%A2%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86-%D8%AF%D8%B1-%D8%B4%D9%87%D8%B1%DA%A9-%D9%88%D9%84%DB%8C%D8%B9%D8%B5%D8%B1-%D9%86%DB%8C%D8%B1%D9%88%DB%8C-%D8%A7%D9%86%D8%AA%D8%B8%D8%A7%D9%85%DB%8C/wZ0UuDAE
+INFO: 2024/11/18 21:00:27 log.go:73: Processing link: https://divar.ir/v/%DB%B5%DB%B7-%D9%85%D8%AA%D8%B1-%D9%81%D9%88%D9%84-%D8%A7%D9%85%DA%A9%D8%A7%D9%86%D8%A7%D8%AA-%DA%A9%D9%80%D8%A7%D9%85%D9%80%D9%84%D9%80%D8%A7-%D9%88%D8%A7%D9%82%D9%80%D8%B9%D9%80%DB%8C/wZ7g3iel
+INFO: 2024/11/18 21:00:28 log.go:73: Saved post with ID 252 to database
+INFO: 2024/11/18 21:00:28 log.go:73: Extracted data from page 7: {Title:رهن اجاره آپارتمان در شهرک ولیعصر نیروی انتظامی TempRoom:۲ Room:2 TempBuildYear:۱۴۰۱ BuildYear:1401 TempArea:۹۲ Area:92 TempPrice: Price:0 PlaceType:true ContractType:2 Elevator:true Parking:true Storage:false Ballcon:false Province: City:اردبیل ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/71zxtmupX3NZoxMRWZEKqA/9261ed3e-6e61-4aa7-a682-198f6a4eea97.jpg Description:تمام کاغذ دیواری ،، بدون کمد دیواری،، واحد تخلیه میباشد برای زوج جوان تخفیف هم داده میشود TempFloor:۱ از ۴ Floor:1 TempRent:۱۰۰٬۰۰۰ تومان Rent:100000 TempDesposit:۳۰۰٬۰۰۰٬۰۰۰ تومان Desposit:300000000}
+INFO: 2024/11/18 21:00:28 log.go:73: Saved post with ID 253 to database
+INFO: 2024/11/18 21:00:28 log.go:73: Extracted data from page 8: {Title:۵۷ متر فول امکانات کـامـلـا واقـعـی TempRoom:۲ Room:2 TempBuildYear:۱۴۰۱ BuildYear:1401 TempArea:۵۷ Area:57 TempPrice:۱٬۳۰۰٬۰۰۰٬۰۰۰ تومان Price:1300000000 PlaceType:true ContractType:1 Elevator:true Parking:true Storage:true Ballcon:false Province:کرج City: شهر جدید اندیشه ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/MUj_voIOFb_xZ2uMJJMwsA/10beba13-701b-40da-a22b-edf97848b70d.jpg Description:❇️ثانیه به ثانیه در حال افزایش قیمت/این فرصت را از دست ندهید
+
+مشخصات ملک:
+۵۷متر دیـزاین شیک
+پارکینگ
+فول امکانات
+آفتاب مهمان همیشگی خانه شما
+
+
+بیشترین > بهترین > به قیمت ترین فایل ها نزد ماست
+
+✔️شرایط پرداخت =نقدینگی +وام+رهن
+
+️اندیشه بورس سرمایه گذاری کل کشور ️
+
+پاسخگویی ۲۴ ⏰️ حتی در ایام تعطیل TempFloor:۱ Floor:1 TempRent: Rent:0 TempDesposit: Desposit:0}
+WARNING: 2024/11/18 21:00:28 log.go:75: Failed to scrape page https://divar.ir/v/%D9%88%DB%8C%D9%84%D8%A7%DB%8C%DB%8C-%D8%AF%D9%88%D8%A8%D9%84%DA%A9%D8%B3-%DB%B4%DB%B6%DB%B0-%D9%85%D8%AA%D8%B1-%D8%AF%D9%88%D9%88%D8%A7%D8%AD%D8%AF-%D9%85%D8%AC%D8%B2%D8%A7-%DB%B6-%D8%AE%D9%88%D8%A7%D8%A8/wZ7gHh6F: this is an error message
+INFO: 2024/11/18 21:00:38 log.go:73: Processing link: https://divar.ir/v/%D9%88%DB%8C%D9%84%D8%A7-%D8%A8%D8%A7%D8%BA-%DB%B3%DB%B0%DB%B0%D9%85%D8%AA%D8%B1%DB%8C-%D9%81%D9%82%D8%B7-%D9%BE%D9%88%D9%84-%D8%B2%D9%85%DB%8C%D9%86%D8%B4%D9%87-%D8%B3%D9%86%D8%AF%D8%AA%DA%A9%D8%A8%D8%B1%DA%AF/gZo6bXyl
+INFO: 2024/11/18 21:00:41 log.go:73: Saved post with ID 254 to database
+INFO: 2024/11/18 21:00:41 log.go:73: Extracted data from page 10: {Title:ویلا باغ ۳۰۰متری فقط پول زمینشه/سندتکبرگ TempRoom:۳ Room:3 TempBuildYear:۱۳۹۸ BuildYear:1398 TempArea:۱۶۰ Area:160 TempPrice:۹۵۰٬۰۰۰٬۰۰۰ تومان Price:950000000 PlaceType:false ContractType:1 Elevator:false Parking:true Storage:true Ballcon:true Province: City:چمستان ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/olJrFPLh7p3Ns6izxQSEJA/6f8b2afd-10a3-43c1-89de-8166391e652c.jpg Description:ویلا باغ نیم پیلوت مشجر  در لوکیشن دنج و خوش نشین
+
+#کد۲۹۸۷
+
+✳300مترزمین
+✳160متر بنا
+✳سه خوابه
+✳مبله کامل
+✳محوطه سازی دلنشین
+✳سند تک برگ مدارک کامل
+✳انشعابات آب و برق و گاز
+✳شهرکی با نگهبانی
+نزدیک جنگل و دریا
+
+
+اقساط بلند مدت بدون بهره
+معاوضه‌باخودرو TempFloor: Floor:0 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 21:00:42 log.go:73: Processing link: https://divar.ir/v/%DB%B1%DB%B3%DB%B7-%D9%85%D8%AA%D8%B1-%D8%B4%D9%87%D8%B1%DA%A9-%D8%BA%D8%B1%D8%A8-%D8%A2%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86/wZF4UkOy
+INFO: 2024/11/18 21:00:42 log.go:73: Processing link: https://divar.ir/v/%D8%A2%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86-55-%D9%85%D8%AA%D8%B1%DB%8C-%D8%B4%D8%A7%D9%87%D8%AF%D8%B4%D9%87%D8%B1-%D8%AE%DB%8C%D8%A7%D8%A8%D8%A7%D9%86-%D8%A7%D8%A8%D9%86-%D8%B3%DB%8C%D9%86%D8%A7/wZk0MgQS
+INFO: 2024/11/18 21:00:43 log.go:73: Saved post with ID 255 to database
+INFO: 2024/11/18 21:00:43 log.go:73: Extracted data from page 8: {Title:۱۳۷ متر شهرک غرب آپارتمان TempRoom:۲ Room:2 TempBuildYear:۱۳۹۳ BuildYear:1393 TempArea:۱۳۷ Area:137 TempPrice: Price:0 PlaceType:true ContractType:2 Elevator:true Parking:true Storage:true Ballcon:false Province:تهران City: سپهر ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/3XMGutd9f8kYSrmmmcJnoA/fe2a8c2c-07ab-472b-a7ca-4b5eb0b9c05a.jpg Description:۲ پارکینگ سندی
+خوش نقشه سالن‌ بزرگ
+لابی
+پنجره های قدی
+تبدیل جزئی
+آماده تخلیه بازدید هماهنگی
+کمیسیون ۲ هفته فیکس
+فایل شخصی
+مشاور محسن رضایی TempFloor:۱ Floor:1 TempRent:مجانی Rent:0 TempDesposit:۲٬۲۰۰٬۰۰۰٬۰۰۰ تومان Desposit:2200000000}
+INFO: 2024/11/18 21:00:43 log.go:73: Processing link: https://divar.ir/v/%D8%B1%D9%87%D9%86-%D8%AE%D8%A7%D9%86%D9%87-%D9%86%D9%88%D8%B3%D8%A7%D8%B2-%D8%AF%D8%B1-%D8%B3%DB%8C-%D9%85%D8%AA%D8%B1%DB%8C-%D8%A7%D9%86%D9%82%D9%84%D8%A7%D8%A8/wZ7cHlnf
+INFO: 2024/11/18 21:00:43 log.go:73: Saved post with ID 256 to database
+INFO: 2024/11/18 21:00:43 log.go:73: Extracted data from page 9: {Title:آپارتمان 55 متری شاهدشهر خیابان ابن سینا TempRoom:۱ Room:1 TempBuildYear:۱۳۹۰ BuildYear:1390 TempArea:۵۵ Area:55 TempPrice:۸۰۰٬۰۰۰٬۰۰۰ تومان Price:800000000 PlaceType:true ContractType:1 Elevator:false Parking:false Storage:true Ballcon:false Province: City:شاهدشهر ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/Il9Wt3kUMkxJX8oK30ooFg/64b67fcd-5e83-4043-95f2-d6e0be507afa.jpg Description:توجه توجه
+((ملک طلاست))
+با سلام
+یک واحد آپارتمان 55 متری
+یک خواب
+دارای بالکن و انباری
+تازه بازسازی شده
+طبقه سوم
+مبایعنامه با کدرهگیری
+در بهترین منطقه شاهدشهر
+واقع در خیابان دکتر حسابی خیابان چمران خیابان ابن سینا
+با همسایگان با فرهنگ و بسیار آرام
+
+800 م نقد + 100 میلیون ودیعه مستاجر=900 میلیون
+
+مناسب سرمایه گذاری و سکونت
+
+(( لطفا خریدار واقعی تماس بگیره به وقت خود و دیگران ارزش قائل بشید))
+
+((لطفا املاک های عزیز تماس نگیرند،فروش مستقیم و بدون واسطه به مصرف کننده واقعی))
+
+قیمت کاملا مقطوع هستش لطفا بابت قیمت سوال بپرسید و از پیشنهاد قیمت های واهی و بی ربط جدا خودداری فرماید . و پس مطالعه دقیق آگهی سوالی داشتید در چت دیوار پیام ارسال کنید. TempFloor:۳ Floor:3 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 21:00:44 log.go:73: Saved post with ID 257 to database
+INFO: 2024/11/18 21:00:44 log.go:73: Extracted data from page 8: {Title:رهن خانه نوساز در سی متری انقلاب TempRoom:۲ Room:2 TempBuildYear:۱۴۰۳ BuildYear:1403 TempArea:۱۱۰ Area:110 TempPrice: Price:0 PlaceType:false ContractType:2 Elevator:false Parking:true Storage:true Ballcon:true Province: City:بروجرد ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl: Description:طبقه دوم کلید نخورده دو خوابه سالن بزرگ حیاط ماشین رو بالکن بزرگ نما وکف سرامیک درب ریموتی آیفون آب برق گاز جدا بدون هیچ کم کسری آدرس سی متری انقلاب بعداز مرغ فروشی شمس TempFloor: Floor:0 TempRent:۱۰۰٬۰۰۰ تومان Rent:100000 TempDesposit:۳۰۰٬۰۰۰٬۰۰۰ تومان Desposit:300000000}
+INFO: 2024/11/18 21:00:52 log.go:73: Processing link: https://divar.ir/v/%D8%A7%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86-%D8%A8%D8%B1-%D8%A7%D9%84%D8%A8%D8%B1%D8%B2/wZ78xyiZ
+INFO: 2024/11/18 21:00:53 log.go:73: Saved post with ID 258 to database
+INFO: 2024/11/18 21:00:53 log.go:73: Extracted data from page 11: {Title:اپارتمان بر البرز TempRoom:۲ Room:2 TempBuildYear:۱۳۷۱ BuildYear:1371 TempArea:۱۹۵ Area:195 TempPrice:۱۲٬۵۰۰٬۰۰۰٬۰۰۰ تومان Price:12500000000 PlaceType:false ContractType:1 Elevator:false Parking:true Storage:true Ballcon:true Province: City:ارومیه ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/3fW5S7r_2iE0quxHJqcNlg/59f2688a-a546-48d1-b4e7-893edee3698d.jpg Description:با سلام خدمت همشهریان عزیز
+ولایی فوق واقع در بر البرز
+با ۲ عدد مغازه مجوز دار
+تخفیف ویژه پای معامله
+با بر ۱۱متر
+با کم ترین بودجه با ما صاحب خانه شوید
+اعتماد شما سرمایه ماست
+پر فایلینگ ترین دفتر معاملاتی شهر
+ارامش در خرید را با ما تجربه کنید
+با تشکر از عوامل محترم دیوار
+گروه مشاورین املاک
+تاج&تخت
+ارادتمند شما عبدی TempFloor: Floor:0 TempRent: Rent:0 TempDesposit: Desposit:0}
+WARNING: 2024/11/18 21:00:58 log.go:75: Failed to scrape page https://divar.ir/v/%D8%A2%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86-190%D9%85%D8%AA%D8%B1-%D9%86%DB%8C%D8%A7%D9%88%D8%B1%D8%A7%D9%86-%D8%B3%D9%87-%D8%AE%D9%88%D8%A7%D8%A8-%D8%AA%D8%B1%D8%A7%D8%B3/wZncTd-M: this is an error message
+INFO: 2024/11/18 21:00:58 log.go:73: Processing link: https://divar.ir/v/%DB%B6%DB%B1-%D9%85%D8%AA%D8%B1-%D9%81%D8%B1%D8%B3%D8%A7%D8%AF-%D8%BA%D8%B1%D8%A8%DB%8C/wZ5g_-Y6
+INFO: 2024/11/18 21:00:59 log.go:73: Processing link: https://divar.ir/v/%DB%B2%D8%B7%D8%A8%D9%82%D9%87-%D8%AA%D9%85%DB%8C%D8%B2-%D9%86%D8%B2%D8%AF%DB%8C%DA%A9-%D8%A8%D9%87-%D8%AE%DB%8C%D8%A7%D8%A8%D8%A7%D9%86-%D8%A7%D8%B5%D9%84%DB%8C/wZ6gPyWa
+INFO: 2024/11/18 21:00:59 log.go:73: Saved post with ID 259 to database
+INFO: 2024/11/18 21:00:59 log.go:73: Extracted data from page 10: {Title:۶۱ متر فرساد غربی TempRoom:۱ Room:1 TempBuildYear:۱۳۸۶ BuildYear:1386 TempArea:۶۱ Area:61 TempPrice:۶٬۱۰۰٬۰۰۰٬۰۰۰ تومان Price:6100000000 PlaceType:true ContractType:1 Elevator:true Parking:true Storage:true Ballcon:false Province:تهران City: اندیشه (شهر زیبا) ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/_qc-knnCs2PYZkY1Lu_tJg/c679fe82-fec1-4665-868d-ec0d3e5b8f5d.jpg Description:درود بر شما
+۶۱ متر ۱ خوابه رو به آفتاب
+بازسازی شده
+امکانات کامل پارکینگ انباری آسانسور
+سرایداری
+محسن رضایی مشاور
+فایل شخصی همکاران تماس بیهوده نگیرید TempFloor:۴ از ۵ Floor:4 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 21:01:00 log.go:73: Saved post with ID 260 to database
+INFO: 2024/11/18 21:01:00 log.go:73: Extracted data from page 9: {Title:۲طبقه تمیز نزدیک به خیابان اصلی TempRoom:۲ Room:2 TempBuildYear:۱۳۹۸ BuildYear:1398 TempArea:۷۰ Area:70 TempPrice: Price:0 PlaceType:false ContractType:2 Elevator:false Parking:true Storage:true Ballcon:false Province:قم City: مدرس ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl: Description:ملک تمیز قابل سکونت ۲خانواده به صورت دربستی TempFloor: Floor:0 TempRent:۱۰٬۰۰۰٬۰۰۰ تومان Rent:10000000 TempDesposit:۱۵۰٬۰۰۰٬۰۰۰ تومان Desposit:150000000}
+INFO: 2024/11/18 21:01:06 log.go:73: Processing link: https://divar.ir/v/%D9%88%DB%8C%D9%84%D8%A7%D9%86%D9%85%D8%A7%DA%A9%D9%84%D8%A7%D8%B3%DB%8C%DA%A9-%D8%A8%D8%A7-%DB%B2%DB%B3%DB%B0%D9%85%D8%AA%D8%B1-%D8%B2%D9%85%DB%8C%D9%86-%D8%B3%D9%86%D8%AF%D8%AF%D8%A7%D8%B1-%D8%B2%DB%8C%D8%A8%D8%A7%DA%A9%D9%86%D8%A7%D8%B1/gZjL2FwB
+INFO: 2024/11/18 21:01:07 log.go:73: Saved post with ID 261 to database
+INFO: 2024/11/18 21:01:07 log.go:73: Extracted data from page 12: {Title:ویلانماکلاسیک/با ۲۳۰متر زمین.سنددار/زیباکنار TempRoom:۲ Room:2 TempBuildYear:۱۴۰۳ BuildYear:1403 TempArea:۱۰۵ Area:105 TempPrice:۳٬۹۰۰٬۰۰۰٬۰۰۰ تومان Price:3900000000 PlaceType:false ContractType:1 Elevator:false Parking:true Storage:true Ballcon:true Province: City:زیباکنار ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/afra/post/VFU2j7sbtz31uLicaWXDqg/30cb7a73-37ba-4f4a-b1ec-79e1781c2748.jpg Description:✅پیشنهاد بهترین گزینه های سرمایه گذاری
+✅شما مشخصات باب سلیقتون رو بگید
+✅ما بهتون معرفی میکنیم
+✅با بیش از ۲۰۰فایل در منطقه زیباکنار وحومه در هر رنج قیمتی
+.
+✅کد ویلا S37
+✅زمین: ۲۲۶
+✅بنا:۱۰۵
+✅دوخواب
+✅مدارک کامل پروانه ساخت
+✅ پایان کار
+✅موقعیت ۵ دقیقه تا ساحل
+✅فاصله تا رشت وانزلی ولاهیجان ۲۵دقیقه
+✅یکی از بهترین گزینه ها برای سرمایه گذاری
+✅نورپردازی داخل ساختمان وخارج از ساختمان عالی
+.
+چند مورد هم تا مبلغ ۳میلیارد ویلا دارم که نمیشه دیوار کرد تماس بگیرید تا عکساشو بفرستم⭐
+✅ما فقط به قیمت ترین ویلاها وزمینها را معرفی میکنیم
+✅تماس بگیرید تا بهترین موردهای منطقه را معرفی کنیم✅
+➰️➰️➰️➰️➰️➰️➰️➰️➰️➰️➰️➰️
+✅((کلمه ««ویلاکده»» رو توی قسمت جستجوی دیوار، سرچ کنید تا ویلاهای دیگه مارو ببینید.))‼️‼️•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°•°• TempFloor: Floor:0 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 21:01:14 log.go:73: Processing link: https://divar.ir/v/%D8%AE%D8%A7%D9%86%D9%87-%D9%85%D8%B3%DA%A9%D9%88%D9%86%DB%8C-%D8%AF%D8%B1%D8%A8%D8%B3%D8%AA/wZ7gHPN2
+INFO: 2024/11/18 21:01:14 log.go:73: Processing link: https://divar.ir/v/%D9%81%D8%B1%D9%88%D8%B4-130-%D9%85%D8%AA%D8%B1%DB%8C-3-%D8%AE%D9%88%D8%A7%D8%A8-%D8%AA%DA%A9%D9%88%D8%A7%D8%AD%D8%AF%DB%8C-%D9%85%D8%AD%D8%AF%D9%88%D8%AF%D9%87-%D8%B4%D9%88%D8%B1%D8%A7/wZ0wnsq0
+INFO: 2024/11/18 21:01:14 log.go:73: Processing link: https://divar.ir/v/%D8%AE%D8%A7%D9%86%D9%87-%DB%B6%DB%B5-%D9%85%D8%AA%D8%B1%DB%8C/wZ7gX0Mg
+INFO: 2024/11/18 21:01:16 log.go:73: Saved post with ID 263 to database
+INFO: 2024/11/18 21:01:16 log.go:73: Extracted data from page 11: {Title:فروش 130 متری 3 خواب/ تکواحدی/ محدوده شورا TempRoom:۳ Room:3 TempBuildYear:۱۳۹۰ BuildYear:1390 TempArea:۱۳۰ Area:130 TempPrice:۹٬۲۰۰٬۰۰۰٬۰۰۰ تومان Price:9200000000 PlaceType:true ContractType:1 Elevator:true Parking:false Storage:true Ballcon:false Province:تهران City: تهران‌نو ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/DLahSyr1uW3bxhv229qhqA/6ccb648a-2c02-4527-b298-26a6ea79055e.jpg Description:آرتا امین شما در امور ملکی با بیشترین تعداد فایل در منطقه
+ 
+●●کد ملک: 87573
+●●کد مشاور:۲۰۸
+
+⬇️مشخصات ملک⬇️
+□■ 130 متر
+■□3 خواب بسیار خوش نقشه
+□■ تکواحدی نورگیر عالی با سالن پرده خور
+■□بازسازی شده شیک
+
+
+⬇️مشخصات تکمیلی ملک⬇️
+□■تعداد واحد در هر طبقه: ۱
+■□محدوده ملک: خیابان شورا دارای دسترسی عالی محلی
+□■ سن بنا: ۱4 سال
+
+
+⬇️امکانات اصلی⬇️
+■□آسانسور
+□■انباری
+■□بالکن
+
+
+
+
+کلینیک مسکن آرتا دارای کادری مجرب و آموزش دیده همه روزه حتی ایام تعطیل و جمعه ها به صورت یکسره از ساعت ۹ الی ۲۲ در سی متری نیروی هوایی فرعی ۷/۳۰ ( شهید سربی ) پلاک ۲۴ با ده خط ویژه ******** در خدمت شما عزیزان میباشد
+●● کد مشاور:۲۰۸
+●● کد ملک: 87573
+
+ ◀️️اعتماد شما افتخار آرتا، افتخار آرتا همراهی شاست◀️️ TempFloor:۵ از ۵ Floor:5 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 21:01:16 log.go:73: Saved post with ID 262 to database
+INFO: 2024/11/18 21:01:16 log.go:73: Extracted data from page 10: {Title:خانه مسکونی دربست TempRoom:۱ Room:1 TempBuildYear:۱۴۰۰ BuildYear:1400 TempArea:۸۰ Area:80 TempPrice: Price:0 PlaceType:false ContractType:2 Elevator:false Parking:false Storage:true Ballcon:false Province: City:ارومیه ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl: Description:خانه مسکونی تمیز دارای موکت کابینت کمد دیواری پرده با امکانات کامل لطفاً جهت بازدید به املاک یادگاری خیابان ابوذر اول کوی ۳۰ مراجعه شود
+درضمن یه خانه دربست به متراژ ۵۵ متر با رهن بیست میلیون و اجاره سه میلیون ترو تمیز موجود میباشد TempFloor: Floor:0 TempRent:۲٬۰۰۰٬۰۰۰ تومان Rent:2000000 TempDesposit:۱۰۰٬۰۰۰٬۰۰۰ تومان Desposit:100000000}
+INFO: 2024/11/18 21:01:20 log.go:73: Processing link: https://divar.ir/v/%D8%A8%D8%A7%D8%BA-%D9%88%DB%8C%D9%84%D8%A7-%D9%85%D8%AF%D8%B1%D9%86-%D9%85%D8%AD%D9%88%D8%B7%D9%87-%D8%B3%D8%A7%D8%B2%DB%8C-%D8%A7%D8%B3%D8%AA%D8%AB%D9%86%D8%A7%DB%8C%DB%8C-%D8%B2%DB%8C%D8%A8%D8%A7%DA%A9%D9%86%D8%A7%D8%B1/gZjjVW28
+INFO: 2024/11/18 21:01:22 log.go:73: Saved post with ID 264 to database
+INFO: 2024/11/18 21:01:22 log.go:73: Extracted data from page 10: {Title:خانه ۶۵ متری TempRoom:۱ Room:1 TempBuildYear:۱۳۹۰ BuildYear:1390 TempArea:۶۵ Area:65 TempPrice: Price:0 PlaceType:true ContractType:2 Elevator:false Parking:false Storage:true Ballcon:false Province: City:پاکدشت ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl: Description:خانه فوق دارای کف موزائیک ، کابینت mdf، هود ، شیرآلات اهرمی ، کولر آبی ، آب و برق و گاز دو واحدی مشترک می باشد . این واحد علاوه بر واحد پشت بام نیز در اختیارش می باشد و دستشویی در پشت بام است . خانه فوق قابلیت تبدیل تا ۱۰۰ میلیون پول پیش و ۲/۵۰۰ میلیون اجاره تبدیل میشود .
+اعتماد شما سرمایه ماست ، املاک بیگی .
+آدرس دفتر: پاکدشت ، نرسیده به میدان قوهه، خیابان خانمحمدی ، روبروی داروخانه جانمحمدی ، املاک بیگی . TempFloor:همکف از ۲ Floor:0 TempRent:۳٬۰۰۰٬۰۰۰ تومان Rent:3000000 TempDesposit:۶۰٬۰۰۰٬۰۰۰ تومان Desposit:60000000}
+INFO: 2024/11/18 21:01:22 log.go:73: Saved post with ID 265 to database
+INFO: 2024/11/18 21:01:22 log.go:73: Extracted data from page 13: {Title:باغ ویلا مدرن/محوطه سازی استثنایی.زیباکنار TempRoom:۲ Room:2 TempBuildYear:۱۴۰۳ BuildYear:1403 TempArea:۱۰۵ Area:105 TempPrice:۳٬۵۰۰٬۰۰۰٬۰۰۰ تومان Price:3500000000 PlaceType:false ContractType:1 Elevator:false Parking:true Storage:true Ballcon:true Province: City:زیباکنار ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/afra/post/2PQQ8crPIDSSvKvvEqLuFg/4ac33c20-65e9-41e3-9a70-6b07fe5e3b86.jpg Description:درود بر عزیزان؛
+یک باب ویلا فلت واقع در استان گیلان، شهر ساحلی زیباکنار
+* متراژ زمین250متر و متراژ ساختمان105متر
+* دارای مدارک مالکیت و پروانه ساختمان و پایانکار وسند آماده صدور
+* دارای انشعابات کامل
+* در بهترین موقعیت و برند منطقه
+* از بهترین متریال در ساخت استفاده شده است.
+* دارای کابینت هایگلاس، هود، گاز رومیزی، شیرآلات مرغوب، تصفیه آب مرکزی(جانبو)، پکیج و رادیاتور
+* کل وسایل برقی و لوله کشی ساختمان از اجناس مرغوب استفاده شده است.
+* دارای آب شرب شهری
+* محوطه سازی مناسب
+* محله ای آرام و غیر بومی و همسایه هایی متشخص
+* دارای درب ضد سرقت
+* فاصله تا دریا ده دقیقه و به زیبا کنار ده دقیقه
+* قیمت کل 3/500/000/000 تومان
+* دارای شرایط ویژه پرداخت ثمن معامله
+* با خودرو یا آپارتمان معاوضه می شود.
+* ملک مورد نظر تا یکسال ضمانت پس از فروش دارد.
+* به مشتری واقعی تخفیف داده می شود.
+* شرایط پرداخت متنوع است. TempFloor: Floor:0 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 21:01:28 log.go:73: Processing link: https://divar.ir/v/115%D9%85%D8%AA%D8%B1-%D8%A7%D9%88%D9%84-%D8%B1%D8%AD%D9%85%D8%A7%D9%86%DB%8C%D9%87-%D8%B3%D9%86%D8%AF-%D8%A2%D9%85%D8%A7%D8%AF%D9%87/wZ7g3ifJ
+INFO: 2024/11/18 21:01:30 log.go:73: Saved post with ID 266 to database
+INFO: 2024/11/18 21:01:30 log.go:73: Extracted data from page 12: {Title:115متر*اول رحمانیه*سند آماده TempRoom:۲ Room:2 TempBuildYear:۱۴۰۱ BuildYear:1401 TempArea:۱۱۵ Area:115 TempPrice:۳٬۶۹۰٬۰۰۰٬۰۰۰ تومان Price:3690000000 PlaceType:true ContractType:1 Elevator:true Parking:true Storage:true Ballcon:false Province:مشهد City: الهیه ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/rlax2mCNv7iOzHAXZnHyZA/86de4d58-c64c-40d8-8551-e2e30c7d4b3c.jpg Description:115 متر اول رحمانیه صفر سند آماده
+
+تصاویر و مشخصات واقعی
+هر دو خواب نورگیر
+رو به نما
+ملک دو کله
+مشاعات تمام سنگ عباس آباد
+فول امکانات
+پنجره ها قدی
+فروش فوری
+مستر روم
+سند آماده اخذ وام
+مناسب سرمایه گذاری
+اعتبار قیمت 24 ساعته
+
+میکائیل میرحاجیان
+
+دفتر رویال vip الهیه 14 TempFloor:۳ از ۵ Floor:3 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 21:01:31 log.go:73: Processing link: https://divar.ir/v/%D9%85%D8%B3%DA%A9%D9%88%D9%86%DB%8C-%D8%AA%D8%AC%D8%A7%D8%B1%DB%8C-%D8%AF%D8%B1-%D8%B4%D9%87%D8%B1-%D8%A7%D9%87%D8%B1%D9%85-%D9%88%D8%B1%D9%88%D8%AF%DB%8C-%D8%A7%D9%87%D8%B1%D9%85-%DA%AF%D8%A7%D8%AF%D9%88%D9%88%DB%8C%DB%8C/wZn4m-lc
+INFO: 2024/11/18 21:01:35 log.go:73: Saved post with ID 267 to database
+INFO: 2024/11/18 21:01:35 log.go:73: Extracted data from page 11: {Title:مسکونی تجاری در شهر اهرم ///ورودی اهرم گادوویی TempRoom:۱ Room:1 TempBuildYear:۱۴۰۰ BuildYear:1400 TempArea:۵۵ Area:55 TempPrice: Price:0 PlaceType:false ContractType:2 Elevator:false Parking:true Storage:true Ballcon:false Province: City:بوشهر ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/afra/post/6XfWcW3HL0faRxRU_OHz9Q/405e249e-c4a2-440e-9b09-f15caa48df86.jpg Description:امکانات ملک مسکونی و تجاری
+رهن و اجاره
+قابلیت های ملک
+زمین به متراژ 800متر
+دارای اتاق نگهبانی
+مجهز به دوربین مداربسته
+کنتور برق سه فاز
+انشعاب آب
+سوله بزرگ جهت بسته بندی
+خرما
+کاغذ
+وضایعات آهن ولات وغیر ه
+به مشتری که کار اشتغال زایی دارد تخفیف ویژه داده می شود .
+در خدمت شما هستم شهر اهرم
+آدرس ملک
+کادویی///ورودی بوشهر چهار اهرم حد فاصله مدرسه
+دبستان گادوی TempFloor: Floor:0 TempRent:۷٬۰۰۰٬۰۰۰ تومان Rent:7000000 TempDesposit:۵۰٬۰۰۰٬۰۰۰ تومان Desposit:50000000}
+INFO: 2024/11/18 21:01:36 log.go:73: Processing link: https://divar.ir/v/%D8%A2%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86-%DB%B2%DB%B5%DB%B0-%D8%AF%D8%B3%D8%AA%DA%AF%D8%A7%D9%87/wZ7gHkPV
+INFO: 2024/11/18 21:01:36 log.go:73: Processing link: https://divar.ir/v/%DB%B5%DB%B8%DB%B0-%D9%85%D8%AA%D8%B1-%D8%AA%D8%B1%DB%8C%D8%A8%D9%84%DA%A9%D8%B3-%D9%BE%D9%84%D8%A7%DA%A9-%D8%AC%D9%86%DA%AF%D9%84-%D9%86%D9%85%DA%A9-%D8%A2%D8%A8%D8%B1%D9%88%D8%AF-%D8%AA%D9%87%D8%A7%D8%AA%D8%B1-%D8%AA%D9%87%D8%B1%D8%A7%D9%86/wZaEkpdq
+INFO: 2024/11/18 21:01:37 log.go:73: Saved post with ID 268 to database
+INFO: 2024/11/18 21:01:37 log.go:73: Extracted data from page 11: {Title:آپارتمان ۲۵۰ دستگاه TempRoom:۲ Room:2 TempBuildYear:۱۳۸۹ BuildYear:1389 TempArea:۷۵ Area:75 TempPrice: Price:0 PlaceType:true ContractType:2 Elevator:false Parking:false Storage:true Ballcon:false Province: City:بندر امام خمینی ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl: Description:⚜️با اطمینان کامل خرید کنید⚜️
+❌❌❌❌❌❌❌❌❌❌
+↩️سربندر فاز ۲۵۰ دستگاه مساحت ۷۵ متر
+✅طبقه ۴ روبنما
+✅کابینت MDF
+✅کمد دیواری
+✅۲ خواب
+✅هود
+✅آبگرمکن
+❌❌❌❌❌❌❌❌❌❌❌❌❌❌❌
+✨مشاورین املاک همشهری با فعالترین فایلینگ در منطقه✨
+✨با بهترین قیمت و شرایط پرداخت✨
+❌❌❌❌❌❌❌❌❌❌❌❌
+
+✅خریدار خودروهایی شما هستیم.معاوضه با ملک هم میگردد✅
+
+❌❌❌❌❌❌❌❌❌❌❌
+⚜️خرید⚜️فروش⚜️رهن⚜️اجاره⚜️مشارکت در ساخت⚜️پیش فروش
+
+✅کد املاک:۱۲
+✅دارای مجوز تخصصی درجه یک
+☆☆مشــاورین امـلاک رسمــی همشهری☆☆
+✅مدیریت:عتیقی
+✅آدرس دفتر :سربندر-بلوار ایت الله خمینی-روبروی پارک شهر
+❗️❗️❗️❗️❗️❗️❗️❗️❗️❗️ TempFloor:۴ Floor:4 TempRent:مجانی Rent:0 TempDesposit:۱۳۰٬۰۰۰٬۰۰۰ تومان Desposit:130000000}
+INFO: 2024/11/18 21:01:37 log.go:73: Saved post with ID 269 to database
+INFO: 2024/11/18 21:01:37 log.go:73: Extracted data from page 14: {Title:۵۸۰ متر تریبلکس پلاک جنگل نمک آبرود/ تهاتر تهران TempRoom:+۴ Room:4 TempBuildYear:۱۴۰۲ BuildYear:1402 TempArea:۵۸۰ Area:580 TempPrice:۱۰۰٬۰۰۰٬۰۰۰٬۰۰۰ تومان Price:100000000000 PlaceType:false ContractType:1 Elevator:false Parking:true Storage:true Ballcon:true Province: City:کلارآباد ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/MZp6Daa2mhkKTPLHmO_R7A/63c7e611-598d-4025-b853-b1c639c3d685.jpg Description:۵۷۰ متر زمین در شهرک با اصالت در منطقه نمک آبرود
+
+۵۸۰ متر ویلای لوکس تریبلکس
+
+استخر ۴ فصل فعال - روف گاردن تجهیز ویو ابدی جنگل های نمک آبرود
+۲ آلاچیق بزرگ در حیاط و روف گاردن
+
+طبقه اول:
+آشپزخانه مرکزی فول فرنیش
+سالن فلت قابل چیدمان سه دست مبلمان
+ارتفاع سقف ۴٫۵ متر
+
+طبقه دوم:
+فضای پرایوت و هال خصوصی
+۵ خواب مستر کینگ سایز
+لاندری(رخت شور خانه) و اتاق خشک کن
+
+طبقه سوم:
+شاه نشین + بار تجهیز شده
+روف گاردن ویو ابدی + آتش کده مسقف
+
+مشاعات و امکانات رفاهی شهرک
+زمین های تنیس٫ فوتبال٫ بسکتبال٫ والیبال
+مارکت اختصاصی - کافه اختصاصی
+باغبان های اختصاصی شهرک
+
+شرایط تهاتر:
+معاوضه با آپارتمان در مناطق ۱ و ۲ و ۳ و ۶ تهران
+معاوضه با خودرو (شرایط و مدل اعلام شود)
+
+!!!!در شرایط خرید به صورت نقدی تخفیف قابل توجهی در نظر گرفته میشود
+
+مهندس احمدپور - ملک پرداز تخصصی تهران و مازندران TempFloor: Floor:0 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 21:01:37 log.go:73: Completed scraping all links for site: https://divar.ir/s/iran/buy-villa
+INFO: 2024/11/18 21:01:43 log.go:73: Processing link: https://divar.ir/v/%D8%A7%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86%DB%B1%DB%B2%DB%B9%D9%85%D8%AA%D8%B1%DB%8C-%D8%AE%D9%88%D8%B4-%D9%86%D9%82%D8%B4%D9%87-%D8%B1%D9%88%D8%A8%D9%87-%D9%86%D9%85%D8%A7-%DA%A9%D9%87%D8%B1%DB%8C%D8%B2%DA%A9/wZ5Y7d1S
+INFO: 2024/11/18 21:01:44 log.go:73: Saved post with ID 270 to database
+INFO: 2024/11/18 21:01:44 log.go:73: Extracted data from page 13: {Title:اپارتمان۱۲۹متری/خوش نقشه/روبه نما/کهریزک TempRoom:۲ Room:2 TempBuildYear:۱۴۰۲ BuildYear:1402 TempArea:۱۲۹ Area:129 TempPrice:۳٬۸۹۰٬۰۰۰٬۰۰۰ تومان Price:3890000000 PlaceType:true ContractType:1 Elevator:true Parking:true Storage:true Ballcon:false Province: City:کهریزک ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/ODKZZCvzaQufbLm51B48zg/fb337fd3-6cf2-4104-bdc9-ee3cc932cdf5.jpg Description:✨اپارتمان ۱۲۹متری
+✨خوش نقشه
+✨رو ب نما
+✨سند اماده
+✨غرق در نور
+✨سالن بزرگ و قابل چیدمان
+✨دسترسی ب مترو مراکز خرید رستوران درمانگاه
+✨دسترسی عالی ب شاه راه های اصلی منطقه
+✨مناسب برای سکونت و سرمایه گذاری
+✨بهترین لوکیشن منطقه
+✨پلان و طراحی مهندسی بدون پرتی
+✨فول امکانات( پارکینگ اسانسورانباری )
+
+تهاتر ملک ماشین و...انجام میشود
+خرید مستقیم از سازنده
+
+نقدینگی +وام و رهن
+رهن واحد به عهده دفتر
+انجام امور بانکی به عهده کارگذار دفتر✍️
+وام تکی به مبلغ ۴۰۰ ملیون تومان
+وام ذوجین به مبلغ ۶۴۰ ملیون تومان
+
+کلیه واحدها
+کارشناسی شده
+و دارای کد رهگیری می‌باشند
+تنها مجموعه
+دارای چندین شعبه دفتری فعال
+و متنوع ترین فایلینگ درمنطقه
+
+کارشناس تخصصی شما : خانم یکتا
+
+ادرس دفتر : کهریزک سر سیمتری شورا
+ابتدای ولیعصراملاک جزیره TempFloor:۲ Floor:2 TempRent: Rent:0 TempDesposit: Desposit:0}
+WARNING: 2024/11/18 21:01:48 log.go:75: Failed to scrape page https://divar.ir/v/%D9%88%DB%8C%D9%84%D8%A7%DB%8C%DB%8C-%D8%AD%DB%8C%D8%A7%D8%B7-%D8%AF%D8%A7%D8%B1-%D8%A8%DB%8C%D9%86-%D9%82%D8%B5%D8%B1%D8%A7%D9%84%D8%AF%D8%B4%D8%AA-%D9%88-%D8%B2%D8%B1%DA%AF%D8%B1%DB%8C/wZ7c3nHY: this is an error message
+WARNING: 2024/11/18 21:01:50 log.go:75: Failed to scrape page https://divar.ir/v/%D8%A2%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86250%D9%85%D8%AA%D8%B1-%D9%81%D8%B1%D9%85%D8%A7%D9%86%DB%8C%D9%87-%DA%86%D9%87%D8%A7%D8%B1-%D8%AE%D9%88%D8%A7%D8%A8/wZBEYr0y: this is an error message
+INFO: 2024/11/18 21:01:57 log.go:73: Processing link: https://divar.ir/v/%DB%B7%DB%B8%D9%85%D8%AA%D8%B1-%DA%A9%D9%84%DB%8C%D8%AF-%D8%A7%D9%88%D9%84-%D9%81%D9%88%D9%84-%D8%A7%D9%85%DA%A9%D8%A7%D9%86%D8%A7%D8%AA-%D8%B3%D9%86%D8%AF-%D8%AA%DA%A9-%D8%A8%D8%B1%DA%AF/wZp0cf4q
+INFO: 2024/11/18 21:01:58 log.go:73: Saved post with ID 271 to database
+INFO: 2024/11/18 21:01:58 log.go:73: Extracted data from page 14: {Title:۷۸متر کلید اول ،فول امکانات،سند تک برگ TempRoom:۲ Room:2 TempBuildYear:۱۳۹۷ BuildYear:1397 TempArea:۷۸ Area:78 TempPrice:۱٬۴۳۰٬۰۰۰٬۰۰۰ تومان Price:1430000000 PlaceType:true ContractType:1 Elevator:true Parking:true Storage:true Ballcon:false Province:تهران City: تهران‌سر ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/WFL0ejaQrqrrJO1ncNcp4w/8d24e374-9556-47cb-a54d-dfd856addd21.jpg Description:با سلام
+
+♦️فریبا اتش باز هستم کارشناس فروش در فازیک
+
+❌برای مشاوره رایگان و اطلاعات کامل مناسب با بودجه خود تماس بگیرید
+
+✅این واحد ارزنده و کمیاب
+✅۷۸متر کلید نخورده ۲خواب
+✅دارای پارکینگ اختصاصی و آسانسور
+✅تماما پنجره غرق در نور
+
+❌دارای سند تک برگ و کد رهگیری
+❌حوزه ثبتی تهران با کد ۰۲۱
+❌قابلیت وام تا ۸۰۰ میلیون
+
+❌بازدید همه روزه حتی ایام تعطیل
+
+با احترام:::::::::: فریبا آتش باز TempFloor:۳ Floor:3 TempRent: Rent:0 TempDesposit: Desposit:0}
+INFO: 2024/11/18 21:01:58 log.go:73: Completed scraping all links for site: https://divar.ir/s/iran/buy-apartment
+INFO: 2024/11/18 21:02:01 log.go:73: Processing link: https://divar.ir/v/%D8%AE%D8%A7%D9%86%D9%87-%D8%B1%D9%87%D9%86-%DA%A9%D9%88%DB%8C-%D8%A7%D8%A8%D9%88%D8%B0%D8%B1-%D8%A8%D9%87%D9%85%D9%86-%DB%B8/wZ7g3en8
+INFO: 2024/11/18 21:02:02 log.go:73: Saved post with ID 272 to database
+INFO: 2024/11/18 21:02:02 log.go:73: Extracted data from page 13: {Title:خانه رهن کوی ابوذر بهمن ۸ TempRoom:۲ Room:2 TempBuildYear:۱۳۹۰ BuildYear:1390 TempArea:۱۴۵ Area:145 TempPrice: Price:0 PlaceType:false ContractType:2 Elevator:false Parking:true Storage:true Ballcon:false Province: City:سوسنگرد ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl: Description:سلام یک باب خانه رهن داده می شود کوی ابوذر TempFloor: Floor:0 TempRent:۱۰۰٬۰۰۰ تومان Rent:100000 TempDesposit:۱٬۷۰۰٬۰۰۰٬۰۰۰ تومان Desposit:1700000000}
+INFO: 2024/11/18 21:02:03 log.go:73: Processing link: https://divar.ir/v/%D8%B1%D9%87%D9%86-%D8%A2%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86-%DB%B8%DB%B5%D9%85%D8%AA%D8%B1%D8%AF%D9%88-%D8%AE%D9%88%D8%A7%D8%A8-%DA%A9%D9%88%DB%8C-%D8%A8%D9%87%D8%A7%D8%B1-%D8%A7%DB%8C%D8%B3%D8%AA%DA%AF%D8%A7%D9%87-%DB%8C%D8%A7%D8%B2%D8%AF%D9%87/wZzQpZT3
+INFO: 2024/11/18 21:02:04 log.go:73: Saved post with ID 273 to database
+INFO: 2024/11/18 21:02:04 log.go:73: Extracted data from page 13: {Title:رهن آپارتمان ۸۵متردو خواب کوی بهار ایستگاه یازده TempRoom:۲ Room:2 TempBuildYear:۱۴۰۳ BuildYear:1403 TempArea:۸۵ Area:85 TempPrice: Price:0 PlaceType:true ContractType:2 Elevator:true Parking:true Storage:true Ballcon:false Province: City:آبادان ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/videos/thumbnails/4f03993d-2ab3-4757-b6e4-8c8e151ec115.jpg Description:باعرض سلام خدمت شما
+⚜️ مشاورین املاک ومعماری فاضلی نیا⚜️
+فایل : #رهن_اپارتمان        
+منطقه : #کوی بهار ایستگاه۱۱
+▪️85مترمفید طبقه2 ساخت 1403_شیش واحده
+▪️دوتا اتاق خواب بزرگ
+▪️دسترسی آسان
+▪️فول امکانات
+▪️ساختمون سردونبش با موقعیت بسیار عالی
+
+امکانات
+✅آشپزخونه همراه با کابینت MDF
+✅هود تو کار لمسی هوشمند و اجاق گاز صفحه ای
+✅سینک ظرفشویی _شیرآلات اهرمی
+✅دو خواب یک خواب همراه باکمد دیواریMDF
+✅درب ورودی واحدضدسرقت، دارای سیستم اعلام حریق
+✅سقف سالن کناف،همراه با نور پردازی ولاین نوری
+✅پمپ آب مرکزی ، کنتر برق وآب و گاز نصب شده
+✅پنجره دوجداره_درب پارکینگ کرکره برقی
+✅نور گیر عالی بالکن دارد
+توضیحات بیشتر حضوری در دفتر ارائه میشود
+
+✅رضایت مشتری تخصص و اولویت ماست .
+
+     ⚜ مشاورین املاک ومعماری فاضلی نیا⚜
+
+⚠️انواع فایل های مختلف مناسب باسلیقه شما موجود میباشد⚠️
+❗️املاک فاضلی نیا بابیشترین فایل ها در منطقه❗️
+
+☑️پیمانکاری ساختمان از ۰تا۱۰۰
+☑️بازسازی منازل قدیمی
+☑️طراحی داخلی و خارجی  ونقشه کشی
+
+✅آدرس دفتر املاک :
+آبادان - امیرآبادفاز۲،حدفاصل فلکه طالقانی وفلکه فرودگاه
+مدیریت :مهندس  فاضلی نیا TempFloor:۲ از ۳ Floor:2 TempRent:۱٬۰۰۰٬۰۰۰ تومان Rent:1000000 TempDesposit:۴۵۰٬۰۰۰٬۰۰۰ تومان Desposit:450000000}
+INFO: 2024/11/18 21:02:14 log.go:73: Processing link: https://divar.ir/v/%D8%AE%D8%A7%D9%86%D9%87-%D8%AF%D8%B1%D8%A8%D8%B3%D8%AA/wZ7gnQdW
+INFO: 2024/11/18 21:02:15 log.go:73: Saved post with ID 274 to database
+INFO: 2024/11/18 21:02:15 log.go:73: Extracted data from page 14: {Title:خانه دربست TempRoom:۳ Room:3 TempBuildYear:۱۳۷۲ BuildYear:1372 TempArea:۳۲۰ Area:320 TempPrice: Price:0 PlaceType:false ContractType:2 Elevator:false Parking:true Storage:true Ballcon:true Province:اصفهان City: شهرک کاوه ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl: Description:یک واحد دوطبقه که طبفه اول سه خواب و طبقه 180- یک خواب میباشد.
+سیستم گرمایش بصورت بخاری و کف موکت میباشد.
+آب وگاز با کنتور مشترک و برق مجزا میباشد. TempFloor: Floor:0 TempRent:۲۵٬۰۰۰٬۰۰۰ تومان Rent:25000000 TempDesposit:۱۰۰٬۰۰۰٬۰۰۰ تومان Desposit:100000000}
+INFO: 2024/11/18 21:02:15 log.go:73: Completed scraping all links for site: https://divar.ir/s/iran/rent-villa
+INFO: 2024/11/18 21:02:16 log.go:73: Processing link: https://divar.ir/v/%D8%A2%D9%BE%D8%A7%D8%B1%D8%AA%D9%85%D8%A7%D9%86-%DB%B6%DB%B0-%D9%85%D8%AA%D8%B1%DB%8C-%D9%85%D9%87%D8%B1%D8%A2%D8%A8%D8%A7%D8%AF-%D8%AC%D9%86%D9%88%D8%A8%DB%8C/wZ7gHpmP
+INFO: 2024/11/18 21:02:18 log.go:73: Saved post with ID 275 to database
+INFO: 2024/11/18 21:02:18 log.go:73: Extracted data from page 14: {Title:آپارتمان ۶۰ متری ، مهرآباد جنوبی TempRoom:۱ Room:1 TempBuildYear:۱۳۹۱ BuildYear:1391 TempArea:۶۰ Area:60 TempPrice: Price:0 PlaceType:true ContractType:2 Elevator:true Parking:false Storage:false Ballcon:false Province:تهران City: مهرآباد جنوبی ReleaseDate:2024-11-18 00:00:00 +0330 +0330 ImageUrl:https://s100.divarcdn.com/static/photo/neda/post/c3bTicvq622IBNgLs_ISDg/ab220d5f-fa3b-4dad-a986-97b88b244513.jpg Description:کاملا آفتاب گیر،قابل تبدیل TempFloor:۲ از ۵ Floor:2 TempRent:۱۲٬۰۰۰٬۰۰۰ تومان Rent:12000000 TempDesposit:۲۰۰٬۰۰۰٬۰۰۰ تومان Desposit:200000000}
+INFO: 2024/11/18 21:02:18 log.go:73: Completed scraping all links for site: https://divar.ir/s/iran/rent-apartment
+WARNING: 2024/11/18 21:02:18 log.go:75: Received shutdown signal, waiting for all tasks to complete...
+INFO: 2024/11/18 21:02:19 log.go:73: All tasks completed. Program shutting down gracefully.
