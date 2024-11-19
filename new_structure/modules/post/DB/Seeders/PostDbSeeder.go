@@ -18,6 +18,12 @@ func (s PostDbSeeder) Name() string {
 
 func (s PostDbSeeder) Handle(db *gorm.DB) {
 	Facades.PostRepo().Truncate()
+	for _, post := range GetFakePosts() {
+		Facades.PostRepo().Create(&post)
+	}
+}
+
+func GetFakePosts() []Models.Post {
 	now := time.Now()
 	//sourceSite, err := Facades2.SourceSiteRepo().FindByID(1)
 	//if err != nil {
@@ -85,10 +91,7 @@ func (s PostDbSeeder) Handle(db *gorm.DB) {
 			UpdateAt:         ptrTime(now.Add(-1 * time.Hour)), // 1 ساعت پیش
 		},
 	}
-
-	for _, post := range posts {
-		Facades.PostRepo().Create(&post)
-	}
+	return posts
 }
 
 func ptrString(s string) *string {
